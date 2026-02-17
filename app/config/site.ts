@@ -355,7 +355,7 @@ export const siteConfig = {
             },
             {
                 text: 'Honest communication, clean code, fast delivery. The rare developer who understands business and translates requirements into perfect technical solutions.',
-                author: "Marcus O'Brien",
+                author: "Robert Junior",
                 role: 'Director, TechStartup AU',
                 initials: 'MO',
                 platform: 'Upwork',
