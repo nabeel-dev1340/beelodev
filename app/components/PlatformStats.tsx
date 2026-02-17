@@ -1,35 +1,20 @@
 'use client';
 
 import { motion, useInView } from 'framer-motion';
+import Image from 'next/image';
 import { useRef } from 'react';
 import { Star, Award, TrendingUp, CheckCircle } from 'lucide-react';
+import { siteConfig } from '../config/site';
+
+const badgeIconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
+    Award, TrendingUp,
+};
 
 export default function PlatformStats() {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-80px" });
 
-    const platforms = [
-        {
-            name: 'Upwork',
-            badge: 'Top Rated',
-            badgeIcon: Award,
-            rating: '5.0',
-            reviews: '40+',
-            success: '100%',
-            earned: '$15K+',
-            accent: '#0ea5e9',
-        },
-        {
-            name: 'Fiverr',
-            badge: 'Level 2 Seller',
-            badgeIcon: TrendingUp,
-            rating: '4.9',
-            reviews: '25+',
-            success: '97%',
-            earned: '$8K+',
-            accent: '#06b6d4',
-        },
-    ];
+    const { platforms, aggregate } = siteConfig.platformStats;
 
     return (
         <section className="py-16 sm:py-28 px-4 sm:px-6 relative" ref={ref}>
@@ -65,85 +50,90 @@ export default function PlatformStats() {
 
                 {/* Platform Cards — side by side */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    {platforms.map((p, index) => (
-                        <motion.div
-                            key={index}
-                            className="group relative rounded-2xl overflow-hidden"
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={isInView ? { opacity: 1, y: 0 } : {}}
-                            transition={{ delay: index * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] as const }}
-                        >
-                            <div className="relative h-full border border-white/[0.06] rounded-2xl bg-white/[0.02] p-5 sm:p-8 transition-colors duration-300 hover:border-white/[0.12]">
+                    {platforms.map((p, index) => {
+                        const BadgeIcon = badgeIconMap[p.badgeIcon];
+                        return (
+                            <motion.div
+                                key={index}
+                                className="group relative rounded-2xl overflow-hidden"
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                                transition={{ delay: index * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] as const }}
+                            >
+                                <div className="relative h-full border border-white/[0.06] rounded-2xl bg-white/[0.02] p-5 sm:p-8 transition-colors duration-300 hover:border-white/[0.12]">
 
-                                {/* Top accent line */}
-                                <div
-                                    className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                                    style={{ backgroundImage: `linear-gradient(90deg, transparent, ${p.accent}, transparent)` }}
-                                />
+                                    {/* Top accent line */}
+                                    <div
+                                        className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                        style={{ backgroundImage: `linear-gradient(90deg, transparent, ${p.accent}, transparent)` }}
+                                    />
 
-                                {/* Header */}
-                                <div className="flex items-center justify-between mb-8">
-                                    <div className="flex items-center gap-3">
+                                    {/* Header */}
+                                    <div className="flex items-center justify-between mb-8">
+                                        <div className="flex items-center gap-3">
+                                            <div className="relative w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0">
+                                                <Image
+                                                    src={p.logo}
+                                                    alt={p.name}
+                                                    fill
+                                                    className="object-contain"
+                                                />
+                                            </div>
+                                            <div>
+                                                <h3 className="font-display text-xl font-bold text-white">{p.name}</h3>
+                                            </div>
+                                        </div>
                                         <div
-                                            className="w-11 h-11 rounded-xl flex items-center justify-center font-display font-bold text-white text-sm"
+                                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-wider text-white"
                                             style={{ backgroundImage: `linear-gradient(135deg, ${p.accent}, ${p.accent}cc)` }}
                                         >
-                                            {p.name[0]}
-                                        </div>
-                                        <div>
-                                            <h3 className="font-display text-xl font-bold text-white">{p.name}</h3>
+                                            {BadgeIcon && <BadgeIcon className="w-3 h-3" />}
+                                            {p.badge}
                                         </div>
                                     </div>
-                                    <div
-                                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-wider text-white"
-                                        style={{ backgroundImage: `linear-gradient(135deg, ${p.accent}, ${p.accent}cc)` }}
-                                    >
-                                        <p.badgeIcon className="w-3 h-3" />
-                                        {p.badge}
-                                    </div>
-                                </div>
 
-                                {/* Rating row */}
-                                <div className="flex items-center gap-3 mb-8">
-                                    <span
-                                        className="text-3xl sm:text-4xl font-display font-bold bg-clip-text text-transparent"
-                                        style={{ backgroundImage: `linear-gradient(135deg, ${p.accent}, ${p.accent}cc)` }}
-                                    >
-                                        {p.rating}
-                                    </span>
-                                    <div className="flex gap-0.5">
-                                        {[...Array(5)].map((_, i) => (
-                                            <Star key={i} className="w-4 h-4 text-amber-400 fill-amber-400" />
+                                    {/* Rating row */}
+                                    <div className="flex items-center gap-3 mb-8">
+                                        <span
+                                            className="text-3xl sm:text-4xl font-display font-bold bg-clip-text text-transparent"
+                                            style={{ backgroundImage: `linear-gradient(135deg, ${p.accent}, ${p.accent}cc)` }}
+                                        >
+                                            {p.rating}
+                                        </span>
+                                        <div className="flex gap-0.5">
+                                            {[...Array(5)].map((_, i) => (
+                                                <Star key={i} className="w-4 h-4 text-amber-400 fill-amber-400" />
+                                            ))}
+                                        </div>
+                                        <span className="text-neutral-500 text-sm">({p.reviews} reviews)</span>
+                                    </div>
+
+                                    {/* Stats — horizontal */}
+                                    <div className="grid grid-cols-3 gap-3">
+                                        {[
+                                            { label: 'Success Rate', value: p.success },
+                                            { label: 'Completed', value: p.reviews },
+                                            { label: 'Earned', value: p.earned },
+                                        ].map((stat, i) => (
+                                            <div
+                                                key={i}
+                                                className="text-center py-3 rounded-xl bg-white/[0.03] border border-white/[0.05]"
+                                            >
+                                                <div className="text-lg font-display font-bold text-white">{stat.value}</div>
+                                                <div className="text-[10px] text-neutral-600 uppercase tracking-wider mt-0.5">{stat.label}</div>
+                                            </div>
                                         ))}
                                     </div>
-                                    <span className="text-neutral-500 text-sm">({p.reviews} reviews)</span>
-                                </div>
 
-                                {/* Stats — horizontal */}
-                                <div className="grid grid-cols-3 gap-3">
-                                    {[
-                                        { label: 'Success Rate', value: p.success },
-                                        { label: 'Completed', value: p.reviews },
-                                        { label: 'Earned', value: p.earned },
-                                    ].map((stat, i) => (
-                                        <div
-                                            key={i}
-                                            className="text-center py-3 rounded-xl bg-white/[0.03] border border-white/[0.05]"
-                                        >
-                                            <div className="text-lg font-display font-bold text-white">{stat.value}</div>
-                                            <div className="text-[10px] text-neutral-600 uppercase tracking-wider mt-0.5">{stat.label}</div>
-                                        </div>
-                                    ))}
+                                    {/* Hover glow */}
+                                    <div
+                                        className="absolute -bottom-8 -right-8 w-40 h-40 rounded-full blur-3xl opacity-0 group-hover:opacity-15 transition-opacity duration-700 pointer-events-none"
+                                        style={{ backgroundColor: p.accent }}
+                                    />
                                 </div>
-
-                                {/* Hover glow */}
-                                <div
-                                    className="absolute -bottom-8 -right-8 w-40 h-40 rounded-full blur-3xl opacity-0 group-hover:opacity-15 transition-opacity duration-700 pointer-events-none"
-                                    style={{ backgroundColor: p.accent }}
-                                />
-                            </div>
-                        </motion.div>
-                    ))}
+                            </motion.div>
+                        );
+                    })}
                 </div>
 
                 {/* Bottom aggregate */}
@@ -153,11 +143,7 @@ export default function PlatformStats() {
                     animate={isInView ? { opacity: 1 } : {}}
                     transition={{ delay: 0.4 }}
                 >
-                    {[
-                        { value: '65+', label: 'Projects Delivered' },
-                        { value: '100%', label: 'Client Satisfaction' },
-                        { value: '12+', label: 'Countries Served' },
-                    ].map((s, i) => (
+                    {aggregate.map((s, i) => (
                         <div key={i} className="flex items-center gap-3">
                             {i > 0 && <div className="w-px h-6 bg-white/10 -ml-1" />}
                             <div className="text-center ml-2">

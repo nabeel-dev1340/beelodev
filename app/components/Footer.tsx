@@ -1,27 +1,9 @@
 import Logo from './Logo';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Calendar } from 'lucide-react';
+import { siteConfig } from '../config/site';
 
 export default function Footer() {
-    const links = {
-        services: [
-            { label: 'AI Automation', href: '#services' },
-            { label: 'Full Stack Dev', href: '#services' },
-            { label: 'WordPress', href: '#services' },
-            { label: 'Mobile Apps', href: '#services' },
-        ],
-        company: [
-            { label: 'Portfolio', href: '#portfolio' },
-            { label: 'Reviews', href: '#testimonials' },
-            { label: 'Pricing', href: '#packages' },
-            { label: 'Contact', href: '#contact' },
-        ],
-        socials: [
-            { label: 'Upwork', href: '#' },
-            { label: 'Fiverr', href: '#' },
-            { label: 'LinkedIn', href: '#' },
-            { label: 'GitHub', href: '#' },
-        ],
-    };
+    const { footer, personal } = siteConfig;
 
     return (
         <footer className="relative px-4 sm:px-6 pt-12 sm:pt-20 pb-8 sm:pb-10 border-t border-white/[0.04]">
@@ -34,19 +16,22 @@ export default function Footer() {
                         style={{ backgroundColor: '#0ea5e9' }}
                     />
                     <h3 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 relative z-10">
-                        Ready to build something great?
+                        {footer.ctaBanner.headline}
                     </h3>
                     <p className="text-neutral-400 text-base mb-8 max-w-md mx-auto relative z-10">
-                        Let&apos;s turn your idea into a product people love.
+                        {footer.ctaBanner.subtitle}
                     </p>
                     <a
-                        href="#contact"
+                        href={siteConfig.personal.booking.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-sm font-semibold text-white relative z-10 transition-shadow hover:shadow-[0_8px_30px_rgba(14,165,233,0.35)]"
                         style={{ backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4)' }}
                     >
-                        Start a Project
-                        <ArrowUpRight className="w-4 h-4" />
+                        <Calendar className="w-4 h-4" />
+                        {footer.ctaBanner.cta}
                     </a>
+
                 </div>
 
                 {/* Middle — Links Grid */}
@@ -66,7 +51,7 @@ export default function Footer() {
                             </span>
                         </div>
                         <p className="text-sm text-neutral-500 leading-relaxed max-w-xs">
-                            AI automation, full-stack development, WordPress & mobile apps — built to last.
+                            {personal.tagline}
                         </p>
                     </div>
 
@@ -74,7 +59,7 @@ export default function Footer() {
                     <div>
                         <h4 className="text-xs text-neutral-600 uppercase tracking-wider font-medium mb-4">Services</h4>
                         <ul className="space-y-2.5">
-                            {links.services.map((item, i) => (
+                            {footer.services.map((item, i) => (
                                 <li key={i}>
                                     <a href={item.href} className="text-sm text-neutral-400 hover:text-white transition-colors">
                                         {item.label}
@@ -88,7 +73,7 @@ export default function Footer() {
                     <div>
                         <h4 className="text-xs text-neutral-600 uppercase tracking-wider font-medium mb-4">Company</h4>
                         <ul className="space-y-2.5">
-                            {links.company.map((item, i) => (
+                            {footer.company.map((item, i) => (
                                 <li key={i}>
                                     <a href={item.href} className="text-sm text-neutral-400 hover:text-white transition-colors">
                                         {item.label}
@@ -102,10 +87,12 @@ export default function Footer() {
                     <div>
                         <h4 className="text-xs text-neutral-600 uppercase tracking-wider font-medium mb-4">Connect</h4>
                         <ul className="space-y-2.5">
-                            {links.socials.map((item, i) => (
+                            {footer.socials.map((item, i) => (
                                 <li key={i}>
                                     <a
                                         href={item.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         className="inline-flex items-center gap-1.5 text-sm text-neutral-400 hover:text-white transition-colors"
                                     >
                                         {item.label}
@@ -120,17 +107,17 @@ export default function Footer() {
                 {/* Bottom Bar */}
                 <div className="pt-8 border-t border-white/[0.04] flex flex-col md:flex-row justify-between items-center gap-4">
                     <div className="text-xs text-neutral-700">
-                        © {new Date().getFullYear()} Beelodev. Built with care by Nabeel.
+                        © {new Date().getFullYear()} {personal.brandName}. Built with care by {personal.name}.
                     </div>
                     <div className="flex items-center gap-4 text-xs text-neutral-700">
-                        <span>Pakistan</span>
+                        <span>{personal.location.split(' · ')[0]}</span>
                         <span className="w-1 h-1 rounded-full bg-neutral-800" />
-                        <span>Remote Worldwide</span>
+                        <span>{personal.location.split(' · ')[1]}</span>
                         <span className="w-1 h-1 rounded-full bg-neutral-800" />
-                        <span>beelodev.com</span>
+                        <span>{personal.domain}</span>
                     </div>
                 </div>
             </div>
-        </footer>
+        </footer >
     );
 }

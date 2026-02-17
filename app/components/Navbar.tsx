@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import { Menu, X, Calendar } from 'lucide-react';
 import Logo from './Logo';
+import { siteConfig } from '../config/site';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -17,12 +18,7 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: 'Services', href: '#services' },
-    { name: 'Portfolio', href: '#portfolio' },
-    { name: 'Packages', href: '#packages' },
-    { name: 'Contact', href: '#contact' },
-  ];
+  const navLinks = siteConfig.navLinks;
 
   return (
     <>
@@ -45,7 +41,7 @@ export default function Navbar() {
             {/* Logo mark */}
             <Logo size={32} />
             <span className="font-display font-bold text-lg text-white">
-              Beelodev
+              {siteConfig.personal.brandName}
             </span>
           </motion.a>
 
@@ -68,7 +64,9 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             {/* CTA */}
             <motion.a
-              href="#contact"
+              href={siteConfig.personal.booking.url}
+              target="_blank"
+              rel="noopener noreferrer"
               className="hidden md:flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold text-white transition-shadow"
               style={{
                 backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4)',
@@ -76,8 +74,8 @@ export default function Navbar() {
               whileHover={{ scale: 1.04, boxShadow: '0 8px 30px rgba(14,165,233,0.35)' }}
               whileTap={{ scale: 0.96 }}
             >
-              Get Started
-              <ArrowRight className="w-4 h-4" />
+              <Calendar className="w-4 h-4" />
+              {siteConfig.personal.booking.shortLabel}
             </motion.a>
 
             {/* Mobile toggle */}

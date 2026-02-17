@@ -3,67 +3,17 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Bot, BarChart3, ShoppingCart, Smartphone, Zap, Activity, ArrowUpRight } from 'lucide-react';
+import { siteConfig } from '../config/site';
+
+const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
+    Bot, BarChart3, ShoppingCart, Smartphone, Zap, Activity,
+};
 
 export default function Portfolio() {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-80px" });
 
-    const projects = [
-        {
-            title: 'AI Voice Agent Platform',
-            category: 'AI Automation',
-            description: 'Built a custom voice AI system that handles customer support calls 24/7, reducing response times by 80% and saving $120K/year in staffing costs.',
-            icon: Bot,
-            metrics: ['24/7 uptime', '80% faster', '$120K saved'],
-            accent: '#0ea5e9',
-            featured: true,
-        },
-        {
-            title: 'Analytics Dashboard',
-            category: 'Full Stack',
-            description: 'Real-time analytics platform processing 1M+ events per day with instant insights and custom reporting.',
-            icon: BarChart3,
-            metrics: ['1M+ events/day', '99.9% uptime'],
-            accent: '#06b6d4',
-            featured: false,
-        },
-        {
-            title: 'E-Commerce Store',
-            category: 'WordPress',
-            description: 'High-converting WooCommerce store with custom checkout flow, resulting in 35% increase in conversions.',
-            icon: ShoppingCart,
-            metrics: ['+35% conversions', '2s load time'],
-            accent: '#14b8a6',
-            featured: false,
-        },
-        {
-            title: 'Fitness Tracking App',
-            category: 'Mobile',
-            description: 'Cross-platform React Native app with workout tracking, social features, and 50K+ downloads.',
-            icon: Smartphone,
-            metrics: ['50K+ downloads', '4.8★ rating'],
-            accent: '#0ea5e9',
-            featured: true,
-        },
-        {
-            title: 'Workflow Automation',
-            category: 'AI Automation',
-            description: 'Zapier-style automation platform for SMBs, connecting 50+ SaaS tools with intelligent triggers.',
-            icon: Zap,
-            metrics: ['50+ integrations', '10K tasks/day'],
-            accent: '#06b6d4',
-            featured: false,
-        },
-        {
-            title: 'Health Monitoring',
-            category: 'Full Stack',
-            description: 'IoT-connected health tracking dashboard with real-time vitals monitoring and alert system.',
-            icon: Activity,
-            metrics: ['Real-time data', 'HIPAA compliant'],
-            accent: '#14b8a6',
-            featured: false,
-        },
-    ];
+    const projects = siteConfig.portfolio;
 
     const stagger = {
         hidden: { opacity: 0 },
@@ -119,94 +69,97 @@ export default function Portfolio() {
                     initial="hidden"
                     animate={isInView ? "visible" : "hidden"}
                 >
-                    {projects.map((project, index) => (
-                        <motion.div
-                            key={index}
-                            className={`group relative rounded-2xl overflow-hidden ${project.featured ? 'md:col-span-2 lg:col-span-2' : ''
-                                }`}
-                            variants={fadeUp}
-                        >
-                            {/* Card */}
+                    {projects.map((project, index) => {
+                        const Icon = iconMap[project.icon];
+                        return (
                             <motion.div
-                                className="relative h-full border border-white/[0.06] rounded-2xl overflow-hidden bg-white/[0.02]"
-                                whileHover={{ borderColor: `${project.accent}33` }}
-                                transition={{ duration: 0.3 }}
+                                key={index}
+                                className={`group relative rounded-2xl overflow-hidden ${project.featured ? 'md:col-span-2 lg:col-span-2' : ''
+                                    }`}
+                                variants={fadeUp}
                             >
-                                {/* Top gradient bar */}
-                                <div
-                                    className="h-[2px] w-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                                    style={{ backgroundImage: `linear-gradient(90deg, transparent, ${project.accent}, transparent)` }}
-                                />
+                                {/* Card */}
+                                <motion.div
+                                    className="relative h-full border border-white/[0.06] rounded-2xl overflow-hidden bg-white/[0.02]"
+                                    whileHover={{ borderColor: `${project.accent}33` }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    {/* Top gradient bar */}
+                                    <div
+                                        className="h-[2px] w-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                        style={{ backgroundImage: `linear-gradient(90deg, transparent, ${project.accent}, transparent)` }}
+                                    />
 
-                                <div className={`p-5 sm:p-8 ${project.featured ? 'md:flex md:items-start md:gap-10' : ''}`}>
-                                    {/* Left — Icon + Meta */}
-                                    <div className={`${project.featured ? 'md:flex-shrink-0' : ''}`}>
-                                        {/* Icon */}
-                                        <motion.div
-                                            className="w-14 h-14 rounded-xl flex items-center justify-center mb-5"
-                                            style={{ backgroundColor: `${project.accent}15`, border: `1px solid ${project.accent}25` }}
-                                            whileHover={{ scale: 1.1, rotate: -5 }}
-                                            transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                                        >
-                                            <project.icon className="w-6 h-6" style={{ color: project.accent }} />
-                                        </motion.div>
-
-                                        {/* Category */}
-                                        <div className="mb-3">
-                                            <span
-                                                className="text-xs font-mono uppercase tracking-wider"
-                                                style={{ color: project.accent }}
+                                    <div className={`p-5 sm:p-8 ${project.featured ? 'md:flex md:items-start md:gap-10' : ''}`}>
+                                        {/* Left — Icon + Meta */}
+                                        <div className={`${project.featured ? 'md:flex-shrink-0' : ''}`}>
+                                            {/* Icon */}
+                                            <motion.div
+                                                className="w-14 h-14 rounded-xl flex items-center justify-center mb-5"
+                                                style={{ backgroundColor: `${project.accent}15`, border: `1px solid ${project.accent}25` }}
+                                                whileHover={{ scale: 1.1, rotate: -5 }}
+                                                transition={{ type: "spring", stiffness: 400, damping: 15 }}
                                             >
-                                                {project.category}
-                                            </span>
-                                        </div>
+                                                {Icon && <Icon className="w-6 h-6" style={{ color: project.accent }} />}
+                                            </motion.div>
 
-                                        {/* Title */}
-                                        <h3 className="font-display text-2xl font-bold text-white mb-3 group-hover:text-white transition-colors">
-                                            {project.title}
-                                        </h3>
-                                    </div>
-
-                                    {/* Right — Description + Metrics */}
-                                    <div className="flex-1">
-                                        {/* Description */}
-                                        <p className="text-neutral-400 text-sm leading-relaxed mb-6">
-                                            {project.description}
-                                        </p>
-
-                                        {/* Metric Pills */}
-                                        <div className="flex flex-wrap gap-2 mb-6">
-                                            {project.metrics.map((metric, i) => (
+                                            {/* Category */}
+                                            <div className="mb-3">
                                                 <span
-                                                    key={i}
-                                                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white/[0.04] border border-white/[0.06] text-neutral-300"
+                                                    className="text-xs font-mono uppercase tracking-wider"
+                                                    style={{ color: project.accent }}
                                                 >
-                                                    {metric}
+                                                    {project.category}
                                                 </span>
-                                            ))}
+                                            </div>
+
+                                            {/* Title */}
+                                            <h3 className="font-display text-2xl font-bold text-white mb-3 group-hover:text-white transition-colors">
+                                                {project.title}
+                                            </h3>
                                         </div>
 
-                                        {/* CTA */}
-                                        <motion.a
-                                            href="#contact"
-                                            className="inline-flex items-center gap-2 text-sm font-medium transition-colors"
-                                            style={{ color: project.accent }}
-                                            whileHover={{ gap: '0.75rem' }}
-                                        >
-                                            View details
-                                            <ArrowUpRight className="w-4 h-4" />
-                                        </motion.a>
-                                    </div>
-                                </div>
+                                        {/* Right — Description + Metrics */}
+                                        <div className="flex-1">
+                                            {/* Description */}
+                                            <p className="text-neutral-400 text-sm leading-relaxed mb-6">
+                                                {project.description}
+                                            </p>
 
-                                {/* Hover glow — bottom-right radial */}
-                                <div
-                                    className="absolute bottom-0 right-0 w-48 h-48 rounded-full blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none"
-                                    style={{ backgroundColor: project.accent }}
-                                />
+                                            {/* Metric Pills */}
+                                            <div className="flex flex-wrap gap-2 mb-6">
+                                                {project.metrics.map((metric, i) => (
+                                                    <span
+                                                        key={i}
+                                                        className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white/[0.04] border border-white/[0.06] text-neutral-300"
+                                                    >
+                                                        {metric}
+                                                    </span>
+                                                ))}
+                                            </div>
+
+                                            {/* CTA */}
+                                            <motion.a
+                                                href="#contact"
+                                                className="inline-flex items-center gap-2 text-sm font-medium transition-colors"
+                                                style={{ color: project.accent }}
+                                                whileHover={{ gap: '0.75rem' }}
+                                            >
+                                                View details
+                                                <ArrowUpRight className="w-4 h-4" />
+                                            </motion.a>
+                                        </div>
+                                    </div>
+
+                                    {/* Hover glow — bottom-right radial */}
+                                    <div
+                                        className="absolute bottom-0 right-0 w-48 h-48 rounded-full blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none"
+                                        style={{ backgroundColor: project.accent }}
+                                    />
+                                </motion.div>
                             </motion.div>
-                        </motion.div>
-                    ))}
+                        );
+                    })}
                 </motion.div>
 
                 {/* Bottom CTA */}

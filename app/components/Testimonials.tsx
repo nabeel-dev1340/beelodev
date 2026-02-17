@@ -3,67 +3,13 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Star, Quote, ExternalLink } from 'lucide-react';
+import { siteConfig } from '../config/site';
 
 export default function Testimonials() {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-80px" });
 
-    const testimonials = [
-        {
-            text: 'Nabeel delivered an exceptional AI chatbot that transformed our customer support. Response quality was incredible and the automation saved us 30+ hours per week.',
-            author: 'James Mitchell',
-            role: 'CEO, ShopFlow USA',
-            initials: 'JM',
-            platform: 'Upwork',
-            accent: '#0ea5e9',
-            featured: true,
-        },
-        {
-            text: 'The full-stack app was delivered 3 days ahead of schedule, works perfectly, and the code quality is something I\'ve rarely seen. Will absolutely hire again.',
-            author: 'Sarah Collins',
-            role: 'CTO, Nexify London',
-            initials: 'SC',
-            platform: 'Upwork',
-            accent: '#06b6d4',
-            featured: false,
-        },
-        {
-            text: 'Our WordPress site is stunning and loads in under 2 seconds. SEO got us to page 1 of Google within 6 weeks. Worth every penny.',
-            author: 'Aisha Rahman',
-            role: 'Founder, StyleBoutique',
-            initials: 'AR',
-            platform: 'Fiverr',
-            accent: '#14b8a6',
-            featured: false,
-        },
-        {
-            text: 'The React Native app works flawlessly on both iOS and Android. Beelodev communicated clearly throughout, handled edge cases brilliantly, and delivered a polished product.',
-            author: 'David Kim',
-            role: 'Product Manager, Delivr',
-            initials: 'DK',
-            platform: 'Upwork',
-            accent: '#06b6d4',
-            featured: true,
-        },
-        {
-            text: 'Make.com automation eliminated manual data entry. 40 hours of manual work per week, now done automatically. Insane ROI.',
-            author: 'Laura Peters',
-            role: 'Operations Lead, PropMax',
-            initials: 'LP',
-            platform: 'Fiverr',
-            accent: '#14b8a6',
-            featured: false,
-        },
-        {
-            text: 'Honest communication, clean code, fast delivery. The rare developer who understands business and translates requirements into perfect technical solutions.',
-            author: 'Marcus O\'Brien',
-            role: 'Director, TechStartup AU',
-            initials: 'MO',
-            platform: 'Upwork',
-            accent: '#0ea5e9',
-            featured: false,
-        },
-    ];
+    const { items: testimonials, aggregateRating, aggregateLabel, trustBanner } = siteConfig.testimonials;
 
     const stagger = {
         hidden: { opacity: 0 },
@@ -125,8 +71,8 @@ export default function Testimonials() {
                             <Star key={i} className="w-5 h-5 text-amber-400 fill-amber-400" />
                         ))}
                     </div>
-                    <span className="text-white font-display font-bold text-lg">4.9</span>
-                    <span className="text-neutral-500 text-sm">across 50+ projects</span>
+                    <span className="text-white font-display font-bold text-lg">{aggregateRating}</span>
+                    <span className="text-neutral-500 text-sm">{aggregateLabel}</span>
                 </motion.div>
 
                 {/* Masonry-ish Grid */}
@@ -212,20 +158,15 @@ export default function Testimonials() {
                     transition={{ delay: 0.5 }}
                 >
                     <div className="inline-flex items-center gap-4 sm:gap-6 glass px-5 sm:px-8 py-3 sm:py-4 rounded-2xl">
-                        <div className="text-center">
-                            <div className="text-2xl font-display font-bold text-white">50+</div>
-                            <div className="text-[11px] text-neutral-500 uppercase tracking-wider">Projects</div>
-                        </div>
-                        <div className="w-px h-8 bg-white/10" />
-                        <div className="text-center">
-                            <div className="text-2xl font-display font-bold text-white">100%</div>
-                            <div className="text-[11px] text-neutral-500 uppercase tracking-wider">5-Star</div>
-                        </div>
-                        <div className="w-px h-8 bg-white/10" />
-                        <div className="text-center">
-                            <div className="text-2xl font-display font-bold text-white">12+</div>
-                            <div className="text-[11px] text-neutral-500 uppercase tracking-wider">Countries</div>
-                        </div>
+                        {trustBanner.map((item, i) => (
+                            <div key={i} className="flex items-center gap-4 sm:gap-6">
+                                {i > 0 && <div className="w-px h-8 bg-white/10" />}
+                                <div className="text-center">
+                                    <div className="text-2xl font-display font-bold text-white">{item.value}</div>
+                                    <div className="text-[11px] text-neutral-500 uppercase tracking-wider">{item.label}</div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </motion.div>
             </div>

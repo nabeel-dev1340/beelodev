@@ -2,7 +2,12 @@
 
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { ArrowRight, ArrowDown, Bot, Code, Smartphone, Globe } from 'lucide-react';
+import { ArrowRight, ArrowDown, Bot, Code, Smartphone, Globe, Calendar } from 'lucide-react';
+import { siteConfig } from '../config/site';
+
+const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
+    Bot, Code, Smartphone, Globe,
+};
 
 export default function Hero() {
     const heroRef = useRef<HTMLElement>(null);
@@ -32,12 +37,7 @@ export default function Hero() {
         }
     };
 
-    const capabilities = [
-        { icon: Bot, label: 'AI Automation' },
-        { icon: Code, label: 'Web Development' },
-        { icon: Smartphone, label: 'Mobile Apps' },
-        { icon: Globe, label: 'WordPress' },
-    ];
+    const { hero, personal } = siteConfig;
 
     return (
         <motion.section
@@ -70,7 +70,7 @@ export default function Hero() {
                             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400" />
                         </span>
                         <span className="text-sm font-medium text-neutral-300">
-                            Available for new projects
+                            {personal.availability.message}
                         </span>
                     </motion.div>
                 </motion.div>
@@ -81,7 +81,7 @@ export default function Hero() {
                     className="font-display font-extrabold leading-[0.95] tracking-tight mb-8"
                 >
                     <span className="block text-white text-[clamp(3rem,8vw,7rem)]">
-                        We Build Digital
+                        {hero.headline.line1}
                     </span>
                     <span
                         className="block text-[clamp(3rem,8vw,7rem)] bg-clip-text text-transparent"
@@ -89,7 +89,7 @@ export default function Hero() {
                             backgroundImage: 'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 40%, #14b8a6 100%)',
                         }}
                     >
-                        Experiences
+                        {hero.headline.line2}
                     </span>
                 </motion.h1>
 
@@ -98,8 +98,7 @@ export default function Hero() {
                     variants={fadeUp}
                     className="text-lg md:text-xl text-neutral-400 max-w-2xl mx-auto mb-12 leading-relaxed"
                 >
-                    AI automation, full-stack development, and mobile apps — engineered for
-                    scale, designed&nbsp;for&nbsp;impact.
+                    {hero.subtitle}
                 </motion.p>
 
                 {/* CTA Buttons */}
@@ -108,7 +107,7 @@ export default function Hero() {
                     className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-14 sm:mb-20"
                 >
                     <motion.a
-                        href="#packages"
+                        href={hero.cta.primary.href}
                         className="group relative overflow-hidden rounded-2xl px-6 sm:px-8 py-3.5 sm:py-4 font-semibold text-sm sm:text-base shadow-lg w-full sm:w-auto text-center"
                         whileHover={{ scale: 1.04, boxShadow: "0 20px 50px rgba(14,165,233,0.35)" }}
                         whileTap={{ scale: 0.96 }}
@@ -120,19 +119,34 @@ export default function Hero() {
                             }}
                         />
                         <span className="relative z-10 text-white flex items-center gap-2">
-                            View Packages
+                            {hero.cta.primary.label}
                             <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                         </span>
                     </motion.a>
 
                     <motion.a
-                        href="#portfolio"
+                        href={personal.booking.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="glass px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-semibold text-sm sm:text-base group w-full sm:w-auto text-center border border-emerald-500/20 hover:border-emerald-500/40 transition-colors"
+                        whileHover={{ scale: 1.04, backgroundColor: "rgba(16,185,129,0.08)" }}
+                        whileTap={{ scale: 0.96 }}
+                    >
+                        <span className="text-white flex items-center justify-center gap-2">
+                            <Calendar className="w-4 h-4 text-emerald-400" />
+                            {personal.booking.label}
+                            <span className="text-xs text-emerald-400/70 font-normal">· {personal.booking.duration}</span>
+                        </span>
+                    </motion.a>
+
+                    <motion.a
+                        href={hero.cta.secondary.href}
                         className="glass px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-semibold text-sm sm:text-base group w-full sm:w-auto text-center"
                         whileHover={{ scale: 1.04, backgroundColor: "rgba(255,255,255,0.1)" }}
                         whileTap={{ scale: 0.96 }}
                     >
                         <span className="text-white flex items-center gap-2">
-                            See Our Work
+                            {hero.cta.secondary.label}
                             <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                         </span>
                     </motion.a>
@@ -143,17 +157,20 @@ export default function Hero() {
                     variants={fadeUp}
                     className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-14 sm:mb-20"
                 >
-                    {capabilities.map((cap, i) => (
-                        <motion.div
-                            key={i}
-                            className="glass flex items-center gap-2.5 px-5 py-3 rounded-full"
-                            whileHover={{ scale: 1.06, backgroundColor: "rgba(255,255,255,0.1)" }}
-                            transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                        >
-                            <cap.icon className="w-4 h-4 text-electric-blue" />
-                            <span className="text-sm font-medium text-neutral-200">{cap.label}</span>
-                        </motion.div>
-                    ))}
+                    {hero.capabilities.map((cap, i) => {
+                        const Icon = iconMap[cap.icon];
+                        return (
+                            <motion.div
+                                key={i}
+                                className="glass flex items-center gap-2.5 px-5 py-3 rounded-full"
+                                whileHover={{ scale: 1.06, backgroundColor: "rgba(255,255,255,0.1)" }}
+                                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                            >
+                                {Icon && <Icon className="w-4 h-4 text-electric-blue" />}
+                                <span className="text-sm font-medium text-neutral-200">{cap.label}</span>
+                            </motion.div>
+                        );
+                    })}
                 </motion.div>
 
                 {/* Stats Row */}
@@ -161,11 +178,7 @@ export default function Hero() {
                     variants={fadeUp}
                     className="grid grid-cols-3 max-w-sm sm:max-w-lg mx-auto"
                 >
-                    {[
-                        { value: '50+', label: 'Projects Delivered' },
-                        { value: '4.9', label: 'Client Rating' },
-                        { value: '100%', label: 'Success Rate' },
-                    ].map((stat, index) => (
+                    {hero.stats.map((stat, index) => (
                         <div key={index} className="text-center relative">
                             {index > 0 && (
                                 <div className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-10 bg-white/10" />

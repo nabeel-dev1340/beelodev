@@ -2,7 +2,12 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useState, useRef } from 'react';
-import { Mail, MessageSquare, MapPin, Send, ArrowUpRight, Sparkles, Clock } from 'lucide-react';
+import { Mail, MessageSquare, MapPin, Send, ArrowUpRight, Sparkles, Clock, Calendar } from 'lucide-react';
+import { siteConfig } from '../config/site';
+
+const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
+    Mail, MessageSquare, MapPin,
+};
 
 export default function Contact() {
     const [showSuccess, setShowSuccess] = useState(false);
@@ -14,11 +19,8 @@ export default function Contact() {
         setShowSuccess(true);
     };
 
-    const contactMethods = [
-        { icon: Mail, label: 'Email', value: 'nabeel@beelodev.com', href: 'mailto:nabeel@beelodev.com' },
-        { icon: MessageSquare, label: 'WhatsApp', value: '+92 300 000 0000', href: '#' },
-        { icon: MapPin, label: 'Location', value: 'Pakistan · Remote Worldwide', href: '#' },
-    ];
+    const { methods: contactMethods, socialPlatforms, budgetRanges, serviceOptions } = siteConfig.contact;
+    const { personal } = siteConfig;
 
     return (
         <section className="py-16 sm:py-28 px-4 sm:px-6 relative" id="contact" ref={ref}>
@@ -70,47 +72,80 @@ export default function Contact() {
                                     <div className="absolute inset-0 w-3 h-3 rounded-full bg-emerald-400 animate-ping opacity-75" />
                                 </div>
                                 <div>
-                                    <div className="font-semibold text-white text-sm">Available for new projects</div>
+                                    <div className="font-semibold text-white text-sm">{personal.availability.message}</div>
                                     <div className="flex items-center gap-1.5 text-xs text-neutral-500 mt-0.5">
                                         <Clock className="w-3 h-3" />
-                                        Response within 4 hours
+                                        {personal.responseTime}
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Contact Methods */}
-                        {contactMethods.map((item, i) => (
-                            <a
-                                key={i}
-                                href={item.href}
-                                className="group flex items-center gap-4 border border-white/[0.06] rounded-2xl bg-white/[0.02] p-5 transition-colors duration-300 hover:border-white/[0.12]"
-                            >
+                        {/* Discovery Call Booking */}
+                        <a
+                            href={personal.booking.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group block border border-emerald-500/20 rounded-2xl bg-emerald-500/[0.04] p-6 transition-all duration-300 hover:border-emerald-500/40 hover:bg-emerald-500/[0.08]"
+                        >
+                            <div className="flex items-center gap-3 mb-3">
                                 <div
                                     className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                                    style={{ backgroundColor: 'rgba(14,165,233,0.1)', border: '1px solid rgba(14,165,233,0.15)' }}
+                                    style={{ backgroundColor: 'rgba(16,185,129,0.12)', border: '1px solid rgba(16,185,129,0.2)' }}
                                 >
-                                    <item.icon className="w-5 h-5 text-[#0ea5e9]" />
+                                    <Calendar className="w-5 h-5 text-emerald-400" />
                                 </div>
-                                <div className="flex-1 min-w-0">
-                                    <div className="text-[11px] text-neutral-600 uppercase tracking-wider">{item.label}</div>
-                                    <div className="font-medium text-white text-sm truncate">{item.value}</div>
+                                <div>
+                                    <div className="font-semibold text-white text-sm">{personal.booking.label}</div>
+                                    <div className="text-xs text-emerald-400/70">{personal.booking.duration} · Free</div>
                                 </div>
-                                <ArrowUpRight className="w-4 h-4 text-neutral-700 group-hover:text-white transition-colors flex-shrink-0" />
-                            </a>
-                        ))}
+                            </div>
+                            <p className="text-xs text-neutral-400 leading-relaxed mb-4">
+                                {personal.booking.description}
+                            </p>
+                            <div className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-400 group-hover:gap-3 transition-all">
+                                Schedule Now
+                                <ArrowUpRight className="w-4 h-4" />
+                            </div>
+                        </a>
+
+                        {/* Contact Methods */}
+                        {contactMethods.map((item, i) => {
+                            const Icon = iconMap[item.icon];
+                            return (
+                                <a
+                                    key={i}
+                                    href={item.href}
+                                    className="group flex items-center gap-4 border border-white/[0.06] rounded-2xl bg-white/[0.02] p-5 transition-colors duration-300 hover:border-white/[0.12]"
+                                >
+                                    <div
+                                        className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                                        style={{ backgroundColor: 'rgba(14,165,233,0.1)', border: '1px solid rgba(14,165,233,0.15)' }}
+                                    >
+                                        {Icon && <Icon className="w-5 h-5 text-[#0ea5e9]" />}
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <div className="text-[11px] text-neutral-600 uppercase tracking-wider">{item.label}</div>
+                                        <div className="font-medium text-white text-sm truncate">{item.value}</div>
+                                    </div>
+                                    <ArrowUpRight className="w-4 h-4 text-neutral-700 group-hover:text-white transition-colors flex-shrink-0" />
+                                </a>
+                            );
+                        })}
 
                         {/* Platform Links */}
                         <div className="pt-2">
                             <div className="text-[11px] text-neutral-600 uppercase tracking-wider mb-3">Also find us on</div>
                             <div className="flex gap-2">
-                                {['Upwork', 'Fiverr', 'LinkedIn'].map((p, i) => (
+                                {socialPlatforms.map((p, i) => (
                                     <a
                                         key={i}
-                                        href="#"
+                                        href={p.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-medium text-neutral-400 bg-white/[0.03] border border-white/[0.06] hover:text-white hover:border-white/[0.12] transition-colors"
                                     >
-                                        {p}
+                                        {p.label}
                                         <ArrowUpRight className="w-3 h-3" />
                                     </a>
                                 ))}
@@ -159,11 +194,9 @@ export default function Contact() {
                                             className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all appearance-none"
                                         >
                                             <option value="" className="bg-neutral-900">Select budget range</option>
-                                            <option className="bg-neutral-900">Under $500</option>
-                                            <option className="bg-neutral-900">$500 – $1,500</option>
-                                            <option className="bg-neutral-900">$1,500 – $5,000</option>
-                                            <option className="bg-neutral-900">$5,000 – $15,000</option>
-                                            <option className="bg-neutral-900">$15,000+</option>
+                                            {budgetRanges.map((range, i) => (
+                                                <option key={i} className="bg-neutral-900">{range}</option>
+                                            ))}
                                         </select>
                                     </div>
                                     <div>
@@ -173,11 +206,9 @@ export default function Contact() {
                                             className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all appearance-none"
                                         >
                                             <option value="" className="bg-neutral-900">What do you need?</option>
-                                            <option className="bg-neutral-900">AI Automation</option>
-                                            <option className="bg-neutral-900">Full Stack Development</option>
-                                            <option className="bg-neutral-900">WordPress Website</option>
-                                            <option className="bg-neutral-900">Mobile App Development</option>
-                                            <option className="bg-neutral-900">Other</option>
+                                            {serviceOptions.map((service, i) => (
+                                                <option key={i} className="bg-neutral-900">{service}</option>
+                                            ))}
                                         </select>
                                     </div>
                                 </div>
@@ -221,7 +252,7 @@ export default function Contact() {
                                 </div>
                                 <h3 className="font-display text-2xl font-bold text-white mb-3">Message Sent!</h3>
                                 <p className="text-sm text-neutral-400 max-w-xs mx-auto">
-                                    Thanks for reaching out. Nabeel will get back to you within 4 hours.
+                                    Thanks for reaching out. {personal.name} will get back to you within 4 hours.
                                 </p>
                             </motion.div>
                         )}

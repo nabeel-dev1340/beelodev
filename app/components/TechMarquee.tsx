@@ -1,9 +1,7 @@
+import { siteConfig } from '../config/site';
+
 export default function TechMarquee() {
-    const technologies = [
-        'React.js', 'Next.js', 'Node.js', 'Python', 'AI Automation',
-        'WordPress', 'React Native', 'OpenAI API', 'Make.com', 'PostgreSQL',
-        'MongoDB', 'TypeScript', 'Tailwind CSS', 'GraphQL'
-    ];
+    const technologies = siteConfig.techMarquee;
 
     return (
         <div className="relative py-16 overflow-hidden border-y border-white/5">

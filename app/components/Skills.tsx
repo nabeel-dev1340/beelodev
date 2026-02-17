@@ -2,56 +2,18 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Code2, Cpu, Database, Smartphone, Globe, Cloud, Layers, Palette } from 'lucide-react';
+import { Code2, Cpu, Database, Smartphone, Globe, Cloud, Layers } from 'lucide-react';
+import { siteConfig } from '../config/site';
+
+const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
+    Code2, Cpu, Database, Smartphone, Globe, Cloud,
+};
 
 export default function Skills() {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-80px" });
 
-    const categories = [
-        {
-            title: 'Frontend',
-            icon: Code2,
-            accent: '#0ea5e9',
-            tools: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'HTML/CSS'],
-        },
-        {
-            title: 'Backend',
-            icon: Database,
-            accent: '#06b6d4',
-            tools: ['Node.js', 'Express', 'Python', 'FastAPI', 'PostgreSQL', 'Redis'],
-        },
-        {
-            title: 'AI & Automation',
-            icon: Cpu,
-            accent: '#14b8a6',
-            tools: ['OpenAI API', 'Claude API', 'LangChain', 'Make.com', 'n8n', 'Zapier'],
-        },
-        {
-            title: 'Mobile',
-            icon: Smartphone,
-            accent: '#0ea5e9',
-            tools: ['React Native', 'Expo', 'iOS', 'Android', 'Push Notifications', 'App Store'],
-        },
-        {
-            title: 'WordPress',
-            icon: Globe,
-            accent: '#06b6d4',
-            tools: ['Custom Themes', 'WooCommerce', 'Elementor', 'SEO', 'Performance', 'Plugins'],
-        },
-        {
-            title: 'Infrastructure',
-            icon: Cloud,
-            accent: '#14b8a6',
-            tools: ['AWS', 'Vercel', 'Supabase', 'Docker', 'CI/CD', 'GitHub Actions'],
-        },
-    ];
-
-    const highlights = [
-        { number: '5+', label: 'Years Experience' },
-        { number: '12+', label: 'Technologies' },
-        { number: '6', label: 'Specializations' },
-    ];
+    const { categories, highlights, extraTools, extraToolsMore } = siteConfig.skills;
 
     const stagger = {
         hidden: { opacity: 0 },
@@ -129,58 +91,61 @@ export default function Skills() {
                     initial="hidden"
                     animate={isInView ? "visible" : "hidden"}
                 >
-                    {categories.map((cat, index) => (
-                        <motion.div
-                            key={index}
-                            className="group relative rounded-2xl overflow-hidden"
-                            variants={fadeUp}
-                        >
-                            <div className="relative h-full border border-white/[0.06] rounded-2xl bg-white/[0.02] p-5 sm:p-7 transition-colors duration-300 hover:border-white/[0.12]">
+                    {categories.map((cat, index) => {
+                        const Icon = iconMap[cat.icon];
+                        return (
+                            <motion.div
+                                key={index}
+                                className="group relative rounded-2xl overflow-hidden"
+                                variants={fadeUp}
+                            >
+                                <div className="relative h-full border border-white/[0.06] rounded-2xl bg-white/[0.02] p-5 sm:p-7 transition-colors duration-300 hover:border-white/[0.12]">
 
-                                {/* Top accent line on hover */}
-                                <div
-                                    className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                                    style={{ backgroundImage: `linear-gradient(90deg, transparent, ${cat.accent}, transparent)` }}
-                                />
+                                    {/* Top accent line on hover */}
+                                    <div
+                                        className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                        style={{ backgroundImage: `linear-gradient(90deg, transparent, ${cat.accent}, transparent)` }}
+                                    />
 
-                                {/* Header */}
-                                <div className="flex items-center gap-3 mb-6">
-                                    <motion.div
-                                        className="w-10 h-10 rounded-xl flex items-center justify-center"
-                                        style={{ backgroundColor: `${cat.accent}15`, border: `1px solid ${cat.accent}20` }}
-                                        whileHover={{ scale: 1.1, rotate: -5 }}
-                                        transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                                    >
-                                        <cat.icon className="w-5 h-5" style={{ color: cat.accent }} />
-                                    </motion.div>
-                                    <h3 className="font-display text-lg font-bold text-white">{cat.title}</h3>
-                                </div>
-
-                                {/* Tool Tags */}
-                                <div className="flex flex-wrap gap-2">
-                                    {cat.tools.map((tool, i) => (
-                                        <motion.span
-                                            key={i}
-                                            className="px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-300 bg-white/[0.04] border border-white/[0.06] transition-all duration-300"
-                                            whileHover={{
-                                                backgroundColor: `${cat.accent}18`,
-                                                borderColor: `${cat.accent}40`,
-                                                color: '#ffffff',
-                                            }}
+                                    {/* Header */}
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <motion.div
+                                            className="w-10 h-10 rounded-xl flex items-center justify-center"
+                                            style={{ backgroundColor: `${cat.accent}15`, border: `1px solid ${cat.accent}20` }}
+                                            whileHover={{ scale: 1.1, rotate: -5 }}
+                                            transition={{ type: "spring", stiffness: 400, damping: 15 }}
                                         >
-                                            {tool}
-                                        </motion.span>
-                                    ))}
-                                </div>
+                                            {Icon && <Icon className="w-5 h-5" style={{ color: cat.accent }} />}
+                                        </motion.div>
+                                        <h3 className="font-display text-lg font-bold text-white">{cat.title}</h3>
+                                    </div>
 
-                                {/* Hover glow */}
-                                <div
-                                    className="absolute -bottom-6 -right-6 w-32 h-32 rounded-full blur-3xl opacity-0 group-hover:opacity-15 transition-opacity duration-700 pointer-events-none"
-                                    style={{ backgroundColor: cat.accent }}
-                                />
-                            </div>
-                        </motion.div>
-                    ))}
+                                    {/* Tool Tags */}
+                                    <div className="flex flex-wrap gap-2">
+                                        {cat.tools.map((tool, i) => (
+                                            <motion.span
+                                                key={i}
+                                                className="px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-300 bg-white/[0.04] border border-white/[0.06] transition-all duration-300"
+                                                whileHover={{
+                                                    backgroundColor: `${cat.accent}18`,
+                                                    borderColor: `${cat.accent}40`,
+                                                    color: '#ffffff',
+                                                }}
+                                            >
+                                                {tool}
+                                            </motion.span>
+                                        ))}
+                                    </div>
+
+                                    {/* Hover glow */}
+                                    <div
+                                        className="absolute -bottom-6 -right-6 w-32 h-32 rounded-full blur-3xl opacity-0 group-hover:opacity-15 transition-opacity duration-700 pointer-events-none"
+                                        style={{ backgroundColor: cat.accent }}
+                                    />
+                                </div>
+                            </motion.div>
+                        );
+                    })}
                 </motion.div>
 
                 {/* Bottom: Logos / "And more" */}
@@ -191,13 +156,13 @@ export default function Skills() {
                     transition={{ delay: 0.5 }}
                 >
                     <div className="flex items-center justify-center gap-3 flex-wrap">
-                        {['Git', 'Figma', 'Jira', 'Notion', 'Slack', 'HubSpot', 'Stripe', 'Firebase'].map((tool, i) => (
+                        {extraTools.map((tool, i) => (
                             <span key={i} className="px-3 py-1 rounded-full text-xs text-neutral-600 border border-white/[0.04]">
                                 {tool}
                             </span>
                         ))}
                         <span className="px-3 py-1 rounded-full text-xs text-neutral-500 border border-white/[0.06] bg-white/[0.03]">
-                            +20 more
+                            {extraToolsMore}
                         </span>
                     </div>
                 </motion.div>
