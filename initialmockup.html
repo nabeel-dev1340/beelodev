@@ -1,0 +1,2169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beelodev — Build Beyond Limits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #04040a;
+    --bg2: #080810;
+    --bg3: #0d0d1a;
+    --card: #0e0e1c;
+    --card2: #12121f;
+    --border: #1e1e32;
+    --border2: #252540;
+    --indigo: #6366f1;
+    --indigo2: #818cf8;
+    --violet: #8b5cf6;
+    --cyan: #22d3ee;
+    --cyan2: #67e8f9;
+    --white: #f8f8ff;
+    --gray: #94a3b8;
+    --gray2: #64748b;
+    --green: #10b981;
+    --orange: #f59e0b;
+    --pink: #ec4899;
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --glow: 0 0 40px rgba(99,102,241,0.15);
+    --glow2: 0 0 80px rgba(99,102,241,0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 900;
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(4,4,10,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s;
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    text-decoration: none;
+    color: var(--white);
+  }
+
+  .nav-logo span { color: var(--indigo); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--indigo);
+    color: var(--white) !important;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 600 !important;
+    transition: all 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--indigo2) !important; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 140px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Animated grid background */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(99,102,241,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99,102,241,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%);
+  }
+
+  /* Orb glow */
+  .hero-orb {
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, rgba(139,92,246,0.06) 50%, transparent 70%);
+    border-radius: 50%;
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .hero-orb2 {
+    position: absolute;
+    bottom: 10%;
+    left: 5%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(34,211,238,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 10s ease-in-out infinite reverse;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(99,102,241,0.1);
+    border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 13px;
+    color: var(--indigo2);
+    font-family: var(--font-mono);
+    margin-bottom: 32px;
+    width: fit-content;
+    animation: fadeInUp 0.6s ease both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(52px, 7vw, 96px);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -3px;
+    max-width: 900px;
+    margin-bottom: 28px;
+    animation: fadeInUp 0.6s 0.1s ease both;
+  }
+
+  .hero-title .line2 {
+    background: linear-gradient(135deg, var(--indigo) 0%, var(--violet) 40%, var(--cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 19px;
+    color: var(--gray);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+    font-weight: 300;
+    animation: fadeInUp 0.6s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--indigo);
+    color: var(--white);
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.25s;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+    box-shadow: 0 0 30px rgba(99,102,241,0.3);
+  }
+
+  .btn-primary:hover {
+    background: var(--indigo2);
+    transform: translateY(-2px);
+    box-shadow: 0 0 50px rgba(99,102,241,0.5);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.25s;
+    border: 1px solid var(--border2);
+    cursor: pointer;
+    font-family: var(--font-body);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--indigo);
+    color: var(--indigo2);
+    transform: translateY(-2px);
+  }
+
+  /* Hero stats strip */
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    margin-top: 72px;
+    padding-top: 48px;
+    border-top: 1px solid var(--border);
+    animation: fadeInUp 0.6s 0.4s ease both;
+    flex-wrap: wrap;
+  }
+
+  .hero-stat .num {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -1px;
+  }
+
+  .hero-stat .num span { color: var(--indigo); }
+
+  .hero-stat .label {
+    font-size: 13px;
+    color: var(--gray2);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION BASE ── */
+  section {
+    padding: 100px 48px;
+    position: relative;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--indigo);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .section-sub {
+    font-size: 17px;
+    color: var(--gray);
+    max-width: 520px;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .section-header {
+    margin-bottom: 64px;
+  }
+
+  /* ── PLATFORM STATS ── */
+  .stats-section { background: var(--bg2); }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .platform-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+
+  .platform-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .platform-card.upwork::before {
+    background: radial-gradient(ellipse at top left, rgba(20,190,20,0.06) 0%, transparent 60%);
+  }
+
+  .platform-card.fiverr::before {
+    background: radial-gradient(ellipse at top left, rgba(16,185,129,0.06) 0%, transparent 60%);
+  }
+
+  .platform-card:hover::before { opacity: 1; }
+  .platform-card:hover { border-color: var(--border2); transform: translateY(-4px); box-shadow: var(--glow2); }
+
+  .platform-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+  }
+
+  .platform-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .platform-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 800;
+    font-family: var(--font-display);
+  }
+
+  .upwork .platform-icon { background: rgba(20,190,20,0.15); color: #14be14; }
+  .fiverr .platform-icon { background: rgba(16,185,129,0.15); color: var(--green); }
+
+  .platform-name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .platform-badge {
+    background: rgba(99,102,241,0.1);
+    border: 1px solid rgba(99,102,241,0.2);
+    color: var(--indigo2);
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 28px;
+  }
+
+  .stat-item .val {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -1px;
+  }
+
+  .stat-item .val.green { color: var(--green); }
+  .stat-item .val.yellow { color: var(--orange); }
+  .stat-item .val.blue { color: var(--indigo2); }
+
+  .stat-item .key {
+    font-size: 12px;
+    color: var(--gray2);
+    margin-top: 4px;
+  }
+
+  .stars { color: var(--orange); font-size: 18px; letter-spacing: 1px; }
+
+  .progress-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 4px;
+    margin-top: 20px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--indigo), var(--violet));
+    animation: fillBar 1.5s ease forwards;
+    transform-origin: left;
+  }
+
+  @keyframes fillBar {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  /* ── SERVICES ── */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .service-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .service-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--indigo), var(--violet), var(--cyan));
+    transform: scaleX(0);
+    transition: transform 0.3s;
+    transform-origin: left;
+  }
+
+  .service-card:hover { transform: translateY(-6px); border-color: var(--border2); box-shadow: var(--glow); }
+  .service-card:hover::after { transform: scaleX(1); }
+
+  .service-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+
+  .service-card:nth-child(1) .service-icon { background: rgba(99,102,241,0.15); }
+  .service-card:nth-child(2) .service-icon { background: rgba(139,92,246,0.15); }
+  .service-card:nth-child(3) .service-icon { background: rgba(34,211,238,0.15); }
+  .service-card:nth-child(4) .service-icon { background: rgba(16,185,129,0.15); }
+
+  .service-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+
+  .service-desc {
+    color: var(--gray);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+
+  .service-features {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+
+  .service-feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--gray);
+  }
+
+  .service-feature::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--indigo);
+    flex-shrink: 0;
+  }
+
+  .service-pricing {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .service-pricing .from { font-size: 12px; color: var(--gray2); }
+  .service-pricing .price {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--white);
+  }
+  .service-pricing .period { font-size: 13px; color: var(--gray2); }
+
+  /* ── PACKAGES ── */
+  .packages-section { background: var(--bg2); }
+
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .pkg-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 40px 36px;
+    position: relative;
+    transition: all 0.3s;
+  }
+
+  .pkg-card.featured {
+    background: linear-gradient(160deg, rgba(99,102,241,0.12) 0%, var(--card) 50%);
+    border-color: rgba(99,102,241,0.4);
+    transform: scale(1.03);
+  }
+
+  .pkg-card:hover { transform: translateY(-6px) scale(1.01); box-shadow: var(--glow); }
+  .pkg-card.featured:hover { transform: translateY(-6px) scale(1.04); }
+
+  .pkg-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--indigo), var(--violet));
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 18px;
+    border-radius: 100px;
+    font-family: var(--font-mono);
+    white-space: nowrap;
+    letter-spacing: 1px;
+  }
+
+  .pkg-name {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .pkg-desc {
+    font-size: 14px;
+    color: var(--gray);
+    margin-bottom: 28px;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .pkg-price {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: 32px;
+  }
+
+  .pkg-price .dollar { font-size: 22px; color: var(--indigo); font-weight: 700; margin-top: 6px; }
+  .pkg-price .amount {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 800;
+    letter-spacing: -2px;
+  }
+  .pkg-price .note { font-size: 13px; color: var(--gray2); align-self: flex-end; padding-bottom: 6px; }
+
+  .pkg-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+
+  .pkg-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+
+  .pkg-features .check {
+    color: var(--green);
+    font-size: 16px;
+    margin-top: 0px;
+    flex-shrink: 0;
+  }
+
+  .pkg-features .cross {
+    color: var(--gray2);
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .pkg-cta {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s;
+    font-family: var(--font-body);
+    text-align: center;
+    border: none;
+  }
+
+  .pkg-cta.primary {
+    background: var(--indigo);
+    color: white;
+    box-shadow: 0 0 30px rgba(99,102,241,0.3);
+  }
+
+  .pkg-cta.primary:hover { background: var(--indigo2); box-shadow: 0 0 50px rgba(99,102,241,0.5); transform: translateY(-2px); }
+
+  .pkg-cta.outline {
+    background: transparent;
+    color: var(--white);
+    border: 1px solid var(--border2);
+  }
+
+  .pkg-cta.outline:hover { border-color: var(--indigo); color: var(--indigo2); transform: translateY(-2px); }
+
+  /* ── PORTFOLIO ── */
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .port-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .port-card:hover { transform: translateY(-6px); border-color: var(--border2); box-shadow: var(--glow2); }
+
+  .port-thumb {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    font-size: 64px;
+  }
+
+  .port-card:nth-child(1) .port-thumb { background: linear-gradient(135deg, #1a1a3e, #2d1b69); }
+  .port-card:nth-child(2) .port-thumb { background: linear-gradient(135deg, #0d2137, #0e4d60); }
+  .port-card:nth-child(3) .port-thumb { background: linear-gradient(135deg, #1a2e1a, #0d4428); }
+  .port-card:nth-child(4) .port-thumb { background: linear-gradient(135deg, #2e1a0e, #5c2d0e); }
+  .port-card:nth-child(5) .port-thumb { background: linear-gradient(135deg, #1a0e2e, #3b1158); }
+  .port-card:nth-child(6) .port-thumb { background: linear-gradient(135deg, #0e1a2e, #0d2d5c); }
+
+  .port-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(99,102,241,0.15);
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+  }
+
+  .port-card:hover .port-overlay { opacity: 1; }
+
+  .port-info { padding: 24px; }
+
+  .port-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .port-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    border: 1px solid var(--border2);
+    color: var(--gray2);
+  }
+
+  .port-title {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+  }
+
+  .port-desc {
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* ── SKILLS ── */
+  .skills-section { background: var(--bg2); }
+
+  .skills-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+
+  .skill-group-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 28px;
+    color: var(--indigo2);
+    letter-spacing: -0.3px;
+  }
+
+  .skill-item {
+    margin-bottom: 22px;
+  }
+
+  .skill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .skill-name {
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .skill-emoji { font-size: 16px; }
+
+  .skill-pct {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--indigo2);
+  }
+
+  .skill-track {
+    height: 6px;
+    background: var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .skill-fill {
+    height: 100%;
+    border-radius: 6px;
+    background: linear-gradient(90deg, var(--indigo), var(--violet));
+    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .tech-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .tech-chip {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--gray);
+    transition: all 0.2s;
+    cursor: default;
+  }
+
+  .tech-chip:hover { border-color: var(--indigo); color: var(--indigo2); transform: translateY(-2px); }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .testi-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .testi-card:hover { transform: translateY(-4px); border-color: var(--border2); box-shadow: var(--glow2); }
+
+  .testi-quote {
+    font-size: 40px;
+    line-height: 1;
+    color: var(--indigo);
+    opacity: 0.5;
+    margin-bottom: 16px;
+    font-family: Georgia, serif;
+  }
+
+  .testi-text {
+    font-size: 14px;
+    color: var(--gray);
+    line-height: 1.8;
+    margin-bottom: 24px;
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  .testi-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .testi-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: var(--font-display);
+    flex-shrink: 0;
+  }
+
+  .testi-card:nth-child(1) .testi-avatar { background: rgba(99,102,241,0.2); color: var(--indigo2); }
+  .testi-card:nth-child(2) .testi-avatar { background: rgba(16,185,129,0.2); color: var(--green); }
+  .testi-card:nth-child(3) .testi-avatar { background: rgba(245,158,11,0.2); color: var(--orange); }
+  .testi-card:nth-child(4) .testi-avatar { background: rgba(236,72,153,0.2); color: var(--pink); }
+  .testi-card:nth-child(5) .testi-avatar { background: rgba(34,211,238,0.2); color: var(--cyan); }
+  .testi-card:nth-child(6) .testi-avatar { background: rgba(139,92,246,0.2); color: var(--violet); }
+
+  .testi-name {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  .testi-role { font-size: 12px; color: var(--gray2); }
+
+  .testi-platform {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    border: 1px solid var(--border2);
+    color: var(--gray2);
+  }
+
+  .testi-stars { color: var(--orange); font-size: 14px; margin-bottom: 12px; }
+
+  /* ── CONTACT ── */
+  .contact-section { background: var(--bg2); }
+
+  .contact-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .contact-info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .contact-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(99,102,241,0.1);
+    border: 1px solid rgba(99,102,241,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .contact-info-title { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+  .contact-info-val { font-size: 14px; color: var(--gray); font-weight: 300; }
+
+  .availability-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(16,185,129,0.1);
+    border: 1px solid rgba(16,185,129,0.3);
+    color: var(--green);
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-size: 13px;
+    margin-top: 8px;
+    margin-bottom: 40px;
+  }
+
+  .availability-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s infinite;
+  }
+
+  /* Form */
+  .contact-form {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 48px;
+  }
+
+  .form-title {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+
+  .form-sub { font-size: 14px; color: var(--gray); margin-bottom: 36px; font-weight: 300; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .form-group { margin-bottom: 20px; }
+
+  .form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--gray);
+  }
+
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 16px;
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 14px;
+    transition: all 0.2s;
+    outline: none;
+    -webkit-appearance: none;
+  }
+
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--indigo);
+    box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+  }
+
+  .form-input::placeholder, .form-textarea::placeholder { color: var(--gray2); }
+
+  .form-select option { background: var(--bg3); }
+
+  .form-textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+
+  .form-submit {
+    width: 100%;
+    padding: 15px;
+    background: var(--indigo);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: all 0.25s;
+    box-shadow: 0 0 30px rgba(99,102,241,0.3);
+    margin-top: 8px;
+  }
+
+  .form-submit:hover { background: var(--indigo2); transform: translateY(-2px); box-shadow: 0 0 50px rgba(99,102,241,0.5); }
+
+  .form-note { font-size: 12px; color: var(--gray2); text-align: center; margin-top: 12px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 60px 48px 40px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    max-width: 1200px;
+    margin: 0 auto 48px;
+  }
+
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+
+  .footer-logo span { color: var(--indigo); }
+
+  .footer-tagline { font-size: 14px; color: var(--gray); font-weight: 300; line-height: 1.6; max-width: 280px; margin-bottom: 24px; }
+
+  .social-links { display: flex; gap: 12px; }
+
+  .social-link {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    border: 1px solid var(--border2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.2s;
+  }
+
+  .social-link:hover { border-color: var(--indigo); color: var(--indigo2); transform: translateY(-2px); }
+
+  .footer-col-title { font-weight: 700; font-size: 14px; margin-bottom: 20px; color: var(--white); }
+
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+  .footer-links a { color: var(--gray); text-decoration: none; font-size: 14px; font-weight: 300; transition: color 0.2s; }
+
+  .footer-links a:hover { color: var(--indigo2); }
+
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: gap;
+  }
+
+  .footer-copy { font-size: 13px; color: var(--gray2); font-weight: 300; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--indigo); }
+
+  /* ── SECTION DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-section {
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    background: var(--bg2);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 64px;
+    animation: marquee 25s linear infinite;
+    width: max-content;
+  }
+
+  .marquee-item {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--gray2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    white-space: nowrap;
+  }
+
+  .marquee-item .dot { color: var(--indigo); font-size: 18px; line-height: 0; }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* Success message */
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 40px;
+  }
+
+  .form-success .success-icon { font-size: 56px; margin-bottom: 16px; }
+  .form-success h3 { font-family: var(--font-display); font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+  .form-success p { color: var(--gray); font-size: 14px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    nav { padding: 16px 24px; }
+    .nav-links { gap: 20px; }
+    section { padding: 80px 24px; }
+    .hero { padding: 120px 24px 60px; }
+    .stats-grid, .services-grid { grid-template-columns: 1fr; }
+    .packages-grid { grid-template-columns: 1fr; }
+    .pkg-card.featured { transform: none; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr 1fr; }
+    .contact-wrapper { grid-template-columns: 1fr; }
+    .skills-container { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .hero-title { font-size: 42px; letter-spacing: -2px; }
+    .hero-stats { gap: 24px; }
+    .portfolio-grid, .testimonials-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .contact-form { padding: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">beelo<span>dev</span></a>
+  <ul class="nav-links">
+    <li><a href="#stats">Stats</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#packages">Packages</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact" class="nav-cta">Hire Us →</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="home">
+  <div class="hero-orb"></div>
+  <div class="hero-orb2"></div>
+
+  <div class="hero-badge">🚀 Available for new projects — 2 spots left</div>
+
+  <h1 class="hero-title">
+    We Build Things<br>
+    <span class="line2">That Actually Work.</span>
+  </h1>
+
+  <p class="hero-sub">
+    AI automation, full-stack development, WordPress, and mobile apps — built by Beelodev to help your business scale faster, smarter, and further.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#packages" class="btn-primary">See Our Packages ↓</a>
+    <a href="#portfolio" class="btn-secondary">View Portfolio</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="num">50<span>+</span></div>
+      <div class="label">Projects Delivered</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">4.9<span>★</span></div>
+      <div class="label">Upwork Rating</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">30<span>+</span></div>
+      <div class="label">Happy Clients</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">3<span>+</span></div>
+      <div class="label">Years Experience</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">100<span>%</span></div>
+      <div class="label">Job Success</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="dot">◆</span> React.js</span>
+    <span class="marquee-item"><span class="dot">◆</span> Next.js</span>
+    <span class="marquee-item"><span class="dot">◆</span> Node.js</span>
+    <span class="marquee-item"><span class="dot">◆</span> Python</span>
+    <span class="marquee-item"><span class="dot">◆</span> AI Automation</span>
+    <span class="marquee-item"><span class="dot">◆</span> WordPress</span>
+    <span class="marquee-item"><span class="dot">◆</span> React Native</span>
+    <span class="marquee-item"><span class="dot">◆</span> OpenAI API</span>
+    <span class="marquee-item"><span class="dot">◆</span> Make.com</span>
+    <span class="marquee-item"><span class="dot">◆</span> PostgreSQL</span>
+    <span class="marquee-item"><span class="dot">◆</span> MongoDB</span>
+    <span class="marquee-item"><span class="dot">◆</span> TypeScript</span>
+    <!-- Duplicate for seamless loop -->
+    <span class="marquee-item"><span class="dot">◆</span> React.js</span>
+    <span class="marquee-item"><span class="dot">◆</span> Next.js</span>
+    <span class="marquee-item"><span class="dot">◆</span> Node.js</span>
+    <span class="marquee-item"><span class="dot">◆</span> Python</span>
+    <span class="marquee-item"><span class="dot">◆</span> AI Automation</span>
+    <span class="marquee-item"><span class="dot">◆</span> WordPress</span>
+    <span class="marquee-item"><span class="dot">◆</span> React Native</span>
+    <span class="marquee-item"><span class="dot">◆</span> OpenAI API</span>
+    <span class="marquee-item"><span class="dot">◆</span> Make.com</span>
+    <span class="marquee-item"><span class="dot">◆</span> PostgreSQL</span>
+    <span class="marquee-item"><span class="dot">◆</span> MongoDB</span>
+    <span class="marquee-item"><span class="dot">◆</span> TypeScript</span>
+  </div>
+</div>
+
+<!-- ── PLATFORM STATS ── -->
+<section class="stats-section" id="stats">
+  <div class="section-header" style="max-width:1200px;margin:0 auto 64px">
+    <div class="section-label">// verified stats</div>
+    <h2 class="section-title">Proven Track Record</h2>
+    <p class="section-sub">Our numbers across the world's top freelance platforms speak for themselves.</p>
+  </div>
+
+  <div class="stats-grid">
+    <!-- Upwork Card -->
+    <div class="platform-card upwork">
+      <div class="platform-header">
+        <div class="platform-logo">
+          <div class="platform-icon">U</div>
+          <div>
+            <div class="platform-name">Upwork</div>
+            <div style="font-size:12px;color:var(--gray2);margin-top:2px">Top Rated Freelancer</div>
+          </div>
+        </div>
+        <div class="platform-badge">TOP RATED</div>
+      </div>
+
+      <div class="stars">★★★★★</div>
+      <div style="font-size:13px;color:var(--gray2);margin-top:4px;margin-bottom:28px">5.0 / 5.0 — Based on 40+ reviews</div>
+
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="val green">100%</div>
+          <div class="key">Job Success</div>
+        </div>
+        <div class="stat-item">
+          <div class="val blue">40+</div>
+          <div class="key">Jobs Done</div>
+        </div>
+        <div class="stat-item">
+          <div class="val yellow">$15k+</div>
+          <div class="key">Total Earned</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:24px;margin-top:8px">
+        <div class="stat-item">
+          <div class="val" style="font-size:20px">3+ yrs</div>
+          <div class="key">On Platform</div>
+        </div>
+        <div class="stat-item">
+          <div class="val" style="font-size:20px">24hr</div>
+          <div class="key">Avg Response</div>
+        </div>
+        <div class="stat-item">
+          <div class="val" style="font-size:20px">98%</div>
+          <div class="key">On Time</div>
+        </div>
+      </div>
+
+      <div class="progress-bar" style="margin-top:24px">
+        <div class="progress-fill" style="width:100%"></div>
+      </div>
+    </div>
+
+    <!-- Fiverr Card -->
+    <div class="platform-card fiverr">
+      <div class="platform-header">
+        <div class="platform-logo">
+          <div class="platform-icon">F</div>
+          <div>
+            <div class="platform-name">Fiverr</div>
+            <div style="font-size:12px;color:var(--gray2);margin-top:2px">Level 2 Seller</div>
+          </div>
+        </div>
+        <div class="platform-badge">LEVEL 2</div>
+      </div>
+
+      <div class="stars">★★★★★</div>
+      <div style="font-size:13px;color:var(--gray2);margin-top:4px;margin-bottom:28px">4.9 / 5.0 — Based on 25+ reviews</div>
+
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="val green">25+</div>
+          <div class="key">Orders Done</div>
+        </div>
+        <div class="stat-item">
+          <div class="val blue">4.9★</div>
+          <div class="key">Rating</div>
+        </div>
+        <div class="stat-item">
+          <div class="val yellow">97%</div>
+          <div class="key">Completion</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:24px;margin-top:8px">
+        <div class="stat-item">
+          <div class="val" style="font-size:20px">2 days</div>
+          <div class="key">Avg Delivery</div>
+        </div>
+        <div class="stat-item">
+          <div class="val" style="font-size:20px">1hr</div>
+          <div class="key">Response Time</div>
+        </div>
+        <div class="stat-item">
+          <div class="val" style="font-size:20px">100%</div>
+          <div class="key">Repeat Buyers</div>
+        </div>
+      </div>
+
+      <div class="progress-bar" style="margin-top:24px">
+        <div class="progress-fill" style="width:98%"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<section id="services">
+  <div class="section-header" style="max-width:1200px;margin:0 auto 64px">
+    <div class="section-label">// what we do</div>
+    <h2 class="section-title">Our Services</h2>
+    <p class="section-sub">Four core capabilities. One agency built to deliver all of them at the highest level.</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🤖</div>
+      <div class="service-title">AI Automation</div>
+      <p class="service-desc">We build intelligent systems that eliminate repetitive work, automate workflows, and deploy AI agents that work for your business 24/7.</p>
+      <div class="service-features">
+        <div class="service-feature">Custom AI chatbots & voice agents</div>
+        <div class="service-feature">Workflow automation with Make.com / n8n</div>
+        <div class="service-feature">CRM & lead gen automation</div>
+        <div class="service-feature">OpenAI, Claude & Gemini integrations</div>
+        <div class="service-feature">Document processing & data extraction</div>
+      </div>
+      <div class="service-pricing">
+        <span class="from">Starting from</span>
+        <span class="price">$500</span>
+        <span class="period">/ project</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">💻</div>
+      <div class="service-title">Full Stack Development</div>
+      <p class="service-desc">End-to-end web applications built with modern tech stacks. From database architecture to pixel-perfect frontends — we own the full pipeline.</p>
+      <div class="service-features">
+        <div class="service-feature">React / Next.js frontends</div>
+        <div class="service-feature">Node.js / Python backends</div>
+        <div class="service-feature">REST & GraphQL APIs</div>
+        <div class="service-feature">PostgreSQL, MongoDB, Redis</div>
+        <div class="service-feature">Cloud deployment (AWS, Vercel, Railway)</div>
+      </div>
+      <div class="service-pricing">
+        <span class="from">Starting from</span>
+        <span class="price">$1,000</span>
+        <span class="period">/ project</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🌐</div>
+      <div class="service-title">WordPress Development</div>
+      <p class="service-desc">Fast, beautiful, conversion-focused WordPress websites. Custom themes, WooCommerce stores, and performance-optimized business sites.</p>
+      <div class="service-features">
+        <div class="service-feature">Custom theme development</div>
+        <div class="service-feature">WooCommerce stores</div>
+        <div class="service-feature">SEO optimization (on-page)</div>
+        <div class="service-feature">Speed & Core Web Vitals optimization</div>
+        <div class="service-feature">Ongoing maintenance plans</div>
+      </div>
+      <div class="service-pricing">
+        <span class="from">Starting from</span>
+        <span class="price">$300</span>
+        <span class="period">/ project</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">📱</div>
+      <div class="service-title">Mobile Development</div>
+      <p class="service-desc">Cross-platform mobile apps built with React Native. One codebase, two platforms, zero compromises on performance or design quality.</p>
+      <div class="service-features">
+        <div class="service-feature">iOS & Android (React Native)</div>
+        <div class="service-feature">App Store & Play Store submission</div>
+        <div class="service-feature">Push notifications & offline support</div>
+        <div class="service-feature">API integrations & real-time features</div>
+        <div class="service-feature">UI/UX design included</div>
+      </div>
+      <div class="service-pricing">
+        <span class="from">Starting from</span>
+        <span class="price">$2,000</span>
+        <span class="period">/ project</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PACKAGES ── -->
+<section class="packages-section" id="packages">
+  <div class="section-header" style="max-width:1200px;margin:0 auto 64px">
+    <div class="section-label">// productised services</div>
+    <h2 class="section-title">Simple Packages.<br>Clear Results.</h2>
+    <p class="section-sub">No surprises. No scope creep. Pick a package, get started today.</p>
+  </div>
+
+  <div class="packages-grid">
+    <!-- Starter -->
+    <div class="pkg-card">
+      <div class="pkg-name">Starter</div>
+      <div class="pkg-desc">Perfect for small businesses launching their first digital presence.</div>
+      <div class="pkg-price">
+        <span class="dollar">$</span>
+        <span class="amount">499</span>
+        <span class="note">one-time</span>
+      </div>
+      <ul class="pkg-features">
+        <li><span class="check">✓</span> 5-page WordPress website</li>
+        <li><span class="check">✓</span> Mobile responsive design</li>
+        <li><span class="check">✓</span> Basic SEO setup</li>
+        <li><span class="check">✓</span> Contact form integration</li>
+        <li><span class="check">✓</span> 30-day free support</li>
+        <li><span class="cross">✗</span> Custom AI chatbot</li>
+        <li><span class="cross">✗</span> E-commerce functionality</li>
+      </ul>
+      <button class="pkg-cta outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started →</button>
+    </div>
+
+    <!-- Growth — Featured -->
+    <div class="pkg-card featured">
+      <div class="pkg-badge">⭐ MOST POPULAR</div>
+      <div class="pkg-name">Growth</div>
+      <div class="pkg-desc">The complete package for businesses ready to scale with AI and automation.</div>
+      <div class="pkg-price">
+        <span class="dollar">$</span>
+        <span class="amount">1,499</span>
+        <span class="note">one-time</span>
+      </div>
+      <ul class="pkg-features">
+        <li><span class="check">✓</span> Custom WordPress or Next.js site</li>
+        <li><span class="check">✓</span> AI chatbot integration</li>
+        <li><span class="check">✓</span> Lead capture automation</li>
+        <li><span class="check">✓</span> CRM integration (HubSpot/Notion)</li>
+        <li><span class="check">✓</span> SEO + analytics setup</li>
+        <li><span class="check">✓</span> 60-day free support</li>
+        <li><span class="check">✓</span> 1 free revision round</li>
+      </ul>
+      <button class="pkg-cta primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started →</button>
+    </div>
+
+    <!-- Enterprise -->
+    <div class="pkg-card">
+      <div class="pkg-name">Enterprise</div>
+      <div class="pkg-desc">Full-scale custom development for businesses with complex requirements.</div>
+      <div class="pkg-price">
+        <span class="dollar">$</span>
+        <span class="amount">4,999</span>
+        <span class="note">starting at</span>
+      </div>
+      <ul class="pkg-features">
+        <li><span class="check">✓</span> Full-stack custom web app</li>
+        <li><span class="check">✓</span> Mobile app (iOS + Android)</li>
+        <li><span class="check">✓</span> Advanced AI automation suite</li>
+        <li><span class="check">✓</span> Custom API development</li>
+        <li><span class="check">✓</span> Cloud deployment + DevOps</li>
+        <li><span class="check">✓</span> 90-day support + maintenance</li>
+        <li><span class="check">✓</span> Dedicated project manager</li>
+      </ul>
+      <button class="pkg-cta outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Let's Talk →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── PORTFOLIO ── -->
+<section id="portfolio">
+  <div class="section-header" style="max-width:1200px;margin:0 auto 64px">
+    <div class="section-label">// our work</div>
+    <h2 class="section-title">Portfolio</h2>
+    <p class="section-sub">A selection of projects we're proud to have shipped.</p>
+  </div>
+
+  <div class="portfolio-grid">
+    <div class="port-card">
+      <div class="port-thumb">🤖
+        <div class="port-overlay">🔗</div>
+      </div>
+      <div class="port-info">
+        <div class="port-tags">
+          <span class="port-tag">AI</span>
+          <span class="port-tag">Python</span>
+          <span class="port-tag">OpenAI</span>
+        </div>
+        <div class="port-title">AI Customer Support Bot</div>
+        <p class="port-desc">Autonomous chatbot for a US e-commerce brand handling 500+ daily queries with 94% resolution rate.</p>
+      </div>
+    </div>
+
+    <div class="port-card">
+      <div class="port-thumb">📊
+        <div class="port-overlay">🔗</div>
+      </div>
+      <div class="port-info">
+        <div class="port-tags">
+          <span class="port-tag">Next.js</span>
+          <span class="port-tag">Node</span>
+          <span class="port-tag">PostgreSQL</span>
+        </div>
+        <div class="port-title">SaaS Analytics Dashboard</div>
+        <p class="port-desc">Real-time business analytics platform for a UK fintech startup with 10k+ active users.</p>
+      </div>
+    </div>
+
+    <div class="port-card">
+      <div class="port-thumb">🛒
+        <div class="port-overlay">🔗</div>
+      </div>
+      <div class="port-info">
+        <div class="port-tags">
+          <span class="port-tag">WordPress</span>
+          <span class="port-tag">WooCommerce</span>
+          <span class="port-tag">SEO</span>
+        </div>
+        <div class="port-title">E-commerce Store</div>
+        <p class="port-desc">High-converting WooCommerce store for a fashion brand. 3x revenue increase post-launch.</p>
+      </div>
+    </div>
+
+    <div class="port-card">
+      <div class="port-thumb">📱
+        <div class="port-overlay">🔗</div>
+      </div>
+      <div class="port-info">
+        <div class="port-tags">
+          <span class="port-tag">React Native</span>
+          <span class="port-tag">Firebase</span>
+          <span class="port-tag">iOS/Android</span>
+        </div>
+        <div class="port-title">Food Delivery App</div>
+        <p class="port-desc">Full-featured delivery app with real-time tracking, payments, and restaurant management panel.</p>
+      </div>
+    </div>
+
+    <div class="port-card">
+      <div class="port-thumb">⚡
+        <div class="port-overlay">🔗</div>
+      </div>
+      <div class="port-info">
+        <div class="port-tags">
+          <span class="port-tag">Make.com</span>
+          <span class="port-tag">n8n</span>
+          <span class="port-tag">Zapier</span>
+        </div>
+        <div class="port-title">Lead Gen Automation</div>
+        <p class="port-desc">End-to-end lead qualification and nurture automation for a US real estate agency. 40% more conversions.</p>
+      </div>
+    </div>
+
+    <div class="port-card">
+      <div class="port-thumb">🏥
+        <div class="port-overlay">🔗</div>
+      </div>
+      <div class="port-info">
+        <div class="port-tags">
+          <span class="port-tag">React</span>
+          <span class="port-tag">Node.js</span>
+          <span class="port-tag">MongoDB</span>
+        </div>
+        <div class="port-title">Clinic Management System</div>
+        <p class="port-desc">Custom patient management, appointment booking, and billing system for a private clinic network.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ── -->
+<section class="skills-section" id="skills">
+  <div class="section-header" style="max-width:1200px;margin:0 auto 64px">
+    <div class="section-label">// tech stack</div>
+    <h2 class="section-title">Skills & Expertise</h2>
+    <p class="section-sub">Battle-tested across hundreds of real-world projects.</p>
+  </div>
+
+  <div class="skills-container">
+    <div>
+      <div class="skill-group-title">Development & Engineering</div>
+
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-name"><span class="skill-emoji">⚛️</span> React / Next.js</span>
+          <span class="skill-pct">96%</span>
+        </div>
+        <div class="skill-track"><div class="skill-fill" style="width:96%"></div></div>
+      </div>
+
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-name"><span class="skill-emoji">🟩</span> Node.js / Express</span>
+          <span class="skill-pct">92%</span>
+        </div>
+        <div class="skill-track"><div class="skill-fill" style="width:92%"></div></div>
+      </div>
+
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-name"><span class="skill-emoji">🐍</span> Python</span>
+          <span class="skill-pct">88%</span>
+        </div>
+        <div class="skill-track"><div class="skill-fill" style="width:88%"></div></div>
+      </div>
+
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-name"><span class="skill-emoji">📱</span> React Native</span>
+          <span class="skill-pct">85%</span>
+        </div>
+        <div class="skill-track"><div class="skill-fill" style="width:85%"></div></div>
+      </div>
+
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-name"><span class="skill-emoji">🌐</span> WordPress</span>
+          <span class="skill-pct">95%</span>
+        </div>
+        <div class="skill-track"><div class="skill-fill" style="width:95%"></div></div>
+      </div>
+
+      <div style="margin-top:36px">
+        <div class="skill-group-title" style="font-size:13px;margin-bottom:14px;color:var(--gray)">Technologies</div>
+        <div class="tech-chips">
+          <span class="tech-chip">TypeScript</span>
+          <span class="tech-chip">PostgreSQL</span>
+          <span class="tech-chip">MongoDB</span>
+          <span class="tech-chip">Redis</span>
+          <span class="tech-chip">Docker</span>
+          <span class="tech-chip">AWS</span>
+          <span class="tech-chip">Vercel</span>
+          <span class="tech-chip">GraphQL</span>
+          <span class="tech-chip">Tailwind</span>
+          <span class="tech-chip">Prisma</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="skill-group-title">AI & Automation</div>
+
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-name"><span class="skill-emoji">🤖</span> OpenAI / Claude API</span>
+          <span class="skill-pct">94%</span>
+        </div>
+        <div class="skill-track"><div class="skill-fill" style="width:94%"></div></div>
+      </div>
+
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-name"><span class="skill-emoji">⚡</span> Make.com / Zapier</span>
+          <span class="skill-pct">97%</span>
+        </div>
+        <div class="skill-track"><div class="skill-fill" style="width:97%"></div></div>
+      </div>
+
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-name"><span class="skill-emoji">🔗</span> n8n (Self-hosted)</span>
+          <span class="skill-pct">90%</span>
+        </div>
+        <div class="skill-track"><div class="skill-fill" style="width:90%"></div></div>
+      </div>
+
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-name"><span class="skill-emoji">🧠</span> LangChain / RAG</span>
+          <span class="skill-pct">82%</span>
+        </div>
+        <div class="skill-track"><div class="skill-fill" style="width:82%"></div></div>
+      </div>
+
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-name"><span class="skill-emoji">💬</span> Chatbot Platforms</span>
+          <span class="skill-pct">93%</span>
+        </div>
+        <div class="skill-track"><div class="skill-fill" style="width:93%"></div></div>
+      </div>
+
+      <div style="margin-top:36px">
+        <div class="skill-group-title" style="font-size:13px;margin-bottom:14px;color:var(--gray)">AI & Automation Tools</div>
+        <div class="tech-chips">
+          <span class="tech-chip">Pinecone</span>
+          <span class="tech-chip">Langchain</span>
+          <span class="tech-chip">Hugging Face</span>
+          <span class="tech-chip">Flowise</span>
+          <span class="tech-chip">Voiceflow</span>
+          <span class="tech-chip">Airtable</span>
+          <span class="tech-chip">Notion API</span>
+          <span class="tech-chip">Stripe</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section id="testimonials">
+  <div class="section-header" style="max-width:1200px;margin:0 auto 64px">
+    <div class="section-label">// client reviews</div>
+    <h2 class="section-title">What Clients Say</h2>
+    <p class="section-sub">Real reviews from real clients on Upwork and Fiverr.</p>
+  </div>
+
+  <div class="testimonials-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Nabeel delivered an exceptional AI chatbot that transformed our customer support. Response quality was incredible and the automation saved us 30+ hours per week.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">JM</div>
+        <div>
+          <div class="testi-name">James Mitchell</div>
+          <div class="testi-role">CEO, ShopFlow USA</div>
+        </div>
+        <div class="testi-platform">Upwork</div>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">The full-stack app was delivered 3 days ahead of schedule, works perfectly, and the code quality is something I've rarely seen. Will absolutely hire again.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">SC</div>
+        <div>
+          <div class="testi-name">Sarah Collins</div>
+          <div class="testi-role">CTO, Nexify London</div>
+        </div>
+        <div class="testi-platform">Upwork</div>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Our new WordPress site is absolutely beautiful and loads in under 2 seconds. SEO improvements got us to page 1 of Google within 6 weeks. Worth every penny.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">AR</div>
+        <div>
+          <div class="testi-name">Aisha Rahman</div>
+          <div class="testi-role">Founder, StyleBoutique</div>
+        </div>
+        <div class="testi-platform">Fiverr</div>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">The React Native app works flawlessly on both iOS and Android. Beelodev communicated clearly throughout, handled edge cases brilliantly, and delivered a polished product.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">DK</div>
+        <div>
+          <div class="testi-name">David Kim</div>
+          <div class="testi-role">Product Manager, Delivr</div>
+        </div>
+        <div class="testi-platform">Upwork</div>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Make.com automation they built has completely eliminated manual data entry from our workflow. 40 hours of manual work per week, now done automatically. Insane ROI.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">LP</div>
+        <div>
+          <div class="testi-name">Laura Peters</div>
+          <div class="testi-role">Operations Lead, PropMax</div>
+        </div>
+        <div class="testi-platform">Fiverr</div>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Honest communication, clean code, fast delivery. Nabeel is the rare developer who actually understands business requirements and translates them into perfect technical solutions.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">MO</div>
+        <div>
+          <div class="testi-name">Marcus O'Brien</div>
+          <div class="testi-role">Director, TechStartup AU</div>
+        </div>
+        <div class="testi-platform">Upwork</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section class="contact-section" id="contact">
+  <div class="section-header" style="max-width:1200px;margin:0 auto 64px">
+    <div class="section-label">// get in touch</div>
+    <h2 class="section-title">Start a Project</h2>
+    <p class="section-sub">Tell us what you're building. We'll tell you how we can make it exceptional.</p>
+  </div>
+
+  <div class="contact-wrapper">
+    <div>
+      <div class="availability-badge">Available for new projects</div>
+
+      <div class="contact-info-item">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <div class="contact-info-title">Email</div>
+          <div class="contact-info-val">nabeel@beelodev.com</div>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <div class="contact-icon">💬</div>
+        <div>
+          <div class="contact-info-title">WhatsApp</div>
+          <div class="contact-info-val">+92 300 000 0000</div>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <div class="contact-icon">🌍</div>
+        <div>
+          <div class="contact-info-title">Location</div>
+          <div class="contact-info-val">Pakistan · Remote Worldwide</div>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <div class="contact-icon">⏱️</div>
+        <div>
+          <div class="contact-info-title">Response Time</div>
+          <div class="contact-info-val">Within 4 hours (business days)</div>
+        </div>
+      </div>
+
+      <div style="margin-top:40px">
+        <div style="font-size:14px;color:var(--gray2);margin-bottom:16px;font-weight:500">Also find us on</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a href="#" class="btn-secondary" style="padding:10px 20px;font-size:13px">Upwork ↗</a>
+          <a href="#" class="btn-secondary" style="padding:10px 20px;font-size:13px">Fiverr ↗</a>
+          <a href="#" class="btn-secondary" style="padding:10px 20px;font-size:13px">LinkedIn ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="contact-form" id="contactFormCard">
+      <div id="formContent">
+        <div class="form-title">Let's Build Something Great</div>
+        <p class="form-sub">Fill in the details below and we'll get back to you within 4 hours.</p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Your Name *</label>
+            <input type="text" class="form-input" placeholder="John Smith" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address *</label>
+            <input type="email" class="form-input" placeholder="john@company.com" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Company (Optional)</label>
+            <input type="text" class="form-input" placeholder="Your Company">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Budget Range *</label>
+            <select class="form-select">
+              <option value="" disabled selected>Select budget</option>
+              <option>Under $500</option>
+              <option>$500 – $1,500</option>
+              <option>$1,500 – $5,000</option>
+              <option>$5,000 – $15,000</option>
+              <option>$15,000+</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Service Needed *</label>
+          <select class="form-select">
+            <option value="" disabled selected>What can we help with?</option>
+            <option>AI Automation</option>
+            <option>Full Stack Development</option>
+            <option>WordPress Website</option>
+            <option>Mobile App Development</option>
+            <option>Starter Package ($499)</option>
+            <option>Growth Package ($1,499)</option>
+            <option>Enterprise Package ($4,999+)</option>
+            <option>Multiple Services</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Project Details *</label>
+          <textarea class="form-textarea" placeholder="Tell us about your project — what you're building, your goals, timeline, and any technical details..."></textarea>
+        </div>
+
+        <button class="form-submit" onclick="submitForm()">Send Message →</button>
+        <p class="form-note">🔒 Your information is safe. No spam, ever.</p>
+      </div>
+
+      <div class="form-success" id="formSuccess">
+        <div class="success-icon">🚀</div>
+        <h3>Message Sent!</h3>
+        <p>Thanks for reaching out. Nabeel will get back to you within 4 hours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">beelo<span>dev</span></div>
+      <p class="footer-tagline">AI automation, full-stack development, WordPress, and mobile apps — built to last.</p>
+      <div class="social-links">
+        <a href="#" class="social-link">in</a>
+        <a href="#" class="social-link">𝕏</a>
+        <a href="#" class="social-link">G</a>
+        <a href="#" class="social-link">▶</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#">AI Automation</a></li>
+        <li><a href="#">Full Stack Dev</a></li>
+        <li><a href="#">WordPress</a></li>
+        <li><a href="#">Mobile Apps</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Packages</div>
+      <ul class="footer-links">
+        <li><a href="#">Starter — $499</a></li>
+        <li><a href="#">Growth — $1,499</a></li>
+        <li><a href="#">Enterprise — $4,999+</a></li>
+        <li><a href="#">Retainer Plans</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#">About Nabeel</a></li>
+        <li><a href="#">Portfolio</a></li>
+        <li><a href="#">Reviews</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Upwork Profile</a></li>
+        <li><a href="#">Fiverr Profile</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Beelodev. Built by Nabeel with ❤️</div>
+    <div class="footer-copy">Pakistan · Remote Worldwide · beelodev.com</div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      nav.style.padding = '12px 48px';
+    } else {
+      nav.style.padding = '20px 48px';
+    }
+  });
+
+  // Form submit
+  function submitForm() {
+    const inputs = document.querySelectorAll('.form-input, .form-textarea');
+    let valid = true;
+    inputs.forEach(input => {
+      if (input.hasAttribute('required') && !input.value.trim()) {
+        input.style.borderColor = '#ef4444';
+        valid = false;
+      } else {
+        input.style.borderColor = 'var(--border)';
+      }
+    });
+
+    if (valid) {
+      document.getElementById('formContent').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    }
+  }
+
+  // Animate skill bars on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.skill-fill').forEach(bar => {
+          const width = bar.style.width;
+          bar.style.width = '0';
+          setTimeout(() => { bar.style.width = width; }, 100);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const skillsSection = document.querySelector('.skills-section');
+  if (skillsSection) observer.observe(skillsSection);
+</script>
+</body>
+</html>

@@ -1,0 +1,233 @@
+'use client';
+
+import { motion, useInView } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { Mail, MessageSquare, MapPin, Send, ArrowUpRight, Sparkles, Clock } from 'lucide-react';
+
+export default function Contact() {
+    const [showSuccess, setShowSuccess] = useState(false);
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true, margin: "-80px" });
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        setShowSuccess(true);
+    };
+
+    const contactMethods = [
+        { icon: Mail, label: 'Email', value: 'nabeel@beelodev.com', href: 'mailto:nabeel@beelodev.com' },
+        { icon: MessageSquare, label: 'WhatsApp', value: '+92 300 000 0000', href: '#' },
+        { icon: MapPin, label: 'Location', value: 'Pakistan · Remote Worldwide', href: '#' },
+    ];
+
+    return (
+        <section className="py-16 sm:py-28 px-4 sm:px-6 relative" id="contact" ref={ref}>
+            <div className="max-w-6xl mx-auto">
+
+                {/* Section Header */}
+                <motion.div
+                    className="text-center mb-16"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.6 }}
+                >
+                    <motion.div
+                        className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-6"
+                        whileHover={{ scale: 1.05 }}
+                    >
+                        <Mail className="w-3.5 h-3.5 text-electric-blue" />
+                        <span className="text-sm font-mono text-electric-blue">GET IN TOUCH</span>
+                    </motion.div>
+                    <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-bold mb-4">
+                        <span className="text-white">Start a </span>
+                        <span
+                            className="bg-clip-text text-transparent"
+                            style={{ backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4, #14b8a6)' }}
+                        >
+                            Project
+                        </span>
+                    </h2>
+                    <p className="text-neutral-400 text-lg max-w-lg mx-auto">
+                        Tell us what you&apos;re building. We&apos;ll tell you how we can make it exceptional.
+                    </p>
+                </motion.div>
+
+                {/* Layout */}
+                <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 sm:gap-8">
+
+                    {/* Left — Info */}
+                    <motion.div
+                        className="lg:col-span-2 space-y-5"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={isInView ? { opacity: 1, x: 0 } : {}}
+                        transition={{ delay: 0.1, duration: 0.5 }}
+                    >
+                        {/* Availability */}
+                        <div className="border border-white/[0.06] rounded-2xl bg-white/[0.02] p-6">
+                            <div className="flex items-center gap-3">
+                                <div className="relative">
+                                    <div className="w-3 h-3 rounded-full bg-emerald-400" />
+                                    <div className="absolute inset-0 w-3 h-3 rounded-full bg-emerald-400 animate-ping opacity-75" />
+                                </div>
+                                <div>
+                                    <div className="font-semibold text-white text-sm">Available for new projects</div>
+                                    <div className="flex items-center gap-1.5 text-xs text-neutral-500 mt-0.5">
+                                        <Clock className="w-3 h-3" />
+                                        Response within 4 hours
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Contact Methods */}
+                        {contactMethods.map((item, i) => (
+                            <a
+                                key={i}
+                                href={item.href}
+                                className="group flex items-center gap-4 border border-white/[0.06] rounded-2xl bg-white/[0.02] p-5 transition-colors duration-300 hover:border-white/[0.12]"
+                            >
+                                <div
+                                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                                    style={{ backgroundColor: 'rgba(14,165,233,0.1)', border: '1px solid rgba(14,165,233,0.15)' }}
+                                >
+                                    <item.icon className="w-5 h-5 text-[#0ea5e9]" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <div className="text-[11px] text-neutral-600 uppercase tracking-wider">{item.label}</div>
+                                    <div className="font-medium text-white text-sm truncate">{item.value}</div>
+                                </div>
+                                <ArrowUpRight className="w-4 h-4 text-neutral-700 group-hover:text-white transition-colors flex-shrink-0" />
+                            </a>
+                        ))}
+
+                        {/* Platform Links */}
+                        <div className="pt-2">
+                            <div className="text-[11px] text-neutral-600 uppercase tracking-wider mb-3">Also find us on</div>
+                            <div className="flex gap-2">
+                                {['Upwork', 'Fiverr', 'LinkedIn'].map((p, i) => (
+                                    <a
+                                        key={i}
+                                        href="#"
+                                        className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-medium text-neutral-400 bg-white/[0.03] border border-white/[0.06] hover:text-white hover:border-white/[0.12] transition-colors"
+                                    >
+                                        {p}
+                                        <ArrowUpRight className="w-3 h-3" />
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    {/* Right — Form */}
+                    <motion.div
+                        className="lg:col-span-3"
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={isInView ? { opacity: 1, x: 0 } : {}}
+                        transition={{ delay: 0.2, duration: 0.5 }}
+                    >
+                        {!showSuccess ? (
+                            <form
+                                onSubmit={handleSubmit}
+                                className="border border-white/[0.06] rounded-2xl bg-white/[0.02] p-5 sm:p-8 space-y-5"
+                            >
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div>
+                                        <label className="block text-xs text-neutral-500 uppercase tracking-wider mb-2">Name *</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-700 focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all"
+                                            placeholder="John Smith"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs text-neutral-500 uppercase tracking-wider mb-2">Email *</label>
+                                        <input
+                                            type="email"
+                                            required
+                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-700 focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all"
+                                            placeholder="john@company.com"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div>
+                                        <label className="block text-xs text-neutral-500 uppercase tracking-wider mb-2">Budget *</label>
+                                        <select
+                                            required
+                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all appearance-none"
+                                        >
+                                            <option value="" className="bg-neutral-900">Select budget range</option>
+                                            <option className="bg-neutral-900">Under $500</option>
+                                            <option className="bg-neutral-900">$500 – $1,500</option>
+                                            <option className="bg-neutral-900">$1,500 – $5,000</option>
+                                            <option className="bg-neutral-900">$5,000 – $15,000</option>
+                                            <option className="bg-neutral-900">$15,000+</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs text-neutral-500 uppercase tracking-wider mb-2">Service *</label>
+                                        <select
+                                            required
+                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all appearance-none"
+                                        >
+                                            <option value="" className="bg-neutral-900">What do you need?</option>
+                                            <option className="bg-neutral-900">AI Automation</option>
+                                            <option className="bg-neutral-900">Full Stack Development</option>
+                                            <option className="bg-neutral-900">WordPress Website</option>
+                                            <option className="bg-neutral-900">Mobile App Development</option>
+                                            <option className="bg-neutral-900">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-xs text-neutral-500 uppercase tracking-wider mb-2">Project Details *</label>
+                                    <textarea
+                                        required
+                                        rows={4}
+                                        className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-700 focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all resize-none"
+                                        placeholder="Tell us about your project — goals, timeline, and any technical details..."
+                                    />
+                                </div>
+
+                                <motion.button
+                                    type="submit"
+                                    className="w-full py-3.5 rounded-xl font-semibold text-sm text-white flex items-center justify-center gap-2"
+                                    style={{ backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4)' }}
+                                    whileHover={{ scale: 1.02, boxShadow: '0 8px 30px rgba(14,165,233,0.35)' }}
+                                    whileTap={{ scale: 0.97 }}
+                                >
+                                    Send Message
+                                    <Send className="w-4 h-4" />
+                                </motion.button>
+
+                                <p className="text-[11px] text-neutral-700 text-center">
+                                    Your information is safe. No spam, ever.
+                                </p>
+                            </form>
+                        ) : (
+                            <motion.div
+                                className="border border-white/[0.06] rounded-2xl bg-white/[0.02] p-16 text-center"
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.4 }}
+                            >
+                                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6"
+                                    style={{ backgroundColor: 'rgba(14,165,233,0.1)', border: '1px solid rgba(14,165,233,0.15)' }}
+                                >
+                                    <Sparkles className="w-8 h-8 text-[#0ea5e9]" />
+                                </div>
+                                <h3 className="font-display text-2xl font-bold text-white mb-3">Message Sent!</h3>
+                                <p className="text-sm text-neutral-400 max-w-xs mx-auto">
+                                    Thanks for reaching out. Nabeel will get back to you within 4 hours.
+                                </p>
+                            </motion.div>
+                        )}
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+    );
+}
