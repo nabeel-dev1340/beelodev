@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useState, useRef } from 'react';
-import { Mail, MessageSquare, MapPin, Send, ArrowUpRight, Sparkles, Clock, Calendar } from 'lucide-react';
+import { Mail, MessageSquare, MapPin, Send, ArrowUpRight, Clock, Calendar, Loader2, AlertCircle, CheckCircle } from 'lucide-react';
 import { siteConfig } from '../config/site';
 
 const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
@@ -11,12 +11,60 @@ const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>
 
 export default function Contact() {
     const [showSuccess, setShowSuccess] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        budget: '',
+        service: '',
+        projectDetails: '',
+    });
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-80px" });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setShowSuccess(true);
+        setError(null);
+        setIsLoading(true);
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to send message');
+            }
+
+            setShowSuccess(true);
+            // Reset form
+            setFormData({
+                name: '',
+                email: '',
+                budget: '',
+                service: '',
+                projectDetails: '',
+            });
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'An error occurred. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value,
+        }));
     };
 
     const { methods: contactMethods, socialPlatforms, budgetRanges, serviceOptions } = siteConfig.contact;
@@ -165,13 +213,28 @@ export default function Contact() {
                                 onSubmit={handleSubmit}
                                 className="border border-white/[0.06] rounded-2xl bg-white/[0.02] p-5 sm:p-8 space-y-5"
                             >
+                                {error && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        className="flex items-center gap-2 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm"
+                                    >
+                                        <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                                        <span>{error}</span>
+                                    </motion.div>
+                                )}
+
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                     <div>
                                         <label className="block text-xs text-neutral-500 uppercase tracking-wider mb-2">Name *</label>
                                         <input
                                             type="text"
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleChange}
                                             required
-                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-700 focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all"
+                                            disabled={isLoading}
+                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-700 focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                             placeholder="John Smith"
                                         />
                                     </div>
@@ -179,8 +242,12 @@ export default function Contact() {
                                         <label className="block text-xs text-neutral-500 uppercase tracking-wider mb-2">Email *</label>
                                         <input
                                             type="email"
+                                            name="email"
+                                            value={formData.email}
+                                            onChange={handleChange}
                                             required
-                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-700 focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all"
+                                            disabled={isLoading}
+                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-700 focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                             placeholder="john@company.com"
                                         />
                                     </div>
@@ -190,24 +257,32 @@ export default function Contact() {
                                     <div>
                                         <label className="block text-xs text-neutral-500 uppercase tracking-wider mb-2">Budget *</label>
                                         <select
+                                            name="budget"
+                                            value={formData.budget}
+                                            onChange={handleChange}
                                             required
-                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all appearance-none"
+                                            disabled={isLoading}
+                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all appearance-none disabled:opacity-50 disabled:cursor-not-allowed"
                                         >
                                             <option value="" className="bg-neutral-900">Select budget range</option>
                                             {budgetRanges.map((range, i) => (
-                                                <option key={i} className="bg-neutral-900">{range}</option>
+                                                <option key={i} value={range} className="bg-neutral-900">{range}</option>
                                             ))}
                                         </select>
                                     </div>
                                     <div>
                                         <label className="block text-xs text-neutral-500 uppercase tracking-wider mb-2">Service *</label>
                                         <select
+                                            name="service"
+                                            value={formData.service}
+                                            onChange={handleChange}
                                             required
-                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all appearance-none"
+                                            disabled={isLoading}
+                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all appearance-none disabled:opacity-50 disabled:cursor-not-allowed"
                                         >
                                             <option value="" className="bg-neutral-900">What do you need?</option>
                                             {serviceOptions.map((service, i) => (
-                                                <option key={i} className="bg-neutral-900">{service}</option>
+                                                <option key={i} value={service} className="bg-neutral-900">{service}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -216,22 +291,36 @@ export default function Contact() {
                                 <div>
                                     <label className="block text-xs text-neutral-500 uppercase tracking-wider mb-2">Project Details *</label>
                                     <textarea
+                                        name="projectDetails"
+                                        value={formData.projectDetails}
+                                        onChange={handleChange}
                                         required
+                                        disabled={isLoading}
                                         rows={4}
-                                        className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-700 focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all resize-none"
+                                        className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-700 focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all resize-none disabled:opacity-50 disabled:cursor-not-allowed"
                                         placeholder="Describe your biggest operational bottlenecks — where you're losing time, money, or both..."
                                     />
                                 </div>
 
                                 <motion.button
                                     type="submit"
-                                    className="w-full py-3.5 rounded-xl font-semibold text-sm text-white flex items-center justify-center gap-2"
+                                    disabled={isLoading}
+                                    className="w-full py-3.5 rounded-xl font-semibold text-sm text-white flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                                     style={{ backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4)' }}
-                                    whileHover={{ scale: 1.02, boxShadow: '0 8px 30px rgba(14,165,233,0.35)' }}
-                                    whileTap={{ scale: 0.97 }}
+                                    whileHover={!isLoading ? { scale: 1.02, boxShadow: '0 8px 30px rgba(14,165,233,0.35)' } : {}}
+                                    whileTap={!isLoading ? { scale: 0.97 } : {}}
                                 >
-                                    Send Message
-                                    <Send className="w-4 h-4" />
+                                    {isLoading ? (
+                                        <>
+                                            <Loader2 className="w-4 h-4 animate-spin" />
+                                            Sending...
+                                        </>
+                                    ) : (
+                                        <>
+                                            Send Message
+                                            <Send className="w-4 h-4" />
+                                        </>
+                                    )}
                                 </motion.button>
 
                                 <p className="text-[11px] text-neutral-700 text-center">
@@ -246,9 +335,9 @@ export default function Contact() {
                                 transition={{ duration: 0.4 }}
                             >
                                 <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6"
-                                    style={{ backgroundColor: 'rgba(14,165,233,0.1)', border: '1px solid rgba(14,165,233,0.15)' }}
+                                    style={{ backgroundColor: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.15)' }}
                                 >
-                                    <Sparkles className="w-8 h-8 text-[#0ea5e9]" />
+                                    <CheckCircle className="w-8 h-8 text-emerald-400" />
                                 </div>
                                 <h3 className="font-display text-2xl font-bold text-white mb-3">Message Sent!</h3>
                                 <p className="text-sm text-neutral-400 max-w-xs mx-auto">
