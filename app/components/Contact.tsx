@@ -41,16 +41,16 @@ export default function Contact() {
                         <span className="text-sm font-mono text-electric-blue">GET IN TOUCH</span>
                     </motion.div>
                     <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-bold mb-4">
-                        <span className="text-white">Start a </span>
+                        <span className="text-white">Identify Your </span>
                         <span
                             className="bg-clip-text text-transparent"
                             style={{ backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4, #14b8a6)' }}
                         >
-                            Project
+                            Bottlenecks
                         </span>
                     </h2>
                     <p className="text-neutral-400 text-lg max-w-lg mx-auto">
-                        Tell us what you&apos;re building. We&apos;ll tell you how we can make it exceptional.
+                        Tell us where you&apos;re losing time and money. We&apos;ll show you the automation opportunities that will transform your operations.
                     </p>
                 </motion.div>
 
@@ -219,7 +219,7 @@ export default function Contact() {
                                         required
                                         rows={4}
                                         className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-700 focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all resize-none"
-                                        placeholder="Tell us about your project — goals, timeline, and any technical details..."
+                                        placeholder="Describe your biggest operational bottlenecks — where you're losing time, money, or both..."
                                     />
                                 </div>
 

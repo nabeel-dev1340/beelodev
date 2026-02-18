@@ -2,11 +2,11 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Check, ArrowRight, Sparkles, Zap, Rocket, Calendar } from 'lucide-react';
+import { Check, Calendar, Bot, Receipt, FileText } from 'lucide-react';
 import { siteConfig } from '../config/site';
 
 const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
-    Sparkles, Zap, Rocket,
+    Bot, Receipt, FileText,
 };
 
 export default function Packages() {
@@ -145,7 +145,9 @@ export default function Packages() {
 
                                     {/* CTA */}
                                     <motion.a
-                                        href="#contact"
+                                        href={siteConfig.personal.booking.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         className={`block w-full text-center py-3.5 rounded-xl font-semibold text-sm transition-shadow ${plan.popular ? 'text-white' : 'text-white border border-white/[0.1] hover:border-white/[0.2]'
                                             }`}
                                         style={plan.popular ? {
@@ -161,7 +163,7 @@ export default function Packages() {
                                     >
                                         <span className="flex items-center justify-center gap-2">
                                             {plan.cta}
-                                            <ArrowRight className="w-4 h-4" />
+                                            <Calendar className="w-4 h-4" />
                                         </span>
                                     </motion.a>
 

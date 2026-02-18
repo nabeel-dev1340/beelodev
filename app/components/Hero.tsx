@@ -78,13 +78,13 @@ export default function Hero() {
                 {/* Headline */}
                 <motion.h1
                     variants={fadeUp}
-                    className="font-display font-extrabold leading-[0.95] tracking-tight mb-8"
+                    className="font-display font-extrabold leading-[1.05] tracking-tight mb-8"
                 >
-                    <span className="block text-white text-[clamp(3rem,8vw,7rem)]">
+                    <span className="block text-white text-[clamp(3rem,8vw,7rem)] pb-1">
                         {hero.headline.line1}
                     </span>
                     <span
-                        className="block text-[clamp(3rem,8vw,7rem)] bg-clip-text text-transparent"
+                        className="block text-[clamp(3rem,8vw,7rem)] bg-clip-text text-transparent pb-1"
                         style={{
                             backgroundImage: 'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 40%, #14b8a6 100%)',
                         }}
@@ -136,18 +136,6 @@ export default function Hero() {
                             <Calendar className="w-4 h-4 text-emerald-400" />
                             {personal.booking.label}
                             <span className="text-xs text-emerald-400/70 font-normal">· {personal.booking.duration}</span>
-                        </span>
-                    </motion.a>
-
-                    <motion.a
-                        href={hero.cta.secondary.href}
-                        className="glass px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-semibold text-sm sm:text-base group w-full sm:w-auto text-center"
-                        whileHover={{ scale: 1.04, backgroundColor: "rgba(255,255,255,0.1)" }}
-                        whileTap={{ scale: 0.96 }}
-                    >
-                        <span className="text-white flex items-center gap-2">
-                            {hero.cta.secondary.label}
-                            <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                         </span>
                     </motion.a>
                 </motion.div>
