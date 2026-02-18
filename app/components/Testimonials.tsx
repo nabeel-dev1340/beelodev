@@ -75,9 +75,9 @@ export default function Testimonials() {
                     <span className="text-neutral-500 text-sm">{aggregateLabel}</span>
                 </motion.div>
 
-                {/* Masonry-ish Grid */}
+                {/* Grid */}
                 <motion.div
-                    className="columns-1 md:columns-2 lg:columns-3 gap-5 space-y-5"
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
                     variants={stagger}
                     initial="hidden"
                     animate={isInView ? "visible" : "hidden"}
@@ -85,10 +85,10 @@ export default function Testimonials() {
                     {testimonials.map((t, index) => (
                         <motion.div
                             key={index}
-                            className="break-inside-avoid group"
+                            className="group h-full flex"
                             variants={fadeUp}
                         >
-                            <div className="relative border border-white/[0.06] rounded-2xl bg-white/[0.02] p-5 sm:p-7 transition-colors duration-300 hover:border-white/[0.12] overflow-hidden">
+                            <div className="relative border border-white/[0.06] rounded-2xl bg-white/[0.02] p-5 sm:p-7 transition-colors duration-300 hover:border-white/[0.12] overflow-hidden flex flex-col w-full h-full">
 
                                 {/* Top accent line */}
                                 <div
@@ -103,7 +103,7 @@ export default function Testimonials() {
                                 />
 
                                 {/* Review text */}
-                                <p className={`text-neutral-300 leading-relaxed mb-6 ${t.featured ? 'text-base' : 'text-sm'}`}>
+                                <p className="text-neutral-300 leading-relaxed mb-6 text-sm flex-grow">
                                     &ldquo;{t.text}&rdquo;
                                 </p>
 
@@ -124,10 +124,9 @@ export default function Testimonials() {
                                         {t.initials}
                                     </div>
 
-                                    {/* Name & role */}
+                                    {/* Name */}
                                     <div className="flex-1 min-w-0">
                                         <div className="font-semibold text-white text-sm truncate">{t.author}</div>
-                                        <div className="text-xs text-neutral-500 truncate">{t.role}</div>
                                     </div>
 
                                     {/* Platform badge */}
