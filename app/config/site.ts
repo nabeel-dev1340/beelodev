@@ -81,6 +81,7 @@ export const siteConfig = {
                 success: '100%',
                 earned: '$30K+',
                 accent: '#0ea5e9',
+                url: 'https://www.upwork.com/freelancers/syednabeel24',
             },
             {
                 name: 'Fiverr',
@@ -92,6 +93,7 @@ export const siteConfig = {
                 success: '100%',
                 earned: '$30K+',
                 accent: '#06b6d4',
+                url: 'https://www.fiverr.com/s/VYAjE8z',
             },
         ],
         aggregate: [
