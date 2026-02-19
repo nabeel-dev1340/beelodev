@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Star, Award, TrendingUp, CheckCircle } from 'lucide-react';
 import { siteConfig } from '../config/site';
 
@@ -13,8 +13,23 @@ const badgeIconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElem
 export default function PlatformStats() {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-80px" });
+    const [activePreview, setActivePreview] = useState<{ src: string; alt: string } | null>(null);
+    const [isZoomed, setIsZoomed] = useState(false);
 
     const { platforms, aggregate } = siteConfig.platformStats;
+
+    useEffect(() => {
+        if (!activePreview) return;
+
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                setActivePreview(null);
+            }
+        };
+
+        window.addEventListener('keydown', onKeyDown);
+        return () => window.removeEventListener('keydown', onKeyDown);
+    }, [activePreview]);
 
     return (
         <section className="py-16 sm:py-28 px-4 sm:px-6 relative z-10" ref={ref}>
@@ -66,7 +81,7 @@ export default function PlatformStats() {
                                     rel="noopener noreferrer"
                                     className="block h-full transition-transform duration-300 hover:scale-[1.02]"
                                 >
-                                    <div className="relative h-full border border-white/[0.06] rounded-2xl bg-white/[0.02] p-5 sm:p-8 transition-colors duration-300 hover:border-white/[0.12]">
+                                    <div className="relative h-full border border-white/6 rounded-2xl bg-white/2 p-5 sm:p-8 transition-colors duration-300 hover:border-white/12">
 
                                         {/* Top accent line */}
                                         <div
@@ -77,7 +92,7 @@ export default function PlatformStats() {
                                         {/* Header */}
                                         <div className="flex items-center justify-between mb-8">
                                             <div className="flex items-center gap-3">
-                                                <div className="relative w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0">
+                                                <div className="relative w-8 h-8 sm:w-10 sm:h-10 shrink-0">
                                                     <Image
                                                         src={p.logo}
                                                         alt={p.name}
@@ -123,12 +138,37 @@ export default function PlatformStats() {
                                             ].map((stat, i) => (
                                                 <div
                                                     key={i}
-                                                    className="text-center py-3 rounded-xl bg-white/[0.03] border border-white/[0.05]"
+                                                    className="text-center py-3 rounded-xl bg-white/3 border border-white/5"
                                                 >
                                                     <div className="text-lg font-display font-bold text-white">{stat.value}</div>
                                                     <div className="text-[10px] text-neutral-600 uppercase tracking-wider mt-0.5">{stat.label}</div>
                                                 </div>
                                             ))}
+                                        </div>
+
+                                        {/* Profile proof screenshot */}
+                                        <div className="mt-6">
+                                            <button
+                                                type="button"
+                                                onClick={(event) => {
+                                                    event.preventDefault();
+                                                    setActivePreview({
+                                                        src: p.profileImage,
+                                                        alt: p.profileImageAlt,
+                                                    });
+                                                    setIsZoomed(false);
+                                                }}
+                                                className="relative block w-full aspect-video overflow-hidden rounded-xl border border-white/8 bg-black/20"
+                                                aria-label={`Open ${p.name} profile screenshot`}
+                                            >
+                                                <Image
+                                                    src={p.profileImage}
+                                                    alt={p.profileImageAlt}
+                                                    fill
+                                                    className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+                                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                                />
+                                            </button>
                                         </div>
 
                                         {/* Hover glow */}
@@ -161,6 +201,55 @@ export default function PlatformStats() {
                     ))}
                 </motion.div>
             </div>
+
+            {activePreview && (
+                <div
+                    className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm p-4 sm:p-8"
+                    onClick={() => setActivePreview(null)}
+                    role="dialog"
+                    aria-modal="true"
+                >
+                    <div className="max-w-6xl mx-auto h-full flex flex-col">
+                        <div className="flex items-center justify-end gap-3 mb-4">
+                            <button
+                                type="button"
+                                onClick={(event) => {
+                                    event.stopPropagation();
+                                    setIsZoomed((current) => !current);
+                                }}
+                                className="px-4 py-2 rounded-lg text-xs font-semibold text-white bg-white/10 hover:bg-white/20 transition-colors"
+                            >
+                                {isZoomed ? 'Zoom out' : 'Zoom in'}
+                            </button>
+                            <button
+                                type="button"
+                                onClick={(event) => {
+                                    event.stopPropagation();
+                                    setActivePreview(null);
+                                }}
+                                className="px-4 py-2 rounded-lg text-xs font-semibold text-white bg-white/10 hover:bg-white/20 transition-colors"
+                            >
+                                Close
+                            </button>
+                        </div>
+
+                        <div className="relative flex-1 overflow-auto rounded-xl border border-white/15 bg-black/40">
+                            <Image
+                                src={activePreview.src}
+                                alt={activePreview.alt}
+                                width={1920}
+                                height={1080}
+                                className={`mx-auto h-auto w-full object-contain origin-center transition-transform duration-300 ${isZoomed ? 'scale-125 cursor-zoom-out' : 'scale-100 cursor-zoom-in'}`}
+                                onClick={(event) => {
+                                    event.stopPropagation();
+                                    setIsZoomed((current) => !current);
+                                }}
+                                priority
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
         </section>
     );
 }

@@ -113,6 +113,8 @@ export const siteConfig = {
             {
                 name: 'Upwork',
                 logo: '/icons/upwork-icon.svg',
+                profileImage: '/profiles/upwork.png',
+                profileImageAlt: 'Upwork profile screenshot',
                 badge: 'Top Rated',
                 badgeIcon: 'Award',
                 rating: '5.0',
@@ -125,10 +127,12 @@ export const siteConfig = {
             {
                 name: 'Fiverr',
                 logo: '/icons/fiverr-icon.svg',
-                badge: 'Level 2 Seller',
+                profileImage: '/profiles/fiverr.png',
+                profileImageAlt: 'Fiverr profile screenshot',
+                badge: 'Level 1 Seller',
                 badgeIcon: 'TrendingUp',
                 rating: '4.9',
-                reviews: '200+',
+                reviews: '400+',
                 success: '100%',
                 earned: '$30K+',
                 accent: '#06b6d4',
@@ -243,62 +247,7 @@ export const siteConfig = {
     },
 
     // ── Portfolio / Projects ──────────────────────
-    portfolio: [
-        {
-            title: 'AI Voice Agent Platform',
-            category: 'AI Automation',
-            description: 'Customer support calls handled automatically 24/7, cutting response times by 80% and eliminating $120K/year in staffing costs.',
-            icon: 'Bot',
-            metrics: ['24/7 uptime', '80% faster', '$120K saved'],
-            accent: '#0ea5e9',
-            featured: true,
-        },
-        {
-            title: 'Analytics Dashboard',
-            category: 'Full Stack',
-            description: 'Real-time insights from 1M+ daily events, enabling faster decisions and identifying revenue opportunities instantly.',
-            icon: 'BarChart3',
-            metrics: ['1M+ events/day', '99.9% uptime'],
-            accent: '#06b6d4',
-            featured: false,
-        },
-        {
-            title: 'E-Commerce Store',
-            category: 'WordPress',
-            description: 'Online store optimization that increased conversions by 35%, turning more visitors into paying customers.',
-            icon: 'ShoppingCart',
-            metrics: ['+35% conversions', '2s load time'],
-            accent: '#14b8a6',
-            featured: false,
-        },
-        {
-            title: 'Fitness Tracking App',
-            category: 'Mobile',
-            description: 'Mobile platform that engaged 50K+ users, building a community and driving recurring revenue growth.',
-            icon: 'Smartphone',
-            metrics: ['50K+ downloads', '4.8★ rating'],
-            accent: '#0ea5e9',
-            featured: true,
-        },
-        {
-            title: 'Workflow Automation',
-            category: 'AI Automation',
-            description: 'Connected 50+ business tools to eliminate manual work, processing 10K tasks daily without human intervention.',
-            icon: 'Zap',
-            metrics: ['50+ integrations', '10K tasks/day'],
-            accent: '#06b6d4',
-            featured: false,
-        },
-        {
-            title: 'Health Monitoring',
-            category: 'Full Stack',
-            description: 'Real-time health tracking system that enables proactive care decisions and reduces emergency incidents.',
-            icon: 'Activity',
-            metrics: ['Real-time data', 'HIPAA compliant'],
-            accent: '#14b8a6',
-            featured: false,
-        },
-    ],
+    portfolio: [],
 
     // ── Skills ────────────────────────────────────
     skills: {
