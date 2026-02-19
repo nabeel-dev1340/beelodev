@@ -369,7 +369,8 @@ export const siteConfig = {
         socialPlatforms: [
             { label: 'Upwork', href: 'https://www.upwork.com/freelancers/syednabeel24' },
             { label: 'Fiverr', href: 'https://www.fiverr.com/s/VYAjE8z' },
-            { label: 'LinkedIn', href: '#' },
+            { label: 'Facebook', href: 'https://www.facebook.com/people/Beelodev/100070024941028/' },
+            { label: 'Instagram', href: 'https://www.instagram.com/beelo_dev/' },
         ],
         budgetRanges: [
             'Under $500',
@@ -404,8 +405,9 @@ export const siteConfig = {
         socials: [
             { label: 'Upwork', href: 'https://www.upwork.com/freelancers/syednabeel24' },
             { label: 'Fiverr', href: 'https://www.fiverr.com/s/VYAjE8z' },
-            { label: 'LinkedIn', href: '#' },
-            { label: 'GitHub', href: '#' },
+            { label: 'Facebook', href: 'https://www.facebook.com/people/Beelodev/100070024941028/' },
+            { label: 'Instagram', href: 'https://www.instagram.com/beelo_dev/' },
+            { label: 'GitHub', href: 'https://github.com/nabeel-dev1340' },
         ],
         ctaBanner: {
             headline: 'Ready to remove the busywork?',

@@ -134,7 +134,8 @@ export function generateOrganizationSchema() {
     sameAs: [
       siteConfig.contact.socialPlatforms.find(s => s.label === 'Upwork')?.href,
       siteConfig.contact.socialPlatforms.find(s => s.label === 'Fiverr')?.href,
-      siteConfig.contact.socialPlatforms.find(s => s.label === 'LinkedIn')?.href,
+      siteConfig.contact.socialPlatforms.find(s => s.label === 'Facebook')?.href,
+      siteConfig.contact.socialPlatforms.find(s => s.label === 'Instagram')?.href,
     ].filter(Boolean) as string[],
     aggregateRating: {
       '@type': 'AggregateRating',
