@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { ArrowRight, ArrowDown, Bot, Code, Smartphone, Globe, Calendar } from 'lucide-react';
+import { ArrowRight, Bot, Code, Smartphone, Globe, Calendar } from 'lucide-react';
 import { siteConfig } from '../config/site';
 
 const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
@@ -42,7 +42,7 @@ export default function Hero() {
     return (
         <motion.section
             ref={heroRef}
-            className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 sm:px-6 pt-20"
+            className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 pt-20"
             id="home"
             style={{ opacity, scale }}
         >
@@ -188,19 +188,6 @@ export default function Hero() {
                         </div>
                     ))}
                 </motion.div>
-            </motion.div>
-
-            {/* Scroll Indicator */}
-            <motion.div
-                className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-            >
-                <span className="text-xs text-neutral-600 uppercase tracking-widest">Scroll</span>
-                <ArrowDown className="w-4 h-4 text-neutral-600" />
             </motion.div>
         </motion.section>
     );

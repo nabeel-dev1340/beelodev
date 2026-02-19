@@ -41,7 +41,13 @@ export default function Navbar() {
             {/* Logo mark */}
             <Logo size={32} />
             <span className="font-display font-bold text-lg text-white">
-              {siteConfig.personal.brandName}
+              beelo
+              <span
+                className="bg-clip-text text-transparent"
+                style={{ backgroundImage: 'linear-gradient(90deg, #0ea5e9, #06b6d4)' }}
+              >
+                dev
+              </span>
             </span>
           </motion.a>
 

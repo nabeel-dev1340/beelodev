@@ -17,7 +17,7 @@ export default function PlatformStats() {
     const { platforms, aggregate } = siteConfig.platformStats;
 
     return (
-        <section className="py-16 sm:py-28 px-4 sm:px-6 relative" ref={ref}>
+        <section className="py-16 sm:py-28 px-4 sm:px-6 relative z-10" ref={ref}>
             <div className="max-w-5xl mx-auto">
 
                 {/* Section Header */}
