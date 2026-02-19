@@ -1,55 +1,26 @@
 import { MetadataRoute } from 'next';
 import { siteUrl } from './lib/seo';
-import { siteConfig } from './config/site';
+import { projects } from './config/projects';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteUrl;
   const currentDate = new Date().toISOString();
 
-  // Main pages
-  const routes = [
+  const routes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: currentDate,
-      changeFrequency: 'weekly' as const,
+      changeFrequency: 'weekly',
       priority: 1.0,
     },
-    {
-      url: `${baseUrl}/#services`,
+    // Individual project case-study pages — most content-rich URLs
+    ...projects.map((project) => ({
+      url: `${baseUrl}/projects/${project.slug}`,
       lastModified: currentDate,
       changeFrequency: 'monthly' as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/#portfolio`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/#packages`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly' as const,
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/#contact`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    },
+      priority: project.featured ? 0.9 : 0.7,
+    })),
   ];
-
-  // Add service pages
-  siteConfig.services.forEach((service) => {
-    const slug = service.title.toLowerCase().replace(/\s+/g, '-');
-    routes.push({
-      url: `${baseUrl}/services/${slug}`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    });
-  });
 
   return routes;
 }
