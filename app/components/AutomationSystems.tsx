@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Bot, Receipt, FileText, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Bot, Receipt, FileText, CheckCircle2 } from 'lucide-react';
 import { siteConfig } from '../config/site';
 
 const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
