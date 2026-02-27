@@ -9,7 +9,6 @@ import {
     generateProjectSchema,
     generateBreadcrumbsSchema,
     siteUrl,
-    siteName,
 } from '../../lib/seo';
 
 type ProjectPageProps = {

@@ -30,9 +30,9 @@ export const siteConfig = {
 
     // ── Navigation ────────────────────────────────
     navLinks: [
-        { name: 'Services', href: '#services' },
+        { name: 'Systems', href: '#systems' },
         { name: 'Portfolio', href: '#portfolio' },
-        { name: 'Packages', href: '#packages' },
+        { name: 'Pricing', href: '#pricing' },
         { name: 'Contact', href: '#contact' },
     ],
 
@@ -43,16 +43,15 @@ export const siteConfig = {
             line2: 'Start Scaling.',
         },
         subtitle:
-            'Cut costs and grow faster with systems that handle repetitive work around the clock.',
+            'Choose one of 3 proven automation systems and we will install it for your business - fast, secure, and built to scale.',
         cta: {
-            primary: { label: 'Explore Systems', href: '#automation-systems' },
-            secondary: { label: 'Book Discovery Call', href: '#contact' },
+            primary: { label: 'View the 3 Systems', href: '#systems' },
+            secondary: { label: 'Book a Free Discovery Call', href: '#book' },
         },
         capabilities: [
-            { icon: 'Bot', label: 'AI Agents' },
-            { icon: 'Zap', label: 'Workflow Auto' },
-            { icon: 'Database', label: 'Data Systems' },
-            { icon: 'BarChart3', label: 'Dashboards' },
+            { icon: 'Bot', label: 'AI Support Agent' },
+            { icon: 'Receipt', label: 'Auto-Invoicing' },
+            { icon: 'FileText', label: 'Docu-Brain' },
         ],
         stats: [
             { value: '300+', label: 'Systems Built' },
@@ -150,35 +149,27 @@ export const siteConfig = {
     services: [
         {
             icon: 'Bot',
-            title: 'AI Automation',
-            description: 'Intelligent agents and workflows that eliminate repetitive tasks and work around the clock.',
-            deliverables: ['Custom AI Chatbots', 'Voice Agents', 'Workflow Automation', 'CRM Integration'],
+            title: '24/7 AI Support Agent',
+            description: 'An AI support agent that resolves common questions instantly, hands off complex cases, and reduces support workload.',
+            deliverables: ['Knowledge Base Setup', 'Multi-channel Support', 'Human Handoff', 'Conversation Analytics'],
             accent: '#0ea5e9',
-            stat: '30+ hrs/week saved',
+            stat: 'Faster responses',
         },
         {
-            icon: 'Code',
-            title: 'Full Stack Development',
-            description: 'End-to-end web applications built with modern frameworks and scalable architecture.',
-            deliverables: ['React / Next.js', 'Node.js APIs', 'PostgreSQL', 'Cloud Deploy'],
+            icon: 'Receipt',
+            title: 'Zero-Touch Invoice Processing',
+            description: 'Invoice extraction + validation + routing so your team stops doing data entry and your books stay accurate.',
+            deliverables: ['Email/Portal Parsing', 'Line-item Extraction', 'Approvals', 'Audit Logs'],
             accent: '#06b6d4',
-            stat: '99.9% uptime',
+            stat: 'Zero entry errors',
         },
         {
-            icon: 'Globe',
-            title: 'WordPress Development',
-            description: 'Fast, beautiful, SEO-optimized websites that convert visitors into customers.',
-            deliverables: ['Custom Themes', 'WooCommerce', 'SEO Optimization', 'Speed Tuning'],
+            icon: 'FileText',
+            title: 'Smart Document Intelligence System',
+            description: 'Turn documents into searchable, structured data with summaries and insights your team can use instantly.',
+            deliverables: ['Bulk Processing', 'Searchable Database', 'Summaries/Insights', 'Secure Handling'],
             accent: '#14b8a6',
-            stat: '<2s load time',
-        },
-        {
-            icon: 'Smartphone',
-            title: 'Mobile Development',
-            description: 'Cross-platform mobile apps that feel native on both iOS and Android.',
-            deliverables: ['React Native', 'iOS & Android', 'Push Notifications', 'App Store Launch'],
-            accent: '#0ea5e9',
-            stat: '50K+ downloads',
+            stat: 'Find answers in seconds',
         },
     ],
 
@@ -192,6 +183,9 @@ export const siteConfig = {
                 period: 'one-time setup',
                 icon: 'Bot',
                 accent: '#0ea5e9',
+                bestFor: 'Teams drowning in repetitive customer questions.',
+                timeline: '7-14 days',
+                integrations: ['Website chat', 'WhatsApp', 'Email', 'Docs/FAQ'],
                 features: [
                     'Custom Knowledge Base Setup',
                     'Multi-Channel Integration (Web/WhatsApp)',
@@ -211,6 +205,9 @@ export const siteConfig = {
                 period: 'one-time setup',
                 icon: 'Receipt',
                 accent: '#06b6d4',
+                bestFor: 'Finance teams processing invoices every day.',
+                timeline: '10-21 days',
+                integrations: ['Gmail/Outlook', 'QuickBooks', 'Xero', 'Google Drive'],
                 features: [
                     'Email & Portal Parsing',
                     'Line-Item Extraction',
@@ -230,6 +227,9 @@ export const siteConfig = {
                 period: 'starting at',
                 icon: 'FileText',
                 accent: '#14b8a6',
+                bestFor: 'Ops teams buried in PDFs, contracts, and forms.',
+                timeline: '14-28 days',
+                integrations: ['Google Drive', 'Notion', 'Airtable', 'Custom API'],
                 features: [
                     'Custom Document Models',
                     'Bulk Processing Pipeline',
@@ -363,7 +363,7 @@ export const siteConfig = {
     contact: {
         methods: [
             { icon: 'Mail', label: 'Email', value: 'support@beelodev.com', href: 'mailto:support@beelodev.com' },
-            { icon: 'MessageSquare', label: 'WhatsApp', value: '+92 303 846 6058', href: '#' },
+            { icon: 'MessageSquare', label: 'WhatsApp', value: '+92 303 846 6058', href: 'https://wa.me/923038466058' },
             { icon: 'MapPin', label: 'Location', value: 'Pakistan · Remote Worldwide', href: '#' },
         ],
         socialPlatforms: [
@@ -391,15 +391,14 @@ export const siteConfig = {
     // ── Footer ────────────────────────────────────
     footer: {
         services: [
-            { label: 'AI Automation', href: '#services' },
-            { label: 'Full Stack Dev', href: '#services' },
-            { label: 'WordPress', href: '#services' },
-            { label: 'Mobile Apps', href: '#services' },
+            { label: 'AI Support Agent', href: '#pricing' },
+            { label: 'Auto-Invoicing', href: '#pricing' },
+            { label: 'Docu-Brain', href: '#pricing' },
         ],
         company: [
             { label: 'Portfolio', href: '#portfolio' },
             { label: 'Reviews', href: '#testimonials' },
-            { label: 'Pricing', href: '#packages' },
+            { label: 'Pricing', href: '#pricing' },
             { label: 'Contact', href: '#contact' },
         ],
         socials: [

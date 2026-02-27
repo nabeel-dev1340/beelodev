@@ -32,7 +32,7 @@ export default function Packages() {
     };
 
     return (
-        <section className="py-16 sm:py-28 px-4 sm:px-6 relative" id="packages" ref={ref}>
+        <section className="py-16 sm:py-28 px-4 sm:px-6 relative" id="pricing" ref={ref}>
             <div className="max-w-5xl mx-auto">
 
                 {/* Section Header */}
@@ -57,8 +57,8 @@ export default function Packages() {
                             Real Results.
                         </span>
                     </h2>
-                    <p className="text-neutral-400 text-lg max-w-lg mx-auto">
-                        No hidden fees. No long contracts. Just great work, delivered fast.
+                    <p className="text-neutral-400 text-lg max-w-xl mx-auto">
+                        Three proven automation systems, packaged with fixed scope and clear pricing. Book a call and we will recommend the best fit.
                     </p>
                 </motion.div>
 
@@ -117,6 +117,34 @@ export default function Packages() {
 
                                     <p className="text-neutral-500 text-sm mb-6 ml-12">{plan.tagline}</p>
 
+                                    {/* Best for + Timeline */}
+                                    <div className="mb-6 ml-12">
+                                        {plan.bestFor && (
+                                            <div className="text-sm text-neutral-300 mb-2">
+                                                <span className="text-neutral-500">Best for:</span> {plan.bestFor}
+                                            </div>
+                                        )}
+                                        {plan.timeline && (
+                                            <div className="text-xs text-neutral-600 uppercase tracking-wider">
+                                                Typical timeline: <span className="text-neutral-400">{plan.timeline}</span>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Integrations */}
+                                    {plan.integrations?.length > 0 && (
+                                        <div className="flex flex-wrap gap-2 mb-7 ml-12">
+                                            {plan.integrations.map((item) => (
+                                                <span
+                                                    key={item}
+                                                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white/4 border border-white/6 text-neutral-300"
+                                                >
+                                                    {item}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    )}
+
                                     {/* Price */}
                                     <div className="mb-7">
                                         <div className="flex items-baseline gap-1.5">
@@ -162,7 +190,7 @@ export default function Packages() {
                                         whileTap={{ scale: 0.97 }}
                                     >
                                         <span className="flex items-center justify-center gap-2">
-                                            {plan.cta}
+                                            Book call for {plan.name}
                                             <Calendar className="w-4 h-4" />
                                         </span>
                                     </motion.a>

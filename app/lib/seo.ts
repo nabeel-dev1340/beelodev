@@ -18,6 +18,12 @@ const defaultKeywords = [
   'workflow automation',
   'automation systems',
   'business process automation',
+  'AI support agent',
+  'customer support automation',
+  'invoice processing automation',
+  'accounts payable automation',
+  'document intelligence system',
+  'document processing automation',
   // Buyer-intent long-tail
   'AI automation agency',
   'hire AI automation developer',
@@ -34,17 +40,6 @@ const defaultKeywords = [
   'ChatGPT integration',
   'AI chatbot development',
   'GPT workflow automation',
-  // Development stack
-  'full stack development',
-  'Next.js development',
-  'React development',
-  'Node.js backend development',
-  'custom software development',
-  'web development services',
-  // Other service verticals
-  'WordPress development',
-  'mobile app development',
-  'React Native developer',
   // Marketplace / trust signals
   'freelance developer',
   'Upwork developer',
@@ -318,13 +313,10 @@ export function generatePersonSchema() {
     knowsAbout: [
       'AI Automation',
       'Machine Learning',
-      'Full Stack Web Development',
       'React',
       'Next.js',
       'Node.js',
       'Python',
-      'WordPress',
-      'React Native',
       'n8n',
       'Make.com',
       'OpenAI API',
@@ -354,10 +346,9 @@ export function generateLocalBusinessSchema() {
       name: 'Worldwide',
     },
     serviceType: [
-      'AI Automation',
-      'Full Stack Development',
-      'WordPress Development',
-      'Mobile App Development',
+      'AI Support Agent',
+      'Invoice Processing Automation',
+      'Document Intelligence System',
     ],
     priceRange: '$$',
     openingHoursSpecification: {

@@ -2,11 +2,11 @@
 
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { ArrowRight, Bot, Code, Smartphone, Globe, Calendar } from 'lucide-react';
+import { ArrowRight, Bot, Receipt, FileText, Calendar } from 'lucide-react';
 import { siteConfig } from '../config/site';
 
 const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
-    Bot, Code, Smartphone, Globe,
+    Bot, Receipt, FileText,
 };
 
 export default function Hero() {
@@ -107,7 +107,9 @@ export default function Hero() {
                     className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-14 sm:mb-20"
                 >
                     <motion.a
-                        href={hero.cta.primary.href}
+                        href={personal.booking.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="group relative overflow-hidden rounded-2xl px-6 sm:px-8 py-3.5 sm:py-4 font-semibold text-sm sm:text-base shadow-lg w-full sm:w-auto text-center"
                         whileHover={{ scale: 1.04, boxShadow: "0 20px 50px rgba(14,165,233,0.35)" }}
                         whileTap={{ scale: 0.96 }}
@@ -118,24 +120,22 @@ export default function Hero() {
                                 backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4, #14b8a6)',
                             }}
                         />
-                        <span className="relative z-10 text-white flex items-center gap-2">
-                            {hero.cta.primary.label}
-                            <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                        <span className="relative z-10 text-white flex items-center justify-center gap-2">
+                            <Calendar className="w-4 h-4 text-emerald-400" />
+                            {personal.booking.label}
+                            <span className="text-xs text-emerald-400/70 font-normal">· {personal.booking.duration}</span>
                         </span>
                     </motion.a>
 
                     <motion.a
-                        href={personal.booking.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="glass px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-semibold text-sm sm:text-base group w-full sm:w-auto text-center border border-emerald-500/20 hover:border-emerald-500/40 transition-colors"
-                        whileHover={{ scale: 1.04, backgroundColor: "rgba(16,185,129,0.08)" }}
+                        href={hero.cta.primary.href}
+                        className="glass px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-semibold text-sm sm:text-base group w-full sm:w-auto text-center border border-white/10 hover:border-white/20 transition-colors"
+                        whileHover={{ scale: 1.04, backgroundColor: "rgba(255,255,255,0.08)" }}
                         whileTap={{ scale: 0.96 }}
                     >
                         <span className="text-white flex items-center justify-center gap-2">
-                            <Calendar className="w-4 h-4 text-emerald-400" />
-                            {personal.booking.label}
-                            <span className="text-xs text-emerald-400/70 font-normal">· {personal.booking.duration}</span>
+                            {hero.cta.primary.label}
+                            <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                         </span>
                     </motion.a>
                 </motion.div>

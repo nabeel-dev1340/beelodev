@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import Link from 'next/link';
 import { Bot, BarChart3, ShoppingCart, Smartphone, Zap, Activity, ArrowUpRight } from 'lucide-react';
 import { projects } from '../config/projects';
+import { siteConfig } from '../config/site';
 
 const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
     Bot, BarChart3, ShoppingCart, Smartphone, Zap, Activity,
@@ -45,7 +46,7 @@ export default function Portfolio() {
                         className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-6"
                         whileHover={{ scale: 1.05 }}
                     >
-                        <span className="text-sm font-mono text-electric-teal">PORTFOLIO</span>
+                        <span className="text-sm font-mono text-electric-teal">CASE STUDIES</span>
                     </motion.div>
                     <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-bold mb-4">
                         <span className="text-white">Featured </span>
@@ -57,7 +58,7 @@ export default function Portfolio() {
                         </span>
                     </h2>
                     <p className="text-neutral-400 text-lg max-w-xl mx-auto">
-                        Real work. Real results. Here&apos;s what we&apos;ve built for clients around the world.
+                        Proof these systems work. Real builds, real metrics, and the outcomes you can expect.
                     </p>
                 </motion.div>
 
@@ -192,12 +193,14 @@ export default function Portfolio() {
                     transition={{ delay: 0.6 }}
                 >
                     <motion.a
-                        href="#contact"
+                        href={siteConfig.personal.booking.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 glass px-8 py-4 rounded-xl text-sm font-semibold text-white"
                         whileHover={{ scale: 1.04, backgroundColor: "rgba(255,255,255,0.1)" }}
                         whileTap={{ scale: 0.96 }}
                     >
-                        Have a project in mind? Let&apos;s talk
+                        Book a Free Discovery Call
                         <ArrowUpRight className="w-4 h-4" />
                     </motion.a>
                 </motion.div>

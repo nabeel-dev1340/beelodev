@@ -10,6 +10,7 @@ export default function Testimonials() {
     const isInView = useInView(ref, { once: true, margin: "-80px" });
 
     const { items: testimonials, aggregateRating, aggregateLabel, trustBanner } = siteConfig.testimonials;
+    const platformUrls = new Map(siteConfig.platformStats.platforms.map((p) => [p.name, p.url] as const));
 
     const stagger = {
         hidden: { opacity: 0 },
@@ -130,13 +131,21 @@ export default function Testimonials() {
                                     </div>
 
                                     {/* Platform badge */}
-                                    <a
-                                        href="#"
-                                        className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-medium text-neutral-500 bg-white/[0.04] border border-white/[0.06] hover:text-white hover:border-white/[0.12] transition-colors flex-shrink-0"
-                                    >
-                                        {t.platform}
-                                        <ExternalLink className="w-2.5 h-2.5" />
-                                    </a>
+                                    {platformUrls.get(t.platform) ? (
+                                        <a
+                                            href={platformUrls.get(t.platform)}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-medium text-neutral-500 bg-white/[0.04] border border-white/[0.06] hover:text-white hover:border-white/[0.12] transition-colors flex-shrink-0"
+                                        >
+                                            {t.platform}
+                                            <ExternalLink className="w-2.5 h-2.5" />
+                                        </a>
+                                    ) : (
+                                        <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-medium text-neutral-500 bg-white/[0.04] border border-white/[0.06] flex-shrink-0">
+                                            {t.platform}
+                                        </span>
+                                    )}
                                 </div>
 
                                 {/* Hover glow */}

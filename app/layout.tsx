@@ -7,7 +7,7 @@ import StructuredData from "./components/StructuredData";
 export const metadata: Metadata = generateSEOMetadata({
   title: "Beelodev — Build Beyond Limits",
   description:
-    "AI automation, full-stack development, WordPress, and mobile apps — built by Beelodev to help your business scale faster, smarter, and further.",
+    "Three proven automation systems for support, invoicing, and document intelligence — installed by Beelodev to cut busywork, reduce costs, and help you scale without hiring.",
 });
 
 export default function RootLayout({

@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Bot, Receipt, FileText, CheckCircle2 } from 'lucide-react';
+import { Bot, Receipt, FileText, CheckCircle2, Calendar } from 'lucide-react';
 import { siteConfig } from '../config/site';
 
 const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
@@ -14,6 +14,7 @@ export default function AutomationSystems() {
     const isInView = useInView(ref, { once: true, margin: "-80px" });
 
     const { title, systems } = siteConfig.automationSystems;
+    const bookingUrl = siteConfig.personal.booking.url;
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -35,7 +36,7 @@ export default function AutomationSystems() {
     };
 
     return (
-        <section className="py-20 sm:py-32 px-4 sm:px-6 relative overflow-hidden" id="automation-systems" ref={ref}>
+        <section className="py-20 sm:py-32 px-4 sm:px-6 relative overflow-hidden" id="systems" ref={ref}>
             {/* Background Elements */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full pointer-events-none">
                 <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-[100px]" />
@@ -116,6 +117,16 @@ export default function AutomationSystems() {
                                         <p className="text-sm font-mono font-medium tracking-wide flex items-center gap-2" style={{ color: system.accent }}>
                                             <span className="opacity-80">{system.closingLine}</span>
                                         </p>
+
+                                        <a
+                                            href={bookingUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
+                                        >
+                                            <Calendar className="w-4 h-4" style={{ color: system.accent }} />
+                                            Book a Free Discovery Call
+                                        </a>
                                     </div>
 
                                     {/* Hover specific glow */}

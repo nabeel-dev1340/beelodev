@@ -14,9 +14,9 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <PlatformStats />
         <AutomationSystems />
         <Packages />
+        <PlatformStats />
         <Portfolio />
         <Testimonials />
         <Contact />
