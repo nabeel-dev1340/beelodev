@@ -117,4 +117,23 @@ export const projects: Project[] = [
             '/projects/lead_scoring_automation/lead_scoring_automation_2.png',
         ],
     },
+    {
+        slug: 'employee-reports-evaluation-bot',
+        title: 'AI Employee Report Evaluation Bot',
+        category: 'AI Automation',
+        shortDescription:
+            'Telegram + Zapier + GPT-4 system that scores daily employee reports, sends structured feedback, and delivers the manager an executive summary within minutes.',
+        fullDescription:
+            'For this client, I built an automated QA layer around their daily employee reports so the manager no longer has to manually review each one. Employees submit their updates through a Telegram bot, where a Zapier workflow validates required sections and sends the content to OpenAI GPT-4. The AI evaluates reports against 8 quality criteria—numbers, deadlines, risks, blockers, links, and next steps—then sends each employee a private scored breakdown and improvement suggestions. In parallel, it generates a concise executive summary for the manager highlighting scores, gaps, risks, and decisions waiting on them. All results are logged in Google Sheets so performance can be tracked over time and accountability stays consistent across the entire team.',
+        metrics: [
+            'Telegram intake + Zapier workflow',
+            'GPT-4 quality scoring across 8 criteria',
+            'Instant employee feedback messages',
+            'Executive summaries + Google Sheets logging',
+        ],
+        accent: '#14b8a6',
+        featured: true,
+        icon: 'Bot',
+        images: ['/projects/employee_reports_evaluation/employee_reports_evaluation_1.png'],
+    },
 ];
