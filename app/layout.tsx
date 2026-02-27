@@ -4,6 +4,7 @@ import "./globals.css";
 import MeshGradient from "./components/MeshGradient";
 import { generateMetadata as generateSEOMetadata } from "./lib/seo";
 import StructuredData from "./components/StructuredData";
+import { Analytics } from "@vercel/analytics/next"
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -49,6 +50,7 @@ export default function RootLayout({
         <StructuredData />
         <MeshGradient />
         {children}
+        <Analytics />
       </body>
     </html>
   );
