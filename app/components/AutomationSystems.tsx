@@ -2,6 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import Link from 'next/link';
 import { Bot, Receipt, FileText, CheckCircle2, Calendar } from 'lucide-react';
 import { siteConfig } from '../config/site';
 
@@ -117,6 +118,14 @@ export default function AutomationSystems() {
                                         <p className="text-sm font-mono font-medium tracking-wide flex items-center gap-2" style={{ color: system.accent }}>
                                             <span className="opacity-80">{system.closingLine}</span>
                                         </p>
+
+                                        <Link
+                                            href={`/systems/${system.slug}`}
+                                            className="mt-4 inline-flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold border"
+                                            style={{ color: system.accent, borderColor: `${system.accent}40`, backgroundColor: `${system.accent}12` }}
+                                        >
+                                            View details
+                                        </Link>
 
                                         <a
                                             href={bookingUrl}

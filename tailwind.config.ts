@@ -25,9 +25,9 @@ export default {
                 'dark-500': '#0a0a0f',
             },
             fontFamily: {
-                display: ['Syne', 'sans-serif'],
-                body: ['DM Sans', 'sans-serif'],
-                mono: ['JetBrains Mono', 'monospace'],
+                display: ['var(--font-syne)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                body: ['var(--font-dm-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                mono: ['var(--font-jetbrains-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
             },
             animation: {
                 'gradient-x': 'gradient-x 6s ease infinite',

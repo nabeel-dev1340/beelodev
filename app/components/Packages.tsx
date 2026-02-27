@@ -2,6 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import Link from 'next/link';
 import { Check, Calendar, Bot, Receipt, FileText } from 'lucide-react';
 import { siteConfig } from '../config/site';
 
@@ -116,6 +117,16 @@ export default function Packages() {
                                     </div>
 
                                     <p className="text-neutral-500 text-sm mb-6 ml-12">{plan.tagline}</p>
+
+                                    <div className="mb-5 ml-12">
+                                        <Link
+                                            href={`/systems/${plan.slug}`}
+                                            className="text-sm font-semibold"
+                                            style={{ color: plan.accent }}
+                                        >
+                                            View details
+                                        </Link>
+                                    </div>
 
                                     {/* Best for + Timeline */}
                                     <div className="mb-6 ml-12">

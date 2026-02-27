@@ -465,6 +465,21 @@ export function generateFAQSchema() {
   };
 }
 
+export function generateFAQPageSchema(faqs: Array<{ question: string; answer: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(({ question, answer }) => ({
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: answer,
+      },
+    })),
+  };
+}
+
 /**
  * Schema.org CreativeWork for an individual project page.
  * Gives Google structured context about each case study.

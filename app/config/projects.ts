@@ -1,3 +1,5 @@
+import type { SystemSlug } from './systems';
+
 export type Project = {
     slug: string;
     title: string;
@@ -10,6 +12,7 @@ export type Project = {
     icon?: 'Bot' | 'BarChart3' | 'ShoppingCart' | 'Smartphone' | 'Zap' | 'Activity';
     images: string[];
     liveUrl?: string;
+    systems?: SystemSlug[];
 };
 
 // Add your real projects here.
@@ -32,6 +35,7 @@ export const projects: Project[] = [
             '/projects/foreclosuredatahub/foreclosuredatahub_2.png',
         ],
         liveUrl: 'https://foreclosuredatahub.com',
+        systems: ['docu-brain'],
     },
     {
         slug: 'ai-website-classification-pipeline',
@@ -46,6 +50,7 @@ export const projects: Project[] = [
         featured: false,
         icon: 'Bot',
         images: ['/projects/ai_websites_classification/ai_websites_classification_1.png'],
+        systems: ['docu-brain'],
     },
     {
         slug: 'scoutbrief-mvp-automation',
@@ -64,6 +69,7 @@ export const projects: Project[] = [
             '/projects/scoutbrief/scoutbrief_2.png',
             '/projects/scoutbrief/scoutbrief_3.png',
         ],
+        systems: ['docu-brain'],
     },
     {
         slug: 'smart-email-classification-system',
@@ -81,6 +87,7 @@ export const projects: Project[] = [
             '/projects/smart_email_classification/smart_email_classification_1.png',
             '/projects/smart_email_classification/smart_email_classification_2.png',
         ],
+        systems: ['ai-support-agent'],
     },
     {
         slug: 'scoring-articles-automation',
@@ -99,6 +106,7 @@ export const projects: Project[] = [
             '/projects/scoring_articles_automation/scoring_articles_automation_2.png',
             '/projects/scoring_articles_automation/scoring_articles_automation_3.png',
         ],
+        systems: ['docu-brain'],
     },
     {
         slug: 'lead-scoring-automation',
@@ -116,6 +124,7 @@ export const projects: Project[] = [
             '/projects/lead_scoring_automation/lead_scoring_automation_1.png',
             '/projects/lead_scoring_automation/lead_scoring_automation_2.png',
         ],
+        systems: ['docu-brain'],
     },
     {
         slug: 'employee-reports-evaluation-bot',
@@ -135,5 +144,6 @@ export const projects: Project[] = [
         featured: true,
         icon: 'Bot',
         images: ['/projects/employee_reports_evaluation/employee_reports_evaluation_1.png'],
+        systems: ['docu-brain'],
     },
 ];

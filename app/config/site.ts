@@ -65,6 +65,7 @@ export const siteConfig = {
         title: "Automation Systems That Run Your Business",
         systems: [
             {
+                slug: 'ai-support-agent',
                 name: "24/7 AI Support Agent",
                 shortHeadline: "Cut support costs by 60% while improving response times and customer satisfaction.",
                 bullets: [
@@ -78,6 +79,7 @@ export const siteConfig = {
                 accent: '#0ea5e9',
             },
             {
+                slug: 'auto-invoicing',
                 name: "Zero-Touch Invoice Processing",
                 shortHeadline: "Eliminate invoice data entry and prevent accounting mistakes that cost money.",
                 bullets: [
@@ -91,6 +93,7 @@ export const siteConfig = {
                 accent: '#06b6d4',
             },
             {
+                slug: 'docu-brain',
                 name: "Smart Document Intelligence System",
                 shortHeadline: "Transform document chaos into organized, searchable business intelligence.",
                 bullets: [
@@ -177,6 +180,7 @@ export const siteConfig = {
     packages: {
         plans: [
             {
+                slug: 'ai-support-agent',
                 name: 'AI Support Agent',
                 tagline: 'Cut support costs while improving customer experience',
                 price: '$1099',
@@ -199,6 +203,7 @@ export const siteConfig = {
                 popular: false,
             },
             {
+                slug: 'auto-invoicing',
                 name: 'Auto-Invoicing',
                 tagline: 'Eliminate invoice data entry and prevent accounting errors',
                 price: '$1299',
@@ -221,6 +226,7 @@ export const siteConfig = {
                 popular: true,
             },
             {
+                slug: 'docu-brain',
                 name: 'Docu-Brain',
                 tagline: 'Transform document chaos into searchable business intelligence',
                 price: '$1999',
@@ -391,11 +397,14 @@ export const siteConfig = {
     // ── Footer ────────────────────────────────────
     footer: {
         services: [
-            { label: 'AI Support Agent', href: '#pricing' },
-            { label: 'Auto-Invoicing', href: '#pricing' },
-            { label: 'Docu-Brain', href: '#pricing' },
+            { label: 'AI Support Agent', href: '/systems/ai-support-agent' },
+            { label: 'Auto-Invoicing', href: '/systems/auto-invoicing' },
+            { label: 'Docu-Brain', href: '/systems/docu-brain' },
         ],
         company: [
+            { label: 'About', href: '/about' },
+            { label: 'Process', href: '/process' },
+            { label: 'Systems', href: '/systems' },
             { label: 'Portfolio', href: '#portfolio' },
             { label: 'Reviews', href: '#testimonials' },
             { label: 'Pricing', href: '#pricing' },
