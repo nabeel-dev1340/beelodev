@@ -20,6 +20,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly' as const,
       priority: 0.9,
     },
+
+    // Cost calculators (paid traffic landing pages)
+    {
+      url: `${baseUrl}/invoice-processing-cost-calculator`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/support-cost-calculator`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/document-intelligence-cost-calculator`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    },
     ...systemSlugs.map((slug) => ({
       url: `${baseUrl}/systems/${slug}`,
       lastModified: currentDate,

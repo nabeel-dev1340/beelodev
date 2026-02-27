@@ -61,6 +61,27 @@ export default function AutomationSystems() {
                     <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-bold mb-6 max-w-4xl mx-auto leading-tight">
                         <span className="text-white">{title}</span>
                     </h2>
+
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
+                        <Link
+                            href="/support-cost-calculator"
+                            className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white border border-white/10 bg-white/5 hover:bg-white/10 transition-colors w-full sm:w-auto"
+                        >
+                            Support Cost Calculator
+                        </Link>
+                        <Link
+                            href="/invoice-processing-cost-calculator"
+                            className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white border border-white/10 bg-white/5 hover:bg-white/10 transition-colors w-full sm:w-auto"
+                        >
+                            Invoice Cost Calculator
+                        </Link>
+                        <Link
+                            href="/document-intelligence-cost-calculator"
+                            className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white border border-white/10 bg-white/5 hover:bg-white/10 transition-colors w-full sm:w-auto"
+                        >
+                            Document Cost Calculator
+                        </Link>
+                    </div>
                 </motion.div>
 
                 {/* Systems Grid */}
