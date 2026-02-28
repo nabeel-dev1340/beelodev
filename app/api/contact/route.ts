@@ -1,5 +1,6 @@
 import { Resend } from 'resend';
 import { NextRequest, NextResponse } from 'next/server';
+import { getPostHogClient } from '@/app/lib/posthog-server';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -50,11 +51,42 @@ export async function POST(request: NextRequest) {
 
         if (error) {
             console.error('Resend error:', error);
+            // Capture server-side email delivery failure
+            const posthog = getPostHogClient();
+            posthog.capture({
+                distinctId: email,
+                event: 'server_contact_form_failed',
+                properties: {
+                    service,
+                    budget,
+                    error_message: error.message ?? 'Resend delivery error',
+                },
+            });
             return NextResponse.json(
                 { error: 'Failed to send email' },
                 { status: 500 }
             );
         }
+
+        // Capture server-side contact form submission success and identify the lead
+        const posthog = getPostHogClient();
+        posthog.identify({
+            distinctId: email,
+            properties: {
+                name,
+                email,
+            },
+        });
+        posthog.capture({
+            distinctId: email,
+            event: 'server_contact_form_submitted',
+            properties: {
+                name,
+                service,
+                budget,
+                resend_id: data?.id,
+            },
+        });
 
         return NextResponse.json(
             { message: 'Email sent successfully', id: data?.id },

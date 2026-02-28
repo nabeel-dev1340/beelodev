@@ -4,6 +4,7 @@ import { motion, useInView } from 'framer-motion';
 import { useState, useRef } from 'react';
 import { Mail, MessageSquare, MapPin, Send, ArrowUpRight, Clock, Calendar, Loader2, AlertCircle, CheckCircle } from 'lucide-react';
 import { siteConfig } from '../config/site';
+import posthog from 'posthog-js';
 
 const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
     Mail, MessageSquare, MapPin,
@@ -43,6 +44,18 @@ export default function Contact() {
                 throw new Error(data.error || 'Failed to send message');
             }
 
+            // Identify the user by their email on successful submission
+            posthog.identify(formData.email, {
+                name: formData.name,
+                email: formData.email,
+            });
+
+            // Capture successful contact form submission
+            posthog.capture('contact_form_submitted', {
+                service: formData.service,
+                budget: formData.budget,
+            });
+
             setShowSuccess(true);
             // Reset form
             setFormData({
@@ -53,7 +66,15 @@ export default function Contact() {
                 projectDetails: '',
             });
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'An error occurred. Please try again.');
+            const errorMessage = err instanceof Error ? err.message : 'An error occurred. Please try again.';
+            // Capture form submission error
+            posthog.capture('contact_form_error', {
+                error_message: errorMessage,
+                service: formData.service,
+                budget: formData.budget,
+            });
+            posthog.captureException(err);
+            setError(errorMessage);
         } finally {
             setIsLoading(false);
         }

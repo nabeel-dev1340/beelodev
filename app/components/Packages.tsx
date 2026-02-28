@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import Link from 'next/link';
 import { Check, Calendar, Bot, Receipt, FileText } from 'lucide-react';
 import { siteConfig } from '../config/site';
+import posthog from 'posthog-js';
 
 const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
     Bot, Receipt, FileText,
@@ -123,6 +124,12 @@ export default function Packages() {
                                             href={`/systems/${plan.slug}`}
                                             className="text-sm font-semibold"
                                             style={{ color: plan.accent }}
+                                            onClick={() => posthog.capture('pricing_plan_details_clicked', {
+                                                plan_name: plan.name,
+                                                plan_slug: plan.slug,
+                                                plan_price: plan.price,
+                                                is_popular: plan.popular ?? false,
+                                            })}
                                         >
                                             View details
                                         </Link>
@@ -199,6 +206,12 @@ export default function Packages() {
                                             boxShadow: plan.popular ? `0 8px 30px ${plan.accent}40` : 'none',
                                         }}
                                         whileTap={{ scale: 0.97 }}
+                                        onClick={() => posthog.capture('pricing_plan_cta_clicked', {
+                                            plan_name: plan.name,
+                                            plan_slug: plan.slug,
+                                            plan_price: plan.price,
+                                            is_popular: plan.popular ?? false,
+                                        })}
                                     >
                                         <span className="flex items-center justify-center gap-2">
                                             Book call for {plan.name}

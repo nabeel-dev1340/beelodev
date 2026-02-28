@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { ArrowRight, Bot, Receipt, FileText, Calendar } from 'lucide-react';
 import { siteConfig } from '../config/site';
+import posthog from 'posthog-js';
 
 const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
     Bot, Receipt, FileText,
@@ -115,6 +116,10 @@ export default function Hero() {
                         className="group relative isolate overflow-hidden rounded-2xl px-6 sm:px-8 py-3.5 sm:py-4 font-semibold text-sm sm:text-base shadow-lg w-full sm:w-auto text-center ring-1 ring-white/10 hover:ring-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
                         whileHover={{ scale: 1.04, boxShadow: "0 22px 60px rgba(14,165,233,0.38)" }}
                         whileTap={{ scale: 0.96 }}
+                        onClick={() => posthog.capture('booking_cta_clicked', {
+                            location: 'hero',
+                            label: personal.booking.label,
+                        })}
                     >
                         <div
                             className="absolute inset-0"
@@ -150,6 +155,10 @@ export default function Hero() {
                         className="glass-strong px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-semibold text-sm sm:text-base group w-full sm:w-auto text-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
                         whileHover={{ scale: 1.04, backgroundColor: "rgba(255,255,255,0.10)" }}
                         whileTap={{ scale: 0.96 }}
+                        onClick={() => posthog.capture('hero_primary_cta_clicked', {
+                            label: hero.cta.primary.label,
+                            href: hero.cta.primary.href,
+                        })}
                     >
                         <span className="text-white flex items-center justify-center gap-2">
                             {hero.cta.primary.label}
