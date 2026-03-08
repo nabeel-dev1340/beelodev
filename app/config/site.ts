@@ -42,8 +42,9 @@ export const siteConfig = {
             line1: 'Stop Hiring.',
             line2: 'Start Scaling.',
         },
+        // SEO: keyword optimization — keyword-rich subtitle below H1
         subtitle:
-            'Choose one of 3 proven automation systems and we will install it for your business - fast, secure, and built to scale.',
+            'AI automation systems that replace manual work — built for small and mid-sized businesses.',
         cta: {
             primary: { label: 'View the 3 Systems', href: '#systems' },
             secondary: { label: 'Book a Free Discovery Call', href: '#book' },
@@ -61,8 +62,9 @@ export const siteConfig = {
     },
 
     // ── Automation Systems ────────────────────────
+    // SEO: keyword optimization
     automationSystems: {
-        title: "Automation Systems That Run Your Business",
+        title: "3 AI Automation Systems for Small Business",
         systems: [
             {
                 slug: 'ai-support-agent',
@@ -116,7 +118,7 @@ export const siteConfig = {
                 name: 'Upwork',
                 logo: '/icons/upwork-icon.svg',
                 profileImage: '/profiles/upwork.png',
-                profileImageAlt: 'Upwork profile screenshot',
+                profileImageAlt: 'Beelodev Upwork profile — Top Rated AI automation developer',
                 badge: 'Top Rated',
                 badgeIcon: 'Award',
                 rating: '5.0',
@@ -130,7 +132,7 @@ export const siteConfig = {
                 name: 'Fiverr',
                 logo: '/icons/fiverr-icon.svg',
                 profileImage: '/profiles/fiverr.png',
-                profileImageAlt: 'Fiverr profile screenshot',
+                profileImageAlt: 'Beelodev Fiverr profile — Level 1 automation seller',
                 badge: 'Level 1 Seller',
                 badgeIcon: 'TrendingUp',
                 rating: '4.9',
@@ -409,6 +411,12 @@ export const siteConfig = {
             { label: 'Reviews', href: '#testimonials' },
             { label: 'Pricing', href: '#pricing' },
             { label: 'Contact', href: '#contact' },
+        ],
+        // SEO: calculator pages for internal linking
+        calculators: [
+            { label: 'Support Cost Calculator', href: '/support-cost-calculator' },
+            { label: 'Invoice Cost Calculator', href: '/invoice-processing-cost-calculator' },
+            { label: 'Document Cost Calculator', href: '/document-intelligence-cost-calculator' },
         ],
         socials: [
             { label: 'Upwork', href: 'https://www.upwork.com/freelancers/syednabeel24' },

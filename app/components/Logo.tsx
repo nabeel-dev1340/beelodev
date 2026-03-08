@@ -4,7 +4,7 @@ export default function Logo({ size = 32, className = '' }: { size?: number; cla
     return (
         <Image
             src="/logo.svg"
-            alt="Beelodev Logo"
+            alt="Beelodev AI automation agency logo"
             width={size}
             height={size}
             className={className}

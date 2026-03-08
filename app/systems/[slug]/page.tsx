@@ -8,6 +8,7 @@ import {
   generateMetadata as generateSEOMetadata,
   generateBreadcrumbsSchema,
   generateFAQPageSchema,
+  generateSystemServiceSchema,
   siteUrl,
 } from '../../lib/seo';
 import { siteConfig } from '../../config/site';
@@ -33,9 +34,24 @@ export async function generateMetadata({ params }: SystemPageProps) {
     });
   }
 
+  // SEO: keyword optimization — exact titles per spec
+  const pageTitles: Record<string, string> = {
+    'ai-support-agent': 'AI Customer Support Agent for Small Business',
+    'auto-invoicing': 'Invoice Processing Automation — QuickBooks & Xero',
+    'docu-brain': 'Document Intelligence Automation System',
+  };
+  const metaDescriptions: Record<string, string> = {
+    'ai-support-agent':
+      'Deploy an AI customer support agent that cuts costs by 60%. Instant answers, human handoff, multi-channel. Setup in 7–14 days. Book a free call.',
+    'auto-invoicing':
+      'Automate invoice processing end-to-end. Email to QuickBooks or Xero with zero manual entry. Eliminate errors, close faster. From $1,299.',
+    'docu-brain':
+      'Turn document chaos into searchable business intelligence. AI-powered extraction, bulk processing, instant search. Starting at $1,999.',
+  };
+
   return generateSEOMetadata({
-    title: system.name,
-    description: system.shortHeadline,
+    title: pageTitles[system.slug] ?? system.name,
+    description: metaDescriptions[system.slug] ?? system.shortHeadline,
     path: `/systems/${system.slug}`,
     keywords: system.keywords,
     type: 'article',
@@ -60,6 +76,7 @@ export default async function SystemPage({ params }: SystemPageProps) {
   ]);
 
   const faqSchema = generateFAQPageSchema(system.faqs);
+  const serviceSchema = generateSystemServiceSchema(system);
 
   return (
     <>
@@ -68,6 +85,7 @@ export default async function SystemPage({ params }: SystemPageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
 
       <article className="min-h-screen py-12 sm:py-20 px-4 sm:px-6">
         <div className="max-w-5xl mx-auto">
@@ -120,9 +138,56 @@ export default async function SystemPage({ params }: SystemPageProps) {
             <p className="text-xs font-mono uppercase tracking-wider mb-3" style={{ color: system.accent }}>
               {system.priceLabel} · Typical timeline {system.timeline}
             </p>
-            <h1 className="font-display text-3xl sm:text-5xl font-bold text-white mb-5">{system.name}</h1>
+            {/* SEO: keyword-rich H1 per system */}
+            <h1 className="font-display text-3xl sm:text-5xl font-bold text-white mb-5">
+              {system.slug === 'ai-support-agent' && 'AI Customer Support Agent'}
+              {system.slug === 'auto-invoicing' && 'Invoice Processing Automation'}
+              {system.slug === 'docu-brain' && 'Document Intelligence System'}
+              {!['ai-support-agent', 'auto-invoicing', 'docu-brain'].includes(system.slug) && system.name}
+            </h1>
 
-            <p className="text-neutral-300 leading-relaxed mb-6">{system.longDescription}</p>
+            {/* SEO: intro with primary keyword in first 100 words */}
+            <p className="text-neutral-300 leading-relaxed mb-6">
+              {system.slug === 'ai-support-agent' && (
+                <>An AI customer support agent for small business resolves repetitive questions instantly and cuts support costs by up to 60%. </>
+              )}
+              {system.slug === 'auto-invoicing' && (
+                <>Invoice processing automation eliminates manual data entry and syncs directly with QuickBooks and Xero. </>
+              )}
+              {system.slug === 'docu-brain' && (
+                <>A document intelligence system turns PDFs and files into searchable business intelligence. </>
+              )}
+              {system.longDescription}
+            </p>
+
+            {/* SEO: internal link to relevant calculator with keyword-rich anchor */}
+            {system.slug === 'ai-support-agent' && (
+              <p className="text-neutral-400 text-sm mb-6">
+                See how much you could save: use our{' '}
+                <Link href="/support-cost-calculator" className="text-electric-blue hover:underline">
+                  customer support cost calculator
+                </Link>
+                .
+              </p>
+            )}
+            {system.slug === 'auto-invoicing' && (
+              <p className="text-neutral-400 text-sm mb-6">
+                See how much you could save: use our{' '}
+                <Link href="/invoice-processing-cost-calculator" className="hover:underline" style={{ color: system.accent }}>
+                  invoice processing cost calculator
+                </Link>
+                .
+              </p>
+            )}
+            {system.slug === 'docu-brain' && (
+              <p className="text-neutral-400 text-sm mb-6">
+                See how much you could save: use our{' '}
+                <Link href="/document-intelligence-cost-calculator" className="hover:underline" style={{ color: system.accent }}>
+                  document processing cost calculator
+                </Link>
+                .
+              </p>
+            )}
 
             <div className="flex flex-col sm:flex-row gap-3 sm:items-center mb-10">
               <a
@@ -142,12 +207,19 @@ export default async function SystemPage({ params }: SystemPageProps) {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <section aria-label="Who it is for" className="border border-white/10 bg-white/5 rounded-2xl p-6">
-                <h2 className="font-display text-xl font-bold text-white mb-3">Best for</h2>
+                <h2 className="font-display text-xl font-bold text-white mb-3">
+                  {system.slug === 'ai-support-agent' && 'Who This AI Support Agent Is For'}
+                  {system.slug === 'auto-invoicing' && 'Who Invoice Automation Is For'}
+                  {system.slug === 'docu-brain' && 'Who Document Intelligence Is For'}
+                  {!['ai-support-agent', 'auto-invoicing', 'docu-brain'].includes(system.slug) && 'Best for'}
+                </h2>
                 <p className="text-neutral-300 leading-relaxed">{system.bestFor}</p>
               </section>
 
               <section aria-label="Integrations" className="border border-white/10 bg-white/5 rounded-2xl p-6">
-                <h2 className="font-display text-xl font-bold text-white mb-4">Integrations</h2>
+                <h2 className="font-display text-xl font-bold text-white mb-4">
+                  {system.slug === 'auto-invoicing' ? 'QuickBooks & Xero Integration' : 'Integrations'}
+                </h2>
                 <div className="flex flex-wrap gap-2">
                   {system.integrations.map((i) => (
                     <span
@@ -188,7 +260,7 @@ export default async function SystemPage({ params }: SystemPageProps) {
 
           <section aria-label="Case studies" className="mt-12">
             <div className="flex items-end justify-between gap-4 mb-6">
-              <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">Related case studies</h2>
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">See It In Action — Related Case Studies</h2>
               <Link
                 href="/#portfolio"
                 className="text-sm font-medium inline-flex items-center gap-2"
@@ -226,7 +298,12 @@ export default async function SystemPage({ params }: SystemPageProps) {
           </section>
 
           <section aria-label="FAQ" className="mt-12">
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-white mb-6">FAQ</h2>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-white mb-6">
+              {system.slug === 'ai-support-agent' && 'AI Support Agent FAQ'}
+              {system.slug === 'auto-invoicing' && 'Invoice Automation Pricing & FAQ'}
+              {system.slug === 'docu-brain' && 'Document Intelligence Pricing & FAQ'}
+              {!['ai-support-agent', 'auto-invoicing', 'docu-brain'].includes(system.slug) && 'FAQ'}
+            </h2>
             <div className="space-y-4">
               {system.faqs.map((faq) => (
                 <details

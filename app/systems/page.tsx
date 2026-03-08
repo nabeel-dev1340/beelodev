@@ -2,21 +2,31 @@ import Link from 'next/link';
 import { ArrowUpRight, Calendar } from 'lucide-react';
 import { systems } from '../config/systems';
 import { siteConfig } from '../config/site';
-import { generateMetadata as generateSEOMetadata } from '../lib/seo';
+import { generateMetadata as generateSEOMetadata, generateBreadcrumbsSchema } from '../lib/seo';
 
+// SEO: keyword optimization
 export const metadata = generateSEOMetadata({
-  title: 'Automation Systems',
+  title: 'Automation Systems — AI Support, Invoice & Document Intelligence',
   description:
-    'Choose one of three proven automation systems: AI Support Agent, Auto-Invoicing, and Docu-Brain. Book a free discovery call to get a recommendation.',
+    'Choose from 3 AI automation systems for small business: AI Support Agent ($1099), Invoice Processing ($1299), Document Intelligence ($1999). Book a free call.',
   path: '/systems',
   keywords: ['automation systems', 'AI support agent', 'invoice processing automation', 'document intelligence system'],
 });
 
 export default function SystemsIndexPage() {
   const bookingUrl = siteConfig.personal.booking.url;
+  const breadcrumbSchema = generateBreadcrumbsSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Systems', url: '/systems' },
+  ]);
 
   return (
-    <main className="min-h-screen py-16 sm:py-24 px-4 sm:px-6">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <main className="min-h-screen py-16 sm:py-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <p className="text-xs font-mono uppercase tracking-wider text-electric-blue mb-4">
@@ -79,5 +89,6 @@ export default function SystemsIndexPage() {
         </div>
       </div>
     </main>
+    </>
   );
 }

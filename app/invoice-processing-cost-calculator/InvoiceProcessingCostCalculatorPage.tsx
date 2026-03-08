@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import { ArrowRight, Calendar, CheckCircle2 } from 'lucide-react';
 import { siteConfig } from '../config/site';
 import { calculateInvoiceProcessingCost } from '../lib/invoiceCostCalculator';
@@ -71,15 +72,16 @@ export default function InvoiceProcessingCostCalculatorPage() {
   return (
     <main className="min-h-screen py-16 sm:py-24 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto">
+        {/* SEO: keyword-rich H1 and intro */}
         <section className="text-center mb-14 sm:mb-20">
           <p className="text-xs font-mono uppercase tracking-wider text-electric-blue mb-4">
             Invoice Cost Calculator
           </p>
           <h1 className="font-display text-3xl sm:text-5xl font-bold text-white mb-5">
-            How Much Is Manual Invoice Processing Costing Your Business?
+            Invoice Processing Cost Calculator
           </h1>
           <p className="text-neutral-400 text-lg max-w-2xl mx-auto mb-9">
-            Most growing businesses underestimate this by 3-5x.
+            How much does invoice processing cost? See the real cost of manual vs automated invoicing. Most growing businesses underestimate this by 3–5x.
           </p>
           <a
             href="#calculator"
@@ -168,6 +170,24 @@ export default function InvoiceProcessingCostCalculatorPage() {
               constraints.
             </p>
             <p className="text-white font-semibold mt-4">If invoice volume increases, this cost grows with it.</p>
+
+            {/* SEO: Phase 4 — How We Calculate section */}
+            <h2 className="font-display text-xl font-bold text-white mt-10 mb-3">How We Calculate Invoice Processing Costs</h2>
+            <p className="text-neutral-400 text-sm max-w-2xl mx-auto leading-relaxed">
+              We multiply invoices per month by minutes per invoice and your hourly cost. The manual vs automated invoicing cost comparison shows what you spend today and what invoice processing automation could eliminate.
+            </p>
+
+            <h2 className="font-display text-xl font-bold text-white mt-8 mb-3">Ready to Eliminate This Cost?</h2>
+            <p className="text-neutral-400 text-sm max-w-2xl mx-auto mb-4">
+              Invoice processing automation syncs directly with QuickBooks and Xero. Book a free discovery call to see if it fits.
+            </p>
+            <Link
+              href="/systems/auto-invoicing"
+              className="mt-4 inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
+            >
+              Invoice processing automation details
+              <ArrowRight className="w-4 h-4" />
+            </Link>
 
             <a
               href="#solution"

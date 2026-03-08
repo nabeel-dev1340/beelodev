@@ -1,10 +1,11 @@
 import { generateMetadata as generateSEOMetadata, generateBreadcrumbsSchema, siteUrl } from '../lib/seo';
 import InvoiceProcessingCostCalculatorPage from './InvoiceProcessingCostCalculatorPage';
 
+// SEO: keyword optimization
 export const metadata = generateSEOMetadata({
   title: 'Invoice Processing Cost Calculator',
   description:
-    'Estimate how much manual invoice processing is costing your business each year, then see how Zero-Touch Invoice Processing removes the busywork.',
+    'See the real cost of manual invoice processing at your company and calculate your ROI from automation. Free calculator.',
   path: '/invoice-processing-cost-calculator',
   keywords: [
     'invoice processing cost calculator',
@@ -22,23 +23,23 @@ export default function Page() {
     { name: 'Invoice Processing Cost Calculator', url: '/invoice-processing-cost-calculator' },
   ]);
 
-  const webPageSchema = {
+  // SEO: WebApplication schema for calculator
+  const webApplicationSchema = {
     '@context': 'https://schema.org',
-    '@type': 'WebPage',
+    '@type': 'WebApplication',
     name: 'Invoice Processing Cost Calculator',
-    url: `${siteUrl}/invoice-processing-cost-calculator`,
     description:
-      'Calculate how much manual invoice processing is costing your business annually, then book a strategy call to eliminate the busywork.',
-    isPartOf: {
-      '@type': 'WebSite',
-      '@id': `${siteUrl}#website`,
-    },
+      'Calculate how much invoice processing costs and compare manual vs automated invoicing cost. Free business tool.',
+    url: `${siteUrl}/invoice-processing-cost-calculator`,
+    applicationCategory: 'BusinessApplication',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    isPartOf: { '@type': 'WebSite', '@id': `${siteUrl}#website` },
   };
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }} />
       <InvoiceProcessingCostCalculatorPage />
     </>
   );

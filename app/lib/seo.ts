@@ -160,10 +160,17 @@ export function generateMetadata({
 export function generateProjectMetadata(project: Project): Metadata {
   const path = `/projects/${project.slug}`;
   const url = `${siteUrl}${path}`;
-  const description = project.shortDescription;
+  const title = `${project.title} — Case Study`;
+  const description =
+    project.shortDescription.length > 155
+      ? project.shortDescription.slice(0, 152) + '...'
+      : project.shortDescription;
+  const cta = ' Book a free discovery call.';
+  const descriptionWithCta =
+    description.length + cta.length <= 160 ? description + cta : description;
   // Prefer the first project screenshot as the OG image for richer social previews
   const image =
-    project.images[0] ? `${siteUrl}${project.images[0]}` : `${siteUrl}/og-image.svg`;
+    project.images[0] ? `${siteUrl}${project.images[0]}` : `${siteUrl}/og-image.png`;
 
   const projectKeywords = [
     project.category,
@@ -177,16 +184,17 @@ export function generateProjectMetadata(project: Project): Metadata {
   ];
 
   return {
-    title: project.title,
-    description,
+    metadataBase: new URL(siteUrl),
+    title,
+    description: descriptionWithCta,
     keywords: projectKeywords,
     authors: [{ name: personal.name, url: siteUrl }],
     openGraph: {
       type: 'article',
       url,
       siteName,
-      title: `${project.title} | ${siteName}`,
-      description,
+      title: `${title} | ${siteName}`,
+      description: descriptionWithCta,
       images: [
         {
           url: image,
@@ -198,8 +206,8 @@ export function generateProjectMetadata(project: Project): Metadata {
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${project.title} | ${siteName}`,
-      description,
+      title: `${title} | ${siteName}`,
+      description: descriptionWithCta,
       images: [image],
       creator: `@${personal.brandName.toLowerCase()}`,
     },
@@ -238,6 +246,7 @@ export function generateWebSiteSchema() {
 }
 
 /** Schema.org Organization with correct logo ImageObject and numeric ratings. */
+// SEO: keyword optimization in description
 export function generateOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
@@ -251,7 +260,8 @@ export function generateOrganizationSchema() {
       width: 200,
       height: 60,
     },
-    description: defaultDescription,
+    description:
+      'AI automation agency building systems that eliminate busywork for small and mid-sized businesses.',
     email: personal.email,
     telephone: personal.phone,
     address: {
@@ -390,6 +400,40 @@ export function generateServicesSchema() {
       availability: 'https://schema.org/InStock',
     },
   }));
+}
+
+/** Schema.org Service for a single system page — includes price from packages. */
+export function generateSystemServiceSchema(system: {
+  slug: string;
+  name: string;
+  longDescription: string;
+  shortHeadline: string;
+}) {
+  const plan = siteConfig.packages.plans.find((p) => p.slug === system.slug);
+  const priceStr = plan?.price ?? null;
+  const price = priceStr ? parseFloat(priceStr.replace(/[^0-9.]/g, '')) : null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: system.name,
+    description: system.longDescription,
+    provider: {
+      '@type': 'Organization',
+      '@id': `${siteUrl}#organization`,
+      name: personal.brandName,
+      url: siteUrl,
+    },
+    areaServed: {
+      '@type': 'AdministrativeArea',
+      name: 'Worldwide',
+    },
+    serviceType: 'AI Automation',
+    offers: {
+      '@type': 'Offer',
+      availability: 'https://schema.org/InStock',
+      ...(price !== null && !Number.isNaN(price) && { price, priceCurrency: 'USD' }),
+    },
+  };
 }
 
 /** Schema.org Review entries from real client testimonials. */

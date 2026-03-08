@@ -24,10 +24,11 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 });
 
+// SEO: keyword optimization
 export const metadata: Metadata = generateSEOMetadata({
-  title: "Beelodev — Build Beyond Limits",
+  title: "AI Automation Systems for Small Business",
   description:
-    "Three proven automation systems for support, invoicing, and document intelligence — installed by Beelodev to cut busywork, reduce costs, and help you scale without hiring.",
+    "Beelodev builds AI automation systems for small business. Cut costs, eliminate busywork, and scale without hiring. Book a free consultation today.",
 });
 
 export default function RootLayout({

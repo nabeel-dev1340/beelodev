@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import { ArrowRight, Calendar, CheckCircle2 } from 'lucide-react';
 import { siteConfig } from '../config/site';
 import { calculateDocumentHandlingCost } from '../lib/documentIntelligenceCostCalculator';
@@ -71,15 +72,16 @@ export default function DocumentIntelligenceCostCalculatorPage() {
   return (
     <main className="min-h-screen py-16 sm:py-24 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto">
+        {/* SEO: keyword-rich H1 and intro */}
         <section className="text-center mb-14 sm:mb-20">
           <p className="text-xs font-mono uppercase tracking-wider text-electric-teal mb-4">
             Document Cost Calculator
           </p>
           <h1 className="font-display text-3xl sm:text-5xl font-bold text-white mb-5">
-            How Much Is Document Chaos Costing Your Business?
+            Document Processing Cost Calculator
           </h1>
           <p className="text-neutral-400 text-lg max-w-2xl mx-auto mb-9">
-            Searching, copying, and re-reading files is hidden overhead that compounds as you scale.
+            How much does document processing cost? Calculate document automation ROI. Searching, copying, and re-reading files is hidden overhead that compounds as you scale.
           </p>
           <a
             href="#calculator"
@@ -173,6 +175,24 @@ export default function DocumentIntelligenceCostCalculatorPage() {
               handoffs, or errors from outdated docs.
             </p>
             <p className="text-white font-semibold mt-4">As document volume grows, this overhead compounds.</p>
+
+            {/* SEO: Phase 4 — How We Calculate section */}
+            <h2 className="font-display text-xl font-bold text-white mt-10 mb-3">How We Calculate Document Processing Costs</h2>
+            <p className="text-neutral-400 text-sm max-w-2xl mx-auto leading-relaxed">
+              We estimate time lost to searching and extracting info from PDFs and files, then apply your team size and hourly cost. The document automation ROI shows what a document intelligence system could save.
+            </p>
+
+            <h2 className="font-display text-xl font-bold text-white mt-8 mb-3">Ready to Eliminate This Cost?</h2>
+            <p className="text-neutral-400 text-sm max-w-2xl mx-auto mb-4">
+              A document intelligence system turns files into searchable business intelligence. Book a free discovery call.
+            </p>
+            <Link
+              href="/systems/docu-brain"
+              className="mt-4 inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
+            >
+              Document intelligence system details
+              <ArrowRight className="w-4 h-4" />
+            </Link>
 
             <a
               href="#solution"

@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import { ArrowRight, Calendar, CheckCircle2 } from 'lucide-react';
 import { siteConfig } from '../config/site';
 import { calculateSupportHandlingCost } from '../lib/supportCostCalculator';
@@ -69,13 +70,14 @@ export default function SupportCostCalculatorPage() {
   return (
     <main className="min-h-screen py-16 sm:py-24 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto">
+        {/* SEO: keyword-rich H1 and intro */}
         <section className="text-center mb-14 sm:mb-20">
           <p className="text-xs font-mono uppercase tracking-wider text-electric-blue mb-4">Support Cost Calculator</p>
           <h1 className="font-display text-3xl sm:text-5xl font-bold text-white mb-5">
-            How Much Is Manual Support Costing Your Business?
+            Customer Support Cost Calculator
           </h1>
           <p className="text-neutral-400 text-lg max-w-2xl mx-auto mb-9">
-            Most teams underestimate the true cost of repetitive tickets.
+            How much does customer support cost? Compare AI vs human support costs. Most teams underestimate the true cost of repetitive tickets — use this free calculator to see your numbers.
           </p>
           <a
             href="#calculator"
@@ -182,6 +184,24 @@ export default function SupportCostCalculatorPage() {
               scaling constraints.
             </p>
             <p className="text-white font-semibold mt-4">As volume rises, the workload scales linearly unless you automate.</p>
+
+            {/* SEO: Phase 4 — How We Calculate section */}
+            <h2 className="font-display text-xl font-bold text-white mt-10 mb-3">How We Calculate Support Costs</h2>
+            <p className="text-neutral-400 text-sm max-w-2xl mx-auto leading-relaxed">
+              We multiply tickets per month by minutes per ticket and your hourly cost to get the monthly handling cost. The AI vs human support cost comparison uses your estimated automation rate to show how much an AI support agent could remove.
+            </p>
+
+            <h2 className="font-display text-xl font-bold text-white mt-8 mb-3">Ready to Eliminate This Cost?</h2>
+            <p className="text-neutral-400 text-sm max-w-2xl mx-auto mb-4">
+              An AI customer support agent can resolve up to 60% of repetitive tickets. Book a free discovery call to see if it fits your business.
+            </p>
+            <Link
+              href="/systems/ai-support-agent"
+              className="mt-4 inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
+            >
+              AI customer support agent details
+              <ArrowRight className="w-4 h-4" />
+            </Link>
 
             <a
               href="#solution"

@@ -83,6 +83,22 @@ export default function Footer() {
                         </ul>
                     </div>
 
+                    {/* Calculators — SEO: internal links to calculator pages */}
+                    {'calculators' in footer && (
+                        <div>
+                            <h4 className="text-xs text-neutral-600 uppercase tracking-wider font-medium mb-4">Calculators</h4>
+                            <ul className="space-y-2.5">
+                                {footer.calculators.map((item: { label: string; href: string }, i: number) => (
+                                    <li key={i}>
+                                        <a href={item.href} className="text-sm text-neutral-400 hover:text-white transition-colors">
+                                            {item.label}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+
                     {/* Socials */}
                     <div>
                         <h4 className="text-xs text-neutral-600 uppercase tracking-wider font-medium mb-4">Connect</h4>

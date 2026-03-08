@@ -1,18 +1,23 @@
 import Link from 'next/link';
 import { Calendar, CheckCircle2 } from 'lucide-react';
 import { siteConfig } from '../config/site';
-import { generateMetadata as generateSEOMetadata } from '../lib/seo';
+import { generateMetadata as generateSEOMetadata, generateBreadcrumbsSchema } from '../lib/seo';
 
+// SEO: keyword optimization
 export const metadata = generateSEOMetadata({
-  title: 'Process',
+  title: 'Our Automation Process — How We Build Systems',
   description:
-    'What happens after you book a discovery call with Beelodev: fit check, system recommendation, build, launch, and support.',
+    'Book a 30-min discovery call, get a tailored recommendation, then we build and launch your automation system. Clear scope, fast timeline. Book free.',
   path: '/process',
   keywords: ['automation implementation', 'discovery call', 'automation systems process'],
 });
 
 export default function ProcessPage() {
   const bookingUrl = siteConfig.personal.booking.url;
+  const breadcrumbSchema = generateBreadcrumbsSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Process', url: '/process' },
+  ]);
 
   const steps = [
     {
@@ -43,7 +48,12 @@ export default function ProcessPage() {
   ];
 
   return (
-    <main className="min-h-screen py-16 sm:py-24 px-4 sm:px-6">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <main className="min-h-screen py-16 sm:py-24 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
         <p className="text-xs font-mono uppercase tracking-wider text-electric-blue mb-4">Process</p>
         <h1 className="font-display text-3xl sm:text-5xl font-bold text-white mb-4">How we work</h1>
@@ -85,5 +95,6 @@ export default function ProcessPage() {
         </div>
       </div>
     </main>
+    </>
   );
 }

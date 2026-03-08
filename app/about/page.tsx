@@ -1,21 +1,31 @@
 import Link from 'next/link';
 import { ArrowUpRight, Calendar } from 'lucide-react';
 import { siteConfig } from '../config/site';
-import { generateMetadata as generateSEOMetadata } from '../lib/seo';
+import { generateMetadata as generateSEOMetadata, generateBreadcrumbsSchema } from '../lib/seo';
 
+// SEO: keyword optimization
 export const metadata = generateSEOMetadata({
-  title: 'About',
+  title: 'About Beelodev — AI Automation Agency',
   description:
-    'Beelodev builds proven automation systems for support, invoicing, and document intelligence. Book a free discovery call to see the best fit.',
+    'Beelodev is an AI automation agency building systems for small business. 100+ systems deployed. Support, invoicing, document intelligence. Book a free call.',
   path: '/about',
   keywords: ['AI automation', 'business automation', 'workflow automation', 'automation systems'],
 });
 
 export default function AboutPage() {
   const { personal } = siteConfig;
+  const breadcrumbSchema = generateBreadcrumbsSchema([
+    { name: 'Home', url: '/' },
+    { name: 'About', url: '/about' },
+  ]);
 
   return (
-    <main className="min-h-screen py-16 sm:py-24 px-4 sm:px-6">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <main className="min-h-screen py-16 sm:py-24 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
         <p className="text-xs font-mono uppercase tracking-wider text-electric-blue mb-4">About</p>
         <h1 className="font-display text-3xl sm:text-5xl font-bold text-white mb-6">
@@ -64,5 +74,6 @@ export default function AboutPage() {
         </div>
       </div>
     </main>
+    </>
   );
 }

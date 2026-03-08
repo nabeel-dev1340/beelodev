@@ -1,10 +1,11 @@
 import { generateMetadata as generateSEOMetadata, generateBreadcrumbsSchema, siteUrl } from '../lib/seo';
 import SupportCostCalculatorPage from './SupportCostCalculatorPage';
 
+// SEO: keyword optimization
 export const metadata = generateSEOMetadata({
-  title: 'Support Cost Calculator',
+  title: 'Customer Support Cost Calculator — AI vs Human',
   description:
-    'Estimate how much manual support handling is costing your business each year, then see how an AI Support Agent removes repetitive workload.',
+    'Calculate exactly how much your customer support is costing you — and how much you could save with an AI support agent. Free tool.',
   path: '/support-cost-calculator',
   keywords: [
     'support cost calculator',
@@ -22,23 +23,23 @@ export default function Page() {
     { name: 'Support Cost Calculator', url: '/support-cost-calculator' },
   ]);
 
-  const webPageSchema = {
+  // SEO: WebApplication schema for calculator
+  const webApplicationSchema = {
     '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    name: 'Support Cost Calculator',
-    url: `${siteUrl}/support-cost-calculator`,
+    '@type': 'WebApplication',
+    name: 'Customer Support Cost Calculator',
     description:
-      'Calculate the annual cost of handling support tickets manually, then see how an AI Support Agent reduces repetitive workload.',
-    isPartOf: {
-      '@type': 'WebSite',
-      '@id': `${siteUrl}#website`,
-    },
+      'Calculate how much customer support costs and compare AI vs human support cost. Free business tool.',
+    url: `${siteUrl}/support-cost-calculator`,
+    applicationCategory: 'BusinessApplication',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    isPartOf: { '@type': 'WebSite', '@id': `${siteUrl}#website` },
   };
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }} />
       <SupportCostCalculatorPage />
     </>
   );

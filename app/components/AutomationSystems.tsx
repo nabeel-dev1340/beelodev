@@ -63,23 +63,24 @@ export default function AutomationSystems() {
                     </h2>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
+                        {/* SEO: keyword-rich anchor text for calculator pages */}
                         <Link
                             href="/support-cost-calculator"
                             className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white border border-white/10 bg-white/5 hover:bg-white/10 transition-colors w-full sm:w-auto"
                         >
-                            Support Cost Calculator
+                            Customer support cost calculator
                         </Link>
                         <Link
                             href="/invoice-processing-cost-calculator"
                             className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white border border-white/10 bg-white/5 hover:bg-white/10 transition-colors w-full sm:w-auto"
                         >
-                            Invoice Cost Calculator
+                            Invoice processing cost calculator
                         </Link>
                         <Link
                             href="/document-intelligence-cost-calculator"
                             className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white border border-white/10 bg-white/5 hover:bg-white/10 transition-colors w-full sm:w-auto"
                         >
-                            Document Cost Calculator
+                            Document processing cost calculator
                         </Link>
                     </div>
                 </motion.div>
@@ -140,12 +141,16 @@ export default function AutomationSystems() {
                                             <span className="opacity-80">{system.closingLine}</span>
                                         </p>
 
+                                        {/* SEO: keyword-rich anchor text for internal linking */}
                                         <Link
                                             href={`/systems/${system.slug}`}
                                             className="mt-4 inline-flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold border"
                                             style={{ color: system.accent, borderColor: `${system.accent}40`, backgroundColor: `${system.accent}12` }}
                                         >
-                                            View details
+                                            {system.slug === 'ai-support-agent' && 'AI customer support agent'}
+                                            {system.slug === 'auto-invoicing' && 'Invoice processing automation'}
+                                            {system.slug === 'docu-brain' && 'Document intelligence system'}
+                                            {!['ai-support-agent', 'auto-invoicing', 'docu-brain'].includes(system.slug) && 'View details'}
                                         </Link>
 
                                         <a

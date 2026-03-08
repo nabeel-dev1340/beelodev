@@ -1,10 +1,11 @@
 import { generateMetadata as generateSEOMetadata, generateBreadcrumbsSchema, siteUrl } from '../lib/seo';
 import DocumentIntelligenceCostCalculatorPage from './DocumentIntelligenceCostCalculatorPage';
 
+// SEO: keyword optimization
 export const metadata = generateSEOMetadata({
-  title: 'Document Intelligence Cost Calculator',
+  title: 'Document Processing Cost Calculator',
   description:
-    'Estimate how much time and money your team loses to searching and extracting info from documents each year, then see how Docu-Brain fixes it.',
+    'Calculate how much document processing and search overhead costs your team each year. Free tool to estimate document automation ROI.',
   path: '/document-intelligence-cost-calculator',
   keywords: [
     'document intelligence cost calculator',
@@ -21,23 +22,23 @@ export default function Page() {
     { name: 'Document Intelligence Cost Calculator', url: '/document-intelligence-cost-calculator' },
   ]);
 
-  const webPageSchema = {
+  // SEO: WebApplication schema for calculator
+  const webApplicationSchema = {
     '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    name: 'Document Intelligence Cost Calculator',
-    url: `${siteUrl}/document-intelligence-cost-calculator`,
+    '@type': 'WebApplication',
+    name: 'Document Processing Cost Calculator',
     description:
-      'Calculate the annual cost of document search and extraction overhead, then see how Docu-Brain turns files into structured, searchable records.',
-    isPartOf: {
-      '@type': 'WebSite',
-      '@id': `${siteUrl}#website`,
-    },
+      'Calculate how much document processing costs and estimate document automation ROI. Free business tool.',
+    url: `${siteUrl}/document-intelligence-cost-calculator`,
+    applicationCategory: 'BusinessApplication',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    isPartOf: { '@type': 'WebSite', '@id': `${siteUrl}#website` },
   };
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }} />
       <DocumentIntelligenceCostCalculatorPage />
     </>
   );

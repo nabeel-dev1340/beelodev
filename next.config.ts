@@ -1,6 +1,37 @@
 import type { NextConfig } from "next";
+import path from "path";
+import { existsSync } from "fs";
+
+// Resolve project root — works when cwd is beelodev or parent (e.g. Cursor workspace)
+function getProjectRoot(): string {
+  const cwd = process.cwd();
+  const inBeelodev = cwd.endsWith("beelodev") || cwd.endsWith("beelodev/");
+  const candidate = inBeelodev ? cwd : path.join(cwd, "beelodev");
+  if (existsSync(path.join(candidate, "node_modules", "tailwindcss"))) {
+    return path.resolve(candidate);
+  }
+  return path.resolve(cwd);
+}
+
+const projectRoot = getProjectRoot();
 
 const nextConfig: NextConfig = {
+  turbopack: {
+    root: projectRoot,
+  },
+  webpack: (config) => {
+    config.resolve = config.resolve ?? {};
+    config.resolve.modules = [
+      path.join(projectRoot, "node_modules"),
+      ...(Array.isArray(config.resolve.modules) ? config.resolve.modules : ["node_modules"]),
+    ];
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      tailwindcss: path.join(projectRoot, "node_modules", "tailwindcss"),
+      "@tailwindcss/postcss": path.join(projectRoot, "node_modules", "@tailwindcss/postcss"),
+    };
+    return config;
+  },
   // Image optimization
   images: {
     formats: ['image/avif', 'image/webp'],

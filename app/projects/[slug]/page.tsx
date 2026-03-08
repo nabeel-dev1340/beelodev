@@ -138,9 +138,48 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         </div>
 
                         {project.images.length > 0 && (
-                            <ProjectImageGallery images={project.images} title={project.title} />
+                            <ProjectImageGallery
+                                images={project.images}
+                                title={`${project.title} — ${project.category}`}
+                            />
                         )}
                     </div>
+
+                    {/* SEO: link back to relevant system page with keyword-rich anchor */}
+                    {project.systems && project.systems.length > 0 && (
+                        <div className="mt-10 text-center">
+                            <p className="text-neutral-400 text-sm mb-3">Built with our automation systems:</p>
+                            <div className="flex flex-wrap justify-center gap-3">
+                                {project.systems.includes('ai-support-agent') && (
+                                    <Link
+                                        href="/systems/ai-support-agent"
+                                        className="text-sm font-medium hover:underline"
+                                        style={{ color: project.accent }}
+                                    >
+                                        AI customer support agent
+                                    </Link>
+                                )}
+                                {project.systems.includes('auto-invoicing') && (
+                                    <Link
+                                        href="/systems/auto-invoicing"
+                                        className="text-sm font-medium hover:underline"
+                                        style={{ color: project.accent }}
+                                    >
+                                        Invoice processing automation
+                                    </Link>
+                                )}
+                                {project.systems.includes('docu-brain') && (
+                                    <Link
+                                        href="/systems/docu-brain"
+                                        className="text-sm font-medium hover:underline"
+                                        style={{ color: project.accent }}
+                                    >
+                                        Document intelligence system
+                                    </Link>
+                                )}
+                            </div>
+                        </div>
+                    )}
 
                     {/* Footer CTA — internal link equity back to homepage */}
                     <div className="mt-12 text-center">
