@@ -32,6 +32,7 @@ export const siteConfig = {
     navLinks: [
         { name: 'Systems', href: '#systems' },
         { name: 'Portfolio', href: '#portfolio' },
+        { name: 'Blog', href: '/blog' },
         { name: 'Pricing', href: '#pricing' },
         { name: 'Contact', href: '#contact' },
     ],
@@ -405,6 +406,7 @@ export const siteConfig = {
         ],
         company: [
             { label: 'About', href: '/about' },
+            { label: 'Blog', href: '/blog' },
             { label: 'Process', href: '/process' },
             { label: 'Systems', href: '/systems' },
             { label: 'Portfolio', href: '#portfolio' },

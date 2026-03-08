@@ -2,8 +2,9 @@ import { MetadataRoute } from 'next';
 import { siteUrl } from './lib/seo';
 import { projects } from './config/projects';
 import { systemSlugs } from './config/systems';
+import { getAllPostSlugs } from './lib/blog';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteUrl;
   const currentDate = new Date().toISOString();
 
@@ -58,6 +59,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       priority: 0.5,
     },
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.85,
+    },
+    // Blog post pages
+    ...(await getAllPostSlugs()).map((slug) => ({
+      url: `${baseUrl}/blog/${slug}`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    })),
     // Individual project case-study pages — most content-rich URLs
     ...projects.map((project) => ({
       url: `${baseUrl}/projects/${project.slug}`,

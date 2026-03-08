@@ -5,6 +5,7 @@ import AutomationSystems from './components/AutomationSystems';
 import Packages from './components/Packages';
 import Portfolio from './components/Portfolio';
 import Testimonials from './components/Testimonials';
+import BlogPreview from './components/BlogPreview';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
@@ -19,6 +20,7 @@ export default function Home() {
         <PlatformStats />
         <Portfolio />
         <Testimonials />
+        <BlogPreview />
         <Contact />
       </main>
       <Footer />

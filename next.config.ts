@@ -108,6 +108,9 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion'],
   },
+
+  // Required for next-mdx-remote with Turbopack
+  transpilePackages: ['next-mdx-remote'],
 };
 
 export default nextConfig;
