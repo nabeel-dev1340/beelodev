@@ -83,6 +83,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'yearly' as const,
       priority: 0.6,
     },
+    {
+      url: `${baseUrl}/sitemap-page`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.4,
+    },
   ];
 
   return routes;

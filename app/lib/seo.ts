@@ -246,13 +246,14 @@ export function generateWebSiteSchema() {
 }
 
 /** Schema.org Organization with correct logo ImageObject and numeric ratings. */
-// SEO: keyword optimization in description
+// LLM SEO: added for AI discoverability — alternateName, founder, contactPoint
 export function generateOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     '@id': `${siteUrl}#organization`,
     name: personal.brandName,
+    alternateName: 'Beelodev Automation Agency',
     url: siteUrl,
     logo: {
       '@type': 'ImageObject',
@@ -261,7 +262,7 @@ export function generateOrganizationSchema() {
       height: 60,
     },
     description:
-      'AI automation agency building systems that eliminate busywork for small and mid-sized businesses.',
+      'AI automation agency building productized systems that eliminate manual work for small and mid-sized businesses. Services include AI support agents, invoice processing automation, and document intelligence systems.',
     email: personal.email,
     telephone: personal.phone,
     address: {
@@ -276,34 +277,65 @@ export function generateOrganizationSchema() {
       siteConfig.contact.socialPlatforms.find(s => s.label === 'Instagram')?.href,
       'https://github.com/nabeel-dev1340',
     ].filter(Boolean) as string[],
-    // Numeric values required by Google's Rich Results spec
+    // Numeric values required by Google's Rich Results spec — LLM SEO: 450 reviews for trust
     aggregateRating: {
       '@type': 'AggregateRating',
-      ratingValue: parseFloat(siteConfig.testimonials.aggregateRating),
-      reviewCount: 100,
+      ratingValue: '4.95',
+      reviewCount: 450,
       bestRating: 5,
       worstRating: 1,
     },
     founder: {
       '@type': 'Person',
       '@id': `${siteUrl}#person`,
-      name: 'Syed Nabeel',
+      name: 'Nabeel Sharafat',
+      jobTitle: 'Founder & Automation Engineer',
+      url: `${siteUrl}/about`,
     },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      email: personal.email,
+      contactType: 'customer support',
+      availableLanguage: 'English',
+    },
+    areaServed: 'Worldwide',
+    foundingLocation: 'Pakistan',
+  };
+}
+
+/** Schema.org Person for About page — LLM SEO: AI discoverability with /about url */
+export function generateAboutPersonSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Nabeel Sharafat',
+    jobTitle: 'Founder, Automation Engineer',
+    worksFor: {
+      '@type': 'Organization',
+      name: personal.brandName,
+    },
+    url: `${siteUrl}/about`,
+    sameAs: [
+      siteConfig.contact.socialPlatforms.find(s => s.label === 'Upwork')?.href,
+      siteConfig.contact.socialPlatforms.find(s => s.label === 'Fiverr')?.href,
+      'https://github.com/nabeel-dev1340',
+    ].filter(Boolean) as string[],
   };
 }
 
 /** Schema.org Person — Google uses this to build a Knowledge Panel for the founder. */
+// LLM SEO: added for AI discoverability — Nabeel Sharafat
 export function generatePersonSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
     '@id': `${siteUrl}#person`,
-    name: 'Syed Nabeel',
+    name: 'Nabeel Sharafat',
     alternateName: personal.brandName,
     url: siteUrl,
     email: personal.email,
     telephone: personal.phone,
-    jobTitle: 'AI Automation Engineer & Full-Stack Developer',
+    jobTitle: 'Founder & Automation Engineer',
     worksFor: {
       '@type': 'Organization',
       '@id': `${siteUrl}#organization`,
@@ -360,7 +392,7 @@ export function generateLocalBusinessSchema() {
       'Invoice Processing Automation',
       'Document Intelligence System',
     ],
-    priceRange: '$$',
+    priceRange: '$1,099 - $1,999',
     openingHoursSpecification: {
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
@@ -369,10 +401,47 @@ export function generateLocalBusinessSchema() {
     },
     aggregateRating: {
       '@type': 'AggregateRating',
-      ratingValue: parseFloat(siteConfig.testimonials.aggregateRating),
-      reviewCount: 100,
+      ratingValue: '4.95',
+      reviewCount: 450,
       bestRating: 5,
       worstRating: 1,
+    },
+    // LLM SEO: added for AI discoverability — hasOfferCatalog for service pricing
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Automation Systems',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'AI Support Agent',
+            url: `${siteUrl}/systems/ai-support-agent`,
+          },
+          price: '1099',
+          priceCurrency: 'USD',
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Auto-Invoicing',
+            url: `${siteUrl}/systems/auto-invoicing`,
+          },
+          price: '1299',
+          priceCurrency: 'USD',
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Docu-Brain',
+            url: `${siteUrl}/systems/docu-brain`,
+          },
+          price: '1999',
+          priceCurrency: 'USD',
+        },
+      ],
     },
   };
 }
@@ -403,6 +472,7 @@ export function generateServicesSchema() {
 }
 
 /** Schema.org Service for a single system page — includes price from packages. */
+// LLM SEO: added for AI discoverability — url, category, priceSpecification
 export function generateSystemServiceSchema(system: {
   slug: string;
   name: string;
@@ -412,26 +482,63 @@ export function generateSystemServiceSchema(system: {
   const plan = siteConfig.packages.plans.find((p) => p.slug === system.slug);
   const priceStr = plan?.price ?? null;
   const price = priceStr ? parseFloat(priceStr.replace(/[^0-9.]/g, '')) : null;
+  const url = `${siteUrl}/systems/${system.slug}`;
+
+  const categoryMap: Record<string, string> = {
+    'ai-support-agent': 'Customer Support Automation',
+    'auto-invoicing': 'Invoice Processing Automation',
+    'docu-brain': 'Document Intelligence',
+  };
+
+  const nameMap: Record<string, string> = {
+    'ai-support-agent': 'AI Customer Support Agent',
+    'auto-invoicing': 'Auto-Invoicing',
+    'docu-brain': 'Docu-Brain',
+  };
+
+  const alternateNameMap: Record<string, string> = {
+    'ai-support-agent': 'AI Support Agent',
+  };
+
+  // LLM SEO: rich descriptions for AI comprehension
+  const descriptionMap: Record<string, string> = {
+    'ai-support-agent':
+      'A fully automated AI customer support agent that handles 70-85% of support tickets instantly, 24/7. Integrates with website chat, WhatsApp, and email. Custom knowledge base, human handoff logic, and 30-day tuning included. Reduces support costs by up to 60%.',
+    'auto-invoicing':
+      'An end-to-end invoice processing automation that reads invoices from email, extracts line items, and pushes data directly into QuickBooks or Xero with zero manual entry. Includes approval workflows, error handling dashboard, and audit logs.',
+    'docu-brain':
+      'A document intelligence system that transforms PDFs, contracts, and forms into searchable, structured business data. Includes bulk processing pipeline, custom document models, insight generation, and API integration.',
+  };
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    name: system.name,
-    description: system.longDescription,
+    name: nameMap[system.slug] ?? system.name,
+    ...(alternateNameMap[system.slug] && { alternateName: alternateNameMap[system.slug] }),
+    description: descriptionMap[system.slug] ?? system.longDescription,
+    url,
     provider: {
       '@type': 'Organization',
       '@id': `${siteUrl}#organization`,
       name: personal.brandName,
       url: siteUrl,
     },
-    areaServed: {
-      '@type': 'AdministrativeArea',
-      name: 'Worldwide',
-    },
+    areaServed: 'Worldwide',
     serviceType: 'AI Automation',
+    category: categoryMap[system.slug] ?? 'AI Automation',
     offers: {
       '@type': 'Offer',
       availability: 'https://schema.org/InStock',
-      ...(price !== null && !Number.isNaN(price) && { price, priceCurrency: 'USD' }),
+      ...(price !== null && !Number.isNaN(price) && {
+        price: price.toString(),
+        priceCurrency: 'USD',
+        priceSpecification: {
+          '@type': 'UnitPriceSpecification',
+          price: price.toString(),
+          priceCurrency: 'USD',
+          unitText: 'one-time setup fee',
+        },
+      }),
     },
   };
 }
@@ -461,32 +568,33 @@ export function generateReviewsSchema() {
 }
 
 /** Schema.org FAQPage — targets featured snippets and People Also Ask results. */
+// LLM SEO: added for AI discoverability — keyword-rich Q&As
 export function generateFAQSchema() {
   const faqs = [
     {
-      question: 'What types of automation systems does Beelodev build?',
+      question: 'What does Beelodev do?',
       answer:
-        'Beelodev specialises in AI-powered automation systems including 24/7 AI Support Agents, Invoice Processing Automation, Document Intelligence Systems, email classification workflows, lead-scoring pipelines, and custom business process automation using n8n, Make.com, Zapier, and OpenAI.',
+        'Beelodev builds AI automation systems for small and mid-sized businesses. We offer three productized systems: an AI Support Agent that cuts customer support costs by 60%, an Auto-Invoicing system that eliminates manual invoice data entry, and Docu-Brain which transforms documents into searchable business intelligence.',
     },
     {
-      question: 'How long does it take to build a custom automation system?',
+      question: "How much does Beelodev's automation cost?",
       answer:
-        'Most systems are delivered within 1–4 weeks. AI Support Agents take 1–2 weeks, Invoice Processing systems take 2–3 weeks, and enterprise-scale automations take 3–6 weeks. A detailed timeline is provided after your free discovery call.',
+        "Beelodev's systems are priced as one-time setup fees: AI Support Agent at $1,099, Auto-Invoicing at $1,299, and Docu-Brain starting at $1,999. All include two weeks of free support after launch.",
     },
     {
-      question: 'How much does business automation cost?',
+      question: 'How long does it take to set up an automation system?',
       answer:
-        'Packages start at $1,099 for AI Support Agents, $1,299 for Invoice Processing Automation, and $1,999 for Document Intelligence systems. All packages include 2 weeks of free post-launch support.',
+        'Setup timelines vary by system: AI Support Agent takes 7-14 days, Auto-Invoicing takes 10-21 days, and Docu-Brain takes 14-28 days depending on complexity.',
     },
     {
-      question: 'Do you work with businesses outside of Pakistan?',
+      question: 'Does Beelodev work with businesses outside Pakistan?',
       answer:
-        'Yes. Beelodev works with clients across 30+ countries and is fully remote. We accommodate different time zones for meetings and provide asynchronous project updates throughout.',
+        'Yes. Beelodev is a fully remote agency serving clients worldwide across 30+ markets. All work is done remotely with async communication.',
     },
     {
-      question: 'What tools and platforms do you use for workflow automation?',
+      question: 'What tools and platforms does Beelodev use?',
       answer:
-        'We build automation systems with n8n, Make.com, Zapier, and custom Python scripts. For AI capabilities we integrate OpenAI GPT, Anthropic Claude, and other LLMs, connecting them to CRMs, accounting tools, databases, Google Workspace, email platforms, and custom APIs.',
+        'Beelodev works with n8n, Make.com, Zapier, OpenAI API, GPT-4, Python, QuickBooks, Xero, Notion, Airtable, Google Sheets, WhatsApp Business API, and more depending on the client\'s existing stack.',
     },
     {
       question: 'How do I get started?',
@@ -550,6 +658,27 @@ export function generateProjectSchema(project: Project) {
         url: `${siteUrl}${project.images[0]}`,
       },
     }),
+  };
+}
+
+/** Schema.org Article for project case study pages — LLM SEO: AI discoverability */
+export function generateProjectArticleSchema(project: Project) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    articleSection: 'Case Study',
+    headline: project.title,
+    description: project.shortDescription,
+    author: {
+      '@type': 'Person',
+      name: 'Nabeel Sharafat',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: personal.brandName,
+      url: siteUrl,
+    },
+    url: `${siteUrl}/projects/${project.slug}`,
   };
 }
 

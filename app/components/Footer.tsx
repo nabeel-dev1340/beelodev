@@ -124,6 +124,8 @@ export default function Footer() {
                 <div className="pt-8 border-t border-white/[0.04] flex flex-col md:flex-row justify-between items-center gap-4">
                     <div className="text-xs text-neutral-700">
                         © {new Date().getFullYear()} {personal.brandName}. Built with care by {personal.name}.
+                        {' '}
+                        <a href="/sitemap-page" className="text-neutral-500 hover:text-neutral-400 transition-colors">Site Index</a>
                     </div>
                     <div className="flex items-center gap-4 text-xs text-neutral-700">
                         <span>{personal.location.split(' · ')[0]}</span>

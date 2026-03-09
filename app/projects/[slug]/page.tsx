@@ -7,6 +7,7 @@ import ProjectImageGallery from './ProjectImageGallery';
 import {
     generateProjectMetadata,
     generateProjectSchema,
+    generateProjectArticleSchema,
     generateBreadcrumbsSchema,
     siteUrl,
 } from '../../lib/seo';
@@ -45,10 +46,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     ]);
 
     const projectSchema = generateProjectSchema(project);
+    const articleSchema = generateProjectArticleSchema(project);
 
     return (
         <>
-            {/* Project-level structured data injected into the page's <head> */}
+            {/* Project-level structured data injected into the page's <head> — LLM SEO: Article schema for AI discoverability */}
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
@@ -56,6 +58,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(projectSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
             />
 
             <article className="min-h-screen py-12 sm:py-20 px-4 sm:px-6">

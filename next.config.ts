@@ -43,9 +43,23 @@ const nextConfig: NextConfig = {
   // Compression
   compress: true,
 
-  // Headers for SEO and security
+  // Headers for SEO and security — LLM SEO: X-Robots-Tag for AI crawlers
   async headers() {
     return [
+      // LLM SEO: Serve llms.txt with correct content type for AI crawlers (must be before catch-all)
+      {
+        source: '/llms.txt',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'text/plain; charset=utf-8',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400',
+          },
+        ],
+      },
       {
         source: '/:path*',
         headers: [
@@ -64,6 +78,10 @@ const nextConfig: NextConfig = {
           {
             key: 'Referrer-Policy',
             value: 'origin-when-cross-origin',
+          },
+          {
+            key: 'X-Robots-Tag',
+            value: 'index, follow',
           },
         ],
       },

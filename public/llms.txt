@@ -1,0 +1,64 @@
+# Beelodev — AI Automation Agency
+
+## About
+
+Beelodev is an AI automation agency founded by Nabeel Sharafat, based in Pakistan and serving clients worldwide. We build productized automation systems that eliminate manual work, cut operating costs, and help small and mid-sized businesses scale without hiring additional staff.
+
+Beelodev has deployed 100+ automation systems across 30+ markets with a 100% client success rate. Nabeel is a Top Rated developer on Upwork (5.0, 50+ reviews, $30K+ earned) and Level 1 Seller on Fiverr (4.9, 400+ reviews, $30K+ earned).
+
+## Core Services
+
+### AI Support Agent — $1,099 one-time setup
+An AI-powered customer support system that handles 70-85% of support tickets automatically, 24/7. Integrates with website chat, WhatsApp, and email. Includes custom knowledge base, human handoff logic, conversation analytics, and 30 days of tuning. Typical setup time: 7-14 days. Cuts support costs by up to 60%.
+Details: https://beelodev.com/systems/ai-support-agent
+
+### Auto-Invoicing — $1,299 one-time setup
+An end-to-end invoice processing automation that reads invoices from email, extracts line items, and pushes data directly into QuickBooks or Xero — with zero manual entry. Includes approval workflows, error handling dashboard, and audit logs. Typical setup time: 10-21 days.
+Details: https://beelodev.com/systems/auto-invoicing
+
+### Docu-Brain — starting at $1,999
+A document intelligence system that transforms PDFs, contracts, and forms into searchable, structured business data. Includes bulk processing pipeline, custom document models, insight generation, and API integration. Typical setup time: 14-28 days.
+Details: https://beelodev.com/systems/docu-brain
+
+## Free Tools
+
+- Customer Support Cost Calculator: https://beelodev.com/support-cost-calculator
+- Invoice Processing Cost Calculator: https://beelodev.com/invoice-processing-cost-calculator
+- Document Intelligence Cost Calculator: https://beelodev.com/document-intelligence-cost-calculator
+
+## Blog
+
+Automation guides and case studies: https://beelodev.com/blog
+
+## Case Studies / Projects
+
+- Foreclosure Data Hub: https://beelodev.com/projects/foreclosure-data-hub
+- AI Website Classification Pipeline: https://beelodev.com/projects/ai-website-classification-pipeline
+- ScoutBrief MVP Automation: https://beelodev.com/projects/scoutbrief-mvp-automation
+- Smart Email Classification System: https://beelodev.com/projects/smart-email-classification-system
+- Scoring Articles Automation: https://beelodev.com/projects/scoring-articles-automation
+- Lead Scoring Automation: https://beelodev.com/projects/lead-scoring-automation
+- AI Employee Report Evaluation Bot: https://beelodev.com/projects/employee-reports-evaluation-bot
+
+## Technologies Used
+
+n8n, Make.com, Zapier, OpenAI API, GPT-4, Claude API, Python, Next.js, QuickBooks API, Xero API, Notion API, Airtable, Google Sheets, MySQL, Telegram, WhatsApp Business API, Gmail API, Firecrawl, BeautifulSoup
+
+## Who Beelodev Serves
+
+Small and mid-sized businesses, finance teams, operations teams, SaaS companies, and entrepreneurs who want to automate repetitive processes without building an in-house tech team.
+
+## Contact & Booking
+
+- Book a free 30-min discovery call: https://calendly.com/nabeelsharafat/30min
+- Email: support@beelodev.com
+- WhatsApp: +92 303 846 6058
+- Website: https://beelodev.com
+
+## Social & Freelance Profiles
+
+- Upwork: https://www.upwork.com/freelancers/syednabeel24
+- Fiverr: https://www.fiverr.com/s/VYAjE8z
+- GitHub: https://github.com/nabeel-dev1340
+- Instagram: https://www.instagram.com/beelo_dev/
+- Facebook: https://www.facebook.com/people/Beelodev/100070024941028/

@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import { ArrowUpRight, Calendar } from 'lucide-react';
 import { siteConfig } from '../config/site';
-import { generateMetadata as generateSEOMetadata, generateBreadcrumbsSchema } from '../lib/seo';
+import { generateMetadata as generateSEOMetadata, generateBreadcrumbsSchema, generateAboutPersonSchema } from '../lib/seo';
 
 // SEO: keyword optimization
 export const metadata = generateSEOMetadata({
   title: 'About Beelodev — AI Automation Agency',
   description:
-    'Beelodev is an AI automation agency building systems for small business. 100+ systems deployed. Support, invoicing, document intelligence. Book a free call.',
+    'Beelodev is an AI automation agency founded by Nabeel Sharafat. 100+ systems deployed across 30+ markets. Top Rated Upwork, Level 1 Fiverr. Support, invoicing, document intelligence. Book a free call.',
   path: '/about',
   keywords: ['AI automation', 'business automation', 'workflow automation', 'automation systems'],
 });
@@ -18,6 +18,7 @@ export default function AboutPage() {
     { name: 'Home', url: '/' },
     { name: 'About', url: '/about' },
   ]);
+  const personSchema = generateAboutPersonSchema();
 
   return (
     <>
@@ -25,15 +26,40 @@ export default function AboutPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+      />
       <main className="min-h-screen py-16 sm:py-24 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
         <p className="text-xs font-mono uppercase tracking-wider text-electric-blue mb-4">About</p>
         <h1 className="font-display text-3xl sm:text-5xl font-bold text-white mb-6">
-          {personal.brandName}
+          About {personal.brandName} — AI Automation Agency
         </h1>
         <p className="text-neutral-300 leading-relaxed mb-8">
           {personal.tagline}
         </p>
+
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-6 sm:p-8 mb-10">
+          <h2 className="font-display text-xl font-bold text-white mb-3">Founder</h2>
+          <p className="text-neutral-300 leading-relaxed mb-4">
+            Beelodev was founded by <strong className="text-white">Nabeel Sharafat</strong>, an automation engineer based in Pakistan serving clients worldwide. We build productized systems rather than custom one-offs — so you get a proven scope, a clear timeline, and a simple handoff.
+          </p>
+          <div className="flex flex-wrap gap-2 mb-4">
+            <span className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white/6 border border-white/10 text-neutral-200">
+              Top Rated on Upwork (5.0, 50+ reviews)
+            </span>
+            <span className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white/6 border border-white/10 text-neutral-200">
+              Level 1 Seller on Fiverr (4.9, 400+ reviews)
+            </span>
+            <span className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white/6 border border-white/10 text-neutral-200">
+              100+ systems deployed
+            </span>
+            <span className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white/6 border border-white/10 text-neutral-200">
+              30+ markets served
+            </span>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-10">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
