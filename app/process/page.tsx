@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Calendar, CheckCircle2 } from 'lucide-react';
 import { siteConfig } from '../config/site';
-import { generateMetadata as generateSEOMetadata, generateBreadcrumbsSchema } from '../lib/seo';
+import { generateMetadata as generateSEOMetadata, generateBreadcrumbsSchema, siteUrl } from '../lib/seo';
 
 // SEO: keyword optimization
 export const metadata = generateSEOMetadata({
@@ -47,11 +47,36 @@ export default function ProcessPage() {
     },
   ];
 
+  // SEO: HowTo schema — targets rich results in Google for "how to automate" queries
+  const howToSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'How to Get an AI Automation System Built for Your Business',
+    description: 'Book a discovery call, choose the best system, and get it installed with a clear scope and timeline.',
+    totalTime: 'P21D',
+    estimatedCost: {
+      '@type': 'MonetaryAmount',
+      currency: 'USD',
+      value: '1099-1999',
+    },
+    step: steps.map((step, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: step.title,
+      text: step.details,
+      url: `${siteUrl}/process#step-${index + 1}`,
+    })),
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
       <main className="min-h-screen py-16 sm:py-24 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">

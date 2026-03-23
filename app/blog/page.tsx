@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { getAllPosts } from '../lib/blog';
-import { generateMetadata as generateSEOMetadata, generateBreadcrumbsSchema } from '../lib/seo';
+import { generateMetadata as generateSEOMetadata, generateBreadcrumbsSchema, siteUrl } from '../lib/seo';
 import BlogCard from '../components/BlogCard';
 
 export const metadata = generateSEOMetadata({
@@ -20,11 +20,38 @@ export default async function BlogIndexPage() {
     { name: 'Blog', url: '/blog' },
   ]);
 
+  // SEO: ItemList + CollectionPage schema for blog listing rich results
+  const blogListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Automation Insights — Beelodev Blog',
+    description: 'Practical guides, case studies, and automation strategies for small and mid-sized businesses.',
+    url: `${siteUrl}/blog`,
+    isPartOf: {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}#website`,
+    },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: posts.length,
+      itemListElement: posts.map((post, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: `${siteUrl}/blog/${post.slug}`,
+        name: post.title,
+      })),
+    },
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogListSchema) }}
       />
       <main className="min-h-screen py-16 sm:py-24 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">

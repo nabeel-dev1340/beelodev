@@ -9,17 +9,18 @@ import {
 } from '../lib/seo';
 
 /**
- * Injects all global JSON-LD structured data into the document <head>.
- * Rendered server-side in the root layout so it's present on every page.
+ * Injects all global JSON-LD structured data as a single @graph array.
+ * Using @graph lets Google understand entity relationships (Organization ↔ Person ↔ WebSite)
+ * and avoids redundant @context declarations, which reduces page weight and improves parsing.
  *
  * Schema graph included:
- *   WebSite        — entity establishment + sitelinks eligibility
- *   Organization   — brand entity with logo, contacts, sameAs links
- *   Person         — founder knowledge-panel candidate
- *   ProfessionalService — local/global business with AggregateRating
- *   Service[]      — one per service offering (AI, Full-Stack, WP, Mobile)
- *   Review[]       — real client testimonials with ReviewRating
- *   FAQPage        — targets featured snippets and People Also Ask
+ *   WebSite              — entity establishment + sitelinks search box
+ *   Organization         — brand entity with logo, contacts, sameAs links
+ *   Person               — founder knowledge-panel candidate
+ *   ProfessionalService  — local/global business with AggregateRating
+ *   Service[]            — one per service offering
+ *   Review[]             — real client testimonials with ReviewRating
+ *   FAQPage              — targets featured snippets and People Also Ask
  */
 export default function StructuredData() {
   const webSiteSchema = generateWebSiteSchema();
@@ -30,42 +31,29 @@ export default function StructuredData() {
   const reviewsSchema = generateReviewsSchema();
   const faqSchema = generateFAQSchema();
 
+  // Strip @context from individual schemas since @graph provides it once at the top level
+  const stripContext = <T extends Record<string, unknown>>(schema: T): Omit<T, '@context'> => {
+    const { '@context': _, ...rest } = schema;
+    return rest as Omit<T, '@context'>;
+  };
+
+  const graph = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      stripContext(webSiteSchema),
+      stripContext(organizationSchema),
+      stripContext(personSchema),
+      stripContext(localBusinessSchema),
+      ...servicesSchema.map(stripContext),
+      ...reviewsSchema.map(stripContext),
+      stripContext(faqSchema),
+    ],
+  };
+
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
-      />
-      {servicesSchema.map((service, index) => (
-        <script
-          key={`service-${index}`}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(service) }}
-        />
-      ))}
-      {reviewsSchema.map((review, index) => (
-        <script
-          key={`review-${index}`}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(review) }}
-        />
-      ))}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-    </>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }}
+    />
   );
 }

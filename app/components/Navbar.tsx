@@ -33,7 +33,7 @@ export default function Navbar() {
 
           {/* Logo */}
           <motion.a
-            href="#home"
+            href="/"
             className="flex items-center gap-2.5 group"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}

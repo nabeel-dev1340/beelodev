@@ -229,7 +229,7 @@ export function generateProjectMetadata(project: Project): Metadata {
 
 // ─── Structured Data Generators ──────────────────────────────────────────────
 
-/** Schema.org WebSite — establishes the entity and enables sitelinks in Google. */
+/** Schema.org WebSite — establishes the entity, enables sitelinks search box in Google. */
 export function generateWebSiteSchema() {
   return {
     '@context': 'https://schema.org',
@@ -238,9 +238,18 @@ export function generateWebSiteSchema() {
     name: siteName,
     url: siteUrl,
     description: defaultDescription,
+    inLanguage: 'en-US',
     publisher: {
       '@type': 'Organization',
       '@id': `${siteUrl}#organization`,
+    },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${siteUrl}/blog?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
     },
   };
 }

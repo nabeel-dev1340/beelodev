@@ -107,6 +107,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     { name: post.title, url: `/blog/${slug}` },
   ]);
 
+  const articleImageUrl = post.coverImage.startsWith('http') ? post.coverImage : `${siteUrl}${post.coverImage}`;
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -115,15 +116,42 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     author: {
       '@type': 'Person',
       name: post.author,
+      url: siteUrl,
     },
     publisher: {
       '@type': 'Organization',
+      '@id': `${siteUrl}#organization`,
       name: 'Beelodev',
       url: siteUrl,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/logo.svg`,
+      },
     },
     datePublished: post.date,
-    image: post.coverImage.startsWith('http') ? post.coverImage : `${siteUrl}${post.coverImage}`,
+    dateModified: post.date,
+    image: {
+      '@type': 'ImageObject',
+      url: articleImageUrl,
+      width: 1200,
+      height: 630,
+    },
     url: `${siteUrl}/blog/${slug}`,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${siteUrl}/blog/${slug}`,
+    },
+    keywords: post.tags.join(', '),
+    wordCount: post.content ? post.content.split(/\s+/).length : undefined,
+    inLanguage: 'en-US',
+    isPartOf: {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}#website`,
+    },
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['.blog-content h2', '.blog-content p:first-of-type'],
+    },
   };
 
   return (

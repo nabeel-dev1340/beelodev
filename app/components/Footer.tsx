@@ -38,7 +38,7 @@ export default function Footer() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 mb-12 sm:mb-16">
                     {/* Brand */}
                     <div className="col-span-2 md:col-span-1">
-                        <div className="flex items-center gap-2.5 mb-4">
+                        <a href="/" className="flex items-center gap-2.5 mb-4">
                             <Logo size={28} />
                             <span className="font-display text-lg font-bold text-white">
                                 beelo
@@ -49,7 +49,7 @@ export default function Footer() {
                                     dev
                                 </span>
                             </span>
-                        </div>
+                        </a>
                         <p className="text-sm text-neutral-500 leading-relaxed max-w-xs">
                             {personal.tagline}
                         </p>

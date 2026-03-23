@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ArrowUpRight, Calendar } from 'lucide-react';
 import { systems } from '../config/systems';
 import { siteConfig } from '../config/site';
-import { generateMetadata as generateSEOMetadata, generateBreadcrumbsSchema } from '../lib/seo';
+import { generateMetadata as generateSEOMetadata, generateBreadcrumbsSchema, siteUrl } from '../lib/seo';
 
 // SEO: keyword optimization
 export const metadata = generateSEOMetadata({
@@ -20,11 +20,31 @@ export default function SystemsIndexPage() {
     { name: 'Systems', url: '/systems' },
   ]);
 
+  // SEO: ItemList schema for carousel rich results in Google
+  const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'AI Automation Systems for Small Business',
+    description: 'Choose from 3 productized AI automation systems designed for small and mid-sized businesses.',
+    numberOfItems: systems.length,
+    itemListElement: systems.map((system, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: system.name,
+      url: `${siteUrl}/systems/${system.slug}`,
+      description: system.shortHeadline,
+    })),
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
       />
       <main className="min-h-screen py-16 sm:py-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
