@@ -49,7 +49,8 @@ export default function Hero() {
         >
             {/* Radial ambient light */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-20 blur-3xl pointer-events-none"
-                style={{ background: 'radial-gradient(circle, rgba(14,165,233,0.3) 0%, rgba(6,182,212,0.15) 40%, transparent 70%)' }}
+                style={{ background: 'radial-gradient(circle, rgb(var(--brand-blue) / 0.3) 0%, rgb(var(--brand-cyan) / 0.15) 40%, transparent 70%)' }}
+                aria-hidden="true"
             />
 
             {/* Main Content — Centered */}
@@ -85,10 +86,7 @@ export default function Hero() {
                         {hero.headline.line1}
                     </span>
                     <span
-                        className="block text-[clamp(3rem,8vw,7rem)] bg-clip-text text-transparent pb-1"
-                        style={{
-                            backgroundImage: 'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 40%, #14b8a6 100%)',
-                        }}
+                        className="block text-[clamp(3rem,8vw,7rem)] gradient-brand-text pb-1"
                     >
                         {hero.headline.line2}
                     </span>
@@ -114,7 +112,7 @@ export default function Hero() {
                         title={personal.booking.description}
                         aria-label={personal.booking.label}
                         className="group relative isolate overflow-hidden rounded-2xl px-6 sm:px-8 py-3.5 sm:py-4 font-semibold text-sm sm:text-base shadow-lg w-full sm:w-auto text-center ring-1 ring-white/10 hover:ring-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
-                        whileHover={{ scale: 1.04, boxShadow: "0 22px 60px rgba(14,165,233,0.38)" }}
+                        whileHover={{ scale: 1.04, boxShadow: "0 22px 60px rgb(var(--brand-blue) / 0.38)" }}
                         whileTap={{ scale: 0.96 }}
                         onClick={() => posthog.capture('booking_cta_clicked', {
                             location: 'hero',
@@ -122,16 +120,13 @@ export default function Hero() {
                         })}
                     >
                         <div
-                            className="absolute inset-0"
-                            style={{
-                                backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4, #14b8a6)',
-                            }}
+                            className="absolute inset-0 gradient-brand"
                         />
                         <div
                             className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                             style={{
                                 background:
-                                    'radial-gradient(1200px circle at 50% 120%, rgba(255,255,255,0.22) 0%, transparent 55%)',
+                                    'radial-gradient(1200px circle at 50% 120%, rgb(255 255 255 / 0.22) 0%, transparent 55%)',
                             }}
                         />
                         <div className="pointer-events-none absolute -left-1/2 top-0 h-full w-1/2 skew-x-[-20deg] bg-white/20 blur-md opacity-0 group-hover:opacity-100 -translate-x-10 group-hover:translate-x-[260%] transition-all duration-700" />
@@ -206,10 +201,7 @@ export default function Hero() {
                                 <div className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-10 bg-white/10" />
                             )}
                             <motion.div
-                                className="text-3xl md:text-4xl font-display font-bold bg-clip-text text-transparent"
-                                style={{
-                                    backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4)',
-                                }}
+                                className="text-3xl md:text-4xl font-display font-bold gradient-brand-duo-text"
                                 initial={{ opacity: 0, scale: 0.5 }}
                                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                                 transition={{ delay: 0.6 + index * 0.1, type: "spring" }}

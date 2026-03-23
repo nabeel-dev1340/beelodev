@@ -111,10 +111,7 @@ export default function Contact() {
                     </motion.div>
                     <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-bold mb-4">
                         <span className="text-white">Identify Your </span>
-                        <span
-                            className="bg-clip-text text-transparent"
-                            style={{ backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4, #14b8a6)' }}
-                        >
+                        <span className="gradient-brand-text">
                             Bottlenecks
                         </span>
                     </h2>
@@ -188,23 +185,22 @@ export default function Contact() {
                                     className="group flex items-center gap-4 border border-white/[0.06] rounded-2xl bg-white/[0.02] p-5 transition-colors duration-300 hover:border-white/[0.12]"
                                 >
                                     <div
-                                        className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                                        style={{ backgroundColor: 'rgba(14,165,233,0.1)', border: '1px solid rgba(14,165,233,0.15)' }}
+                                        className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-electric-blue/10 border border-electric-blue/15"
                                     >
-                                        {Icon && <Icon className="w-5 h-5 text-[#0ea5e9]" />}
+                                        {Icon && <Icon className="w-5 h-5 text-electric-blue" />}
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                        <div className="text-[11px] text-neutral-600 uppercase tracking-wider">{item.label}</div>
+                                        <div className="text-xs text-neutral-500 uppercase tracking-wider">{item.label}</div>
                                         <div className="font-medium text-white text-sm truncate">{item.value}</div>
                                     </div>
-                                    <ArrowUpRight className="w-4 h-4 text-neutral-700 group-hover:text-white transition-colors flex-shrink-0" />
+                                    <ArrowUpRight className="w-4 h-4 text-neutral-700 group-hover:text-white transition-colors flex-shrink-0" aria-hidden="true" />
                                 </a>
                             );
                         })}
 
                         {/* Platform Links */}
                         <div className="pt-2">
-                            <div className="text-[11px] text-neutral-600 uppercase tracking-wider mb-3">Also find us on</div>
+                            <div className="text-xs text-neutral-500 uppercase tracking-wider mb-3">Also find us on</div>
                             <div className="flex gap-2">
                                 {socialPlatforms.map((p, i) => (
                                     <a
@@ -212,10 +208,11 @@ export default function Contact() {
                                         href={p.href}
                                         target="_blank"
                                         rel="noopener noreferrer"
+                                        aria-label={`${p.label} (opens in new tab)`}
                                         className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-medium text-neutral-400 bg-white/[0.03] border border-white/[0.06] hover:text-white hover:border-white/[0.12] transition-colors"
                                     >
                                         {p.label}
-                                        <ArrowUpRight className="w-3 h-3" />
+                                        <ArrowUpRight className="w-3 h-3" aria-hidden="true" />
                                     </a>
                                 ))}
                             </div>
@@ -236,89 +233,99 @@ export default function Contact() {
                             >
                                 {error && (
                                     <motion.div
+                                        role="alert"
                                         initial={{ opacity: 0, y: -10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         className="flex items-center gap-2 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm"
                                     >
-                                        <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                                        <AlertCircle className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                                         <span>{error}</span>
                                     </motion.div>
                                 )}
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                     <div>
-                                        <label className="block text-xs text-neutral-500 uppercase tracking-wider mb-2">Name *</label>
+                                        <label htmlFor="contact-name" className="block text-xs text-neutral-400 uppercase tracking-wider mb-2">Name *</label>
                                         <input
+                                            id="contact-name"
                                             type="text"
                                             name="name"
                                             value={formData.name}
                                             onChange={handleChange}
                                             required
                                             disabled={isLoading}
-                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-700 focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                            autoComplete="name"
+                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-600 focus:border-electric-blue focus:outline-none focus:ring-1 focus:ring-electric-blue/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                             placeholder="John Smith"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-xs text-neutral-500 uppercase tracking-wider mb-2">Email *</label>
+                                        <label htmlFor="contact-email" className="block text-xs text-neutral-400 uppercase tracking-wider mb-2">Email *</label>
                                         <input
+                                            id="contact-email"
                                             type="email"
                                             name="email"
                                             value={formData.email}
                                             onChange={handleChange}
                                             required
                                             disabled={isLoading}
-                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-700 focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                            autoComplete="email"
+                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-600 focus:border-electric-blue focus:outline-none focus:ring-1 focus:ring-electric-blue/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                             placeholder="john@company.com"
                                         />
                                     </div>
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                    <div>
-                                        <label className="block text-xs text-neutral-500 uppercase tracking-wider mb-2">Budget *</label>
+                                    <div className="relative">
+                                        <label htmlFor="contact-budget" className="block text-xs text-neutral-400 uppercase tracking-wider mb-2">Budget *</label>
                                         <select
+                                            id="contact-budget"
                                             name="budget"
                                             value={formData.budget}
                                             onChange={handleChange}
                                             required
                                             disabled={isLoading}
-                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all appearance-none disabled:opacity-50 disabled:cursor-not-allowed"
+                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 pr-10 text-white text-sm focus:border-electric-blue focus:outline-none focus:ring-1 focus:ring-electric-blue/20 transition-all appearance-none disabled:opacity-50 disabled:cursor-not-allowed"
                                         >
                                             <option value="" className="bg-neutral-900">Select budget range</option>
                                             {budgetRanges.map((range, i) => (
                                                 <option key={i} value={range} className="bg-neutral-900">{range}</option>
                                             ))}
                                         </select>
+                                        <svg className="pointer-events-none absolute right-3 top-[38px] h-4 w-4 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                                     </div>
-                                    <div>
-                                        <label className="block text-xs text-neutral-500 uppercase tracking-wider mb-2">Service *</label>
+                                    <div className="relative">
+                                        <label htmlFor="contact-service" className="block text-xs text-neutral-400 uppercase tracking-wider mb-2">Service *</label>
                                         <select
+                                            id="contact-service"
                                             name="service"
                                             value={formData.service}
                                             onChange={handleChange}
                                             required
                                             disabled={isLoading}
-                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all appearance-none disabled:opacity-50 disabled:cursor-not-allowed"
+                                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 pr-10 text-white text-sm focus:border-electric-blue focus:outline-none focus:ring-1 focus:ring-electric-blue/20 transition-all appearance-none disabled:opacity-50 disabled:cursor-not-allowed"
                                         >
                                             <option value="" className="bg-neutral-900">What do you need?</option>
                                             {serviceOptions.map((service, i) => (
                                                 <option key={i} value={service} className="bg-neutral-900">{service}</option>
                                             ))}
                                         </select>
+                                        <svg className="pointer-events-none absolute right-3 top-[38px] h-4 w-4 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs text-neutral-500 uppercase tracking-wider mb-2">Project Details *</label>
+                                    <label htmlFor="contact-details" className="block text-xs text-neutral-400 uppercase tracking-wider mb-2">Project Details *</label>
                                     <textarea
+                                        id="contact-details"
                                         name="projectDetails"
                                         value={formData.projectDetails}
                                         onChange={handleChange}
                                         required
                                         disabled={isLoading}
                                         rows={4}
-                                        className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-700 focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-600 focus:border-electric-blue focus:outline-none focus:ring-1 focus:ring-electric-blue/20 transition-all resize-none disabled:opacity-50 disabled:cursor-not-allowed"
                                         placeholder="Describe your biggest operational bottlenecks — where you're losing time, money, or both..."
                                     />
                                 </div>
@@ -326,9 +333,8 @@ export default function Contact() {
                                 <motion.button
                                     type="submit"
                                     disabled={isLoading}
-                                    className="w-full py-3.5 rounded-xl font-semibold text-sm text-white flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                                    style={{ backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4)' }}
-                                    whileHover={!isLoading ? { scale: 1.02, boxShadow: '0 8px 30px rgba(14,165,233,0.35)' } : {}}
+                                    className="w-full py-3.5 rounded-xl font-semibold text-sm text-white flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed gradient-brand-duo"
+                                    whileHover={!isLoading ? { scale: 1.02, boxShadow: '0 8px 30px rgb(var(--brand-blue) / 0.35)' } : {}}
                                     whileTap={!isLoading ? { scale: 0.97 } : {}}
                                 >
                                     {isLoading ? (
@@ -344,7 +350,7 @@ export default function Contact() {
                                     )}
                                 </motion.button>
 
-                                <p className="text-[11px] text-neutral-700 text-center">
+                                <p className="text-xs text-neutral-500 text-center">
                                     Your information is safe. No spam, ever.
                                 </p>
                             </form>

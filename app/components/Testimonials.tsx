@@ -48,12 +48,7 @@ export default function Testimonials() {
                     </motion.div>
                     <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-bold mb-4">
                         <span className="text-white">What Clients </span>
-                        <span
-                            className="bg-clip-text text-transparent"
-                            style={{ backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4, #14b8a6)' }}
-                        >
-                            Say
-                        </span>
+                        <span className="gradient-brand-text">Say</span>
                     </h2>
                     <p className="text-neutral-400 text-lg max-w-xl mx-auto">
                         Real reviews from real clients on Upwork and Fiverr.
@@ -67,12 +62,12 @@ export default function Testimonials() {
                     animate={isInView ? { opacity: 1 } : {}}
                     transition={{ delay: 0.2 }}
                 >
-                    <div className="flex gap-0.5">
+                    <div className="flex gap-0.5" role="img" aria-label={`${aggregateRating} out of 5 stars`}>
                         {[...Array(5)].map((_, i) => (
-                            <Star key={i} className="w-5 h-5 text-amber-400 fill-amber-400" />
+                            <Star key={i} className="w-5 h-5 text-amber-400 fill-amber-400" aria-hidden="true" />
                         ))}
                     </div>
-                    <span className="text-white font-display font-bold text-lg">{aggregateRating}</span>
+                    <span className="text-white font-display font-bold text-lg" aria-hidden="true">{aggregateRating}</span>
                     <span className="text-neutral-500 text-sm">{aggregateLabel}</span>
                 </motion.div>
 
@@ -109,9 +104,9 @@ export default function Testimonials() {
                                 </p>
 
                                 {/* Stars */}
-                                <div className="flex gap-0.5 mb-5">
+                                <div className="flex gap-0.5 mb-5" role="img" aria-label="5 out of 5 stars">
                                     {[...Array(5)].map((_, i) => (
-                                        <Star key={i} className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                                        <Star key={i} className="w-3.5 h-3.5 text-amber-400 fill-amber-400" aria-hidden="true" />
                                     ))}
                                 </div>
 

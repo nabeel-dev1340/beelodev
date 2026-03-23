@@ -1,8 +1,37 @@
 @import "tailwindcss";
 
+/* ── Brand design tokens ── */
+@layer base {
+  :root {
+    --brand-blue: 14 165 233;       /* #0ea5e9 */
+    --brand-cyan: 6 182 212;        /* #06b6d4 */
+    --brand-teal: 20 184 166;       /* #14b8a6 */
+    --brand-sky: 56 189 248;        /* #38bdf8 */
+    --brand-indigo: 59 130 246;     /* #3b82f6 */
+    --brand-emerald: 16 185 129;    /* #10b981 */
+
+    --surface-base: #000000;
+    --surface-50: #0a0a0f;
+    --surface-100: #0f0f12;
+    --surface-200: #141418;
+    --surface-300: #1a1a1f;
+  }
+}
+
+/* Reduced motion: disable animations for users who prefer it */
+@layer base {
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
 /* Base styles */
 @layer base {
-
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
@@ -11,7 +40,7 @@
   }
 
   body {
-    background: #000000;
+    background: var(--surface-base);
     color: #fafafa;
     overflow-x: hidden;
     cursor: auto;
@@ -30,8 +59,9 @@
   }
 }
 
-/* Glassmorphism utilities */
+/* ── Reusable utilities ── */
 @layer utilities {
+  /* Glass surfaces */
   .glass {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(20px) saturate(180%);
@@ -53,67 +83,108 @@
     border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
-  /* Neumorphism utilities */
-  .neuro {
-    background: linear-gradient(145deg, #0a0a0f, #0f0f14);
-    box-shadow:
-      8px 8px 16px rgba(0, 0, 0, 0.4),
-      -8px -8px 16px rgba(30, 30, 35, 0.1);
+  /* Brand gradients */
+  .gradient-brand {
+    background-image: linear-gradient(
+      135deg,
+      rgb(var(--brand-blue)),
+      rgb(var(--brand-cyan)),
+      rgb(var(--brand-teal))
+    );
   }
 
-  .neuro-inset {
-    background: linear-gradient(145deg, #0f0f14, #0a0a0f);
-    box-shadow:
-      inset 8px 8px 16px rgba(0, 0, 0, 0.4),
-      inset -8px -8px 16px rgba(30, 30, 35, 0.1);
+  .gradient-brand-duo {
+    background-image: linear-gradient(
+      135deg,
+      rgb(var(--brand-blue)),
+      rgb(var(--brand-cyan))
+    );
+  }
+
+  .gradient-brand-text {
+    background-image: linear-gradient(
+      135deg,
+      rgb(var(--brand-blue)),
+      rgb(var(--brand-cyan)),
+      rgb(var(--brand-teal))
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .gradient-brand-duo-text {
+    background-image: linear-gradient(
+      135deg,
+      rgb(var(--brand-blue)),
+      rgb(var(--brand-cyan))
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Logo gradient (horizontal) */
+  .gradient-logo-text {
+    background-image: linear-gradient(
+      90deg,
+      rgb(var(--brand-blue)),
+      rgb(var(--brand-cyan))
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   /* Glow effects */
   .glow-blue {
-    box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
+    box-shadow: 0 0 20px rgb(var(--brand-blue) / 0.3);
   }
 
   .glow-cyan {
-    box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+    box-shadow: 0 0 20px rgb(var(--brand-cyan) / 0.3);
   }
 
   .glow-teal {
-    box-shadow: 0 0 20px rgba(20, 184, 166, 0.3);
+    box-shadow: 0 0 20px rgb(var(--brand-teal) / 0.3);
+  }
+
+  /* Common hover shadow for CTA buttons */
+  .hover-glow-blue {
+    transition: box-shadow 0.3s;
+  }
+  .hover-glow-blue:hover {
+    box-shadow: 0 8px 30px rgb(var(--brand-blue) / 0.35);
   }
 }
 
-/* Custom scrollbar with glow */
+/* Custom scrollbar */
 @layer base {
   ::-webkit-scrollbar {
     width: 10px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #0a0a0f;
+    background: var(--surface-50);
     border-left: 1px solid rgba(255, 255, 255, 0.05);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #0ea5e9, #06b6d4);
+    background: linear-gradient(180deg, rgb(var(--brand-blue)), rgb(var(--brand-cyan)));
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+    box-shadow: 0 0 10px rgb(var(--brand-blue) / 0.5);
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #38bdf8, #22d3ee);
-    box-shadow: 0 0 15px rgba(14, 165, 233, 0.8);
+    background: linear-gradient(180deg, rgb(var(--brand-sky)), #22d3ee);
+    box-shadow: 0 0 15px rgb(var(--brand-blue) / 0.8);
   }
 }
 
 /* Selection styling */
 @layer base {
   ::selection {
-    background: rgba(14, 165, 233, 0.3);
-    color: #ffffff;
-  }
-
-  ::-moz-selection {
-    background: rgba(14, 165, 233, 0.3);
+    background: rgb(var(--brand-blue) / 0.3);
     color: #ffffff;
   }
 }

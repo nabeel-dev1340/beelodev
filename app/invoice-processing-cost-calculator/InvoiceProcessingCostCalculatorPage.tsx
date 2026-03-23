@@ -34,7 +34,7 @@ function NumberField({ label, value, onChange, min = 0, step = 1, placeholder }:
           onChange(Math.max(min, next));
         }}
         placeholder={placeholder}
-        className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-700 focus:border-[#0ea5e9] focus:outline-none focus:ring-1 focus:ring-[#0ea5e9]/20 transition-all"
+        className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-700 focus:border-electric-blue focus:outline-none focus:ring-1 focus:ring-electric-blue/20 transition-all"
       />
     </div>
   );
@@ -85,8 +85,7 @@ export default function InvoiceProcessingCostCalculatorPage() {
           </p>
           <a
             href="#calculator"
-            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white transition-shadow hover:shadow-[0_8px_30px_rgba(14,165,233,0.35)]"
-            style={{ backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4)' }}
+            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white transition-shadow hover-glow-blue gradient-brand-duo"
           >
             Calculate My Cost
             <ArrowRight className="w-4 h-4" />
@@ -140,7 +139,7 @@ export default function InvoiceProcessingCostCalculatorPage() {
                   type="checkbox"
                   checked={includeErrorCorrection}
                   onChange={(e) => setIncludeErrorCorrection(e.currentTarget.checked)}
-                  className="h-4 w-4 rounded border-white/20 bg-white/10 text-electric-blue focus:ring-[#0ea5e9]/30 focus:ring-2"
+                  className="h-4 w-4 rounded border-white/20 bg-white/10 text-electric-blue focus:ring-electric-blue/30 focus:ring-2"
                 />
                 Include 5% error correction cost
               </label>
@@ -158,8 +157,7 @@ export default function InvoiceProcessingCostCalculatorPage() {
 
             <div
               aria-live="polite"
-              className="mt-4 font-display font-extrabold tracking-tight text-[clamp(3rem,7vw,5rem)] bg-clip-text text-transparent"
-              style={{ backgroundImage: 'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 55%, #14b8a6 100%)' }}
+              className="mt-4 font-display font-extrabold tracking-tight text-[clamp(3rem,7vw,5rem)] gradient-brand-text"
             >
               {formatter.format(results.annualCost)}
             </div>
@@ -239,8 +237,7 @@ export default function InvoiceProcessingCostCalculatorPage() {
                   href={bookingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-6 inline-flex w-full items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-shadow hover:shadow-[0_8px_30px_rgba(14,165,233,0.35)]"
-                  style={{ backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4)' }}
+                  className="mt-6 inline-flex w-full items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-shadow hover-glow-blue gradient-brand-duo"
                 >
                   <Calendar className="w-4 h-4" />
                   Book Free 30-Min Strategy Call

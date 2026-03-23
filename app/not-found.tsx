@@ -16,8 +16,7 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             href="/"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-colors"
-            style={{ backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4)' }}
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-colors gradient-brand-duo"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Home

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Calendar } from 'lucide-react';
 import Logo from './Logo';
@@ -9,14 +9,78 @@ import { siteConfig } from '../config/site';
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
+  const closeMenu = useCallback(() => {
+    setIsMenuOpen(false);
+    toggleRef.current?.focus();
+  }, []);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Escape key closes mobile menu
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeMenu();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isMenuOpen, closeMenu]);
+
+  // Focus trap inside mobile menu
+  useEffect(() => {
+    if (!isMenuOpen || !menuRef.current) return;
+    const menu = menuRef.current;
+    const focusableEls = menu.querySelectorAll<HTMLElement>(
+      'a[href], button, [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusableEls.length === 0) return;
+    const first = focusableEls[0];
+    const last = focusableEls[focusableEls.length - 1];
+    first.focus();
+
+    const trapFocus = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    menu.addEventListener('keydown', trapFocus);
+    return () => menu.removeEventListener('keydown', trapFocus);
+  }, [isMenuOpen]);
+
+  // Lock body scroll when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [isMenuOpen]);
 
   const navLinks = siteConfig.navLinks;
 
@@ -42,12 +106,7 @@ export default function Navbar() {
             <Logo size={32} />
             <span className="font-display font-bold text-lg text-white">
               beelo
-              <span
-                className="bg-clip-text text-transparent"
-                style={{ backgroundImage: 'linear-gradient(90deg, #0ea5e9, #06b6d4)' }}
-              >
-                dev
-              </span>
+              <span className="gradient-logo-text">dev</span>
             </span>
           </motion.a>
 
@@ -73,11 +132,8 @@ export default function Navbar() {
               href={siteConfig.personal.booking.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden md:flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold text-white transition-shadow"
-              style={{
-                backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4)',
-              }}
-              whileHover={{ scale: 1.04, boxShadow: '0 8px 30px rgba(14,165,233,0.35)' }}
+              className="hidden md:flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold text-white transition-shadow gradient-brand-duo"
+              whileHover={{ scale: 1.04, boxShadow: '0 8px 30px rgb(var(--brand-blue) / 0.35)' }}
               whileTap={{ scale: 0.96 }}
             >
               <Calendar className="w-4 h-4" />
@@ -86,10 +142,14 @@ export default function Navbar() {
 
             {/* Mobile toggle */}
             <motion.button
+              ref={toggleRef}
               className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-lg text-white"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               whileHover={{ backgroundColor: 'rgba(255,255,255,0.06)' }}
               whileTap={{ scale: 0.9 }}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             >
               <AnimatePresence mode="wait">
                 {isMenuOpen ? (
@@ -111,6 +171,11 @@ export default function Navbar() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
+            ref={menuRef}
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
             className="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-2 md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -126,8 +191,8 @@ export default function Navbar() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ delay: i * 0.05 }}
-                onClick={() => setIsMenuOpen(false)}
-                whileHover={{ color: '#0ea5e9' }}
+                onClick={() => closeMenu()}
+                whileHover={{ color: 'rgb(var(--brand-blue))' }}
               >
                 {link.name}
               </motion.a>
@@ -135,13 +200,12 @@ export default function Navbar() {
 
             <motion.a
               href="#contact"
-              className="mt-8 px-8 py-4 rounded-xl font-semibold text-base text-white"
-              style={{ backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4)' }}
+              className="mt-8 px-8 py-4 rounded-xl font-semibold text-base text-white gradient-brand-duo"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ delay: 0.2 }}
-              onClick={() => setIsMenuOpen(false)}
+              onClick={() => closeMenu()}
               whileTap={{ scale: 0.95 }}
             >
               Get Started

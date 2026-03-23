@@ -16,16 +16,20 @@ export default function GlitchText({ children, className = '' }: GlitchTextProps
             className={`relative inline-block ${className}`}
             onMouseEnter={() => setIsGlitching(true)}
             onMouseLeave={() => setIsGlitching(false)}
+            onFocus={() => setIsGlitching(true)}
+            onBlur={() => setIsGlitching(false)}
+            tabIndex={0}
+            role="text"
         >
             {/* Main text */}
             <span className="relative z-10">{children}</span>
 
             {/* Glitch layers */}
             {isGlitching && (
-                <>
+                <span aria-hidden="true">
                     <motion.span
                         className="absolute inset-0 z-0"
-                        style={{ color: '#0ea5e9', left: '-2px' }}
+                        style={{ color: 'rgb(var(--brand-blue))', left: '-2px' }}
                         animate={{
                             left: ['-2px', '2px', '-2px'],
                             opacity: [0.8, 0.4, 0.8],
@@ -41,7 +45,7 @@ export default function GlitchText({ children, className = '' }: GlitchTextProps
 
                     <motion.span
                         className="absolute inset-0 z-0"
-                        style={{ color: '#06b6d4', left: '2px' }}
+                        style={{ color: 'rgb(var(--brand-cyan))', left: '2px' }}
                         animate={{
                             left: ['2px', '-2px', '2px'],
                             opacity: [0.8, 0.4, 0.8],
@@ -59,7 +63,7 @@ export default function GlitchText({ children, className = '' }: GlitchTextProps
                     <motion.div
                         className="absolute inset-0 z-20 pointer-events-none"
                         style={{
-                            background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(14, 165, 233, 0.1) 2px, rgba(14, 165, 233, 0.1) 4px)',
+                            background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgb(var(--brand-blue) / 0.1) 2px, rgb(var(--brand-blue) / 0.1) 4px)',
                         }}
                         animate={{
                             opacity: [0, 0.3, 0],
@@ -69,7 +73,7 @@ export default function GlitchText({ children, className = '' }: GlitchTextProps
                             repeat: Infinity,
                         }}
                     />
-                </>
+                </span>
             )}
         </motion.span>
     );

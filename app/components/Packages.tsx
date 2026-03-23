@@ -52,12 +52,7 @@ export default function Packages() {
                     </motion.div>
                     <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-bold mb-4">
                         <span className="text-white">Simple Plans. </span>
-                        <span
-                            className="bg-clip-text text-transparent"
-                            style={{ backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4, #14b8a6)' }}
-                        >
-                            Real Results.
-                        </span>
+                        <span className="gradient-brand-text">Real Results.</span>
                     </h2>
                     <p className="text-neutral-400 text-lg max-w-xl mx-auto">
                         Three proven automation systems, packaged with fixed scope and clear pricing. Book a call and we will recommend the best fit.
@@ -82,10 +77,7 @@ export default function Packages() {
                                 {/* Popular badge */}
                                 {plan.popular && (
                                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
-                                        <div
-                                            className="px-4 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider text-white"
-                                            style={{ backgroundImage: 'linear-gradient(90deg, #0ea5e9, #06b6d4)' }}
-                                        >
+                                        <div className="px-4 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider text-white gradient-brand-duo">
                                             Most Popular
                                         </div>
                                     </div>

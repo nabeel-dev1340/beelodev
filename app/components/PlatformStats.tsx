@@ -51,12 +51,7 @@ export default function PlatformStats() {
                     </motion.div>
                     <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-bold mb-4">
                         <span className="text-white">Proven </span>
-                        <span
-                            className="bg-clip-text text-transparent"
-                            style={{ backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4, #14b8a6)' }}
-                        >
-                            Track Record
-                        </span>
+                        <span className="gradient-brand-text">Track Record</span>
                     </h2>
                     <p className="text-neutral-400 text-lg max-w-lg mx-auto">
                         Numbers that speak for themselves across the world&apos;s top freelance platforms.
@@ -165,6 +160,7 @@ export default function PlatformStats() {
                                                     src={p.profileImage}
                                                     alt={p.profileImageAlt}
                                                     fill
+                                                    loading="lazy"
                                                     className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
                                                     sizes="(max-width: 768px) 100vw, 50vw"
                                                 />
@@ -244,7 +240,6 @@ export default function PlatformStats() {
                                     event.stopPropagation();
                                     setIsZoomed((current) => !current);
                                 }}
-                                priority
                             />
                         </div>
                     </div>

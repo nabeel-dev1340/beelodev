@@ -34,7 +34,7 @@ export default function BlogCard({
   return (
     <Link
       href={`/blog/${slug}`}
-      className="group block rounded-2xl border border-white/10 bg-white/5 overflow-hidden transition-all duration-300 hover:border-white/20 hover:bg-white/8 hover:shadow-[0_8px_30px_rgba(14,165,233,0.12)]"
+      className="group block rounded-2xl border border-white/10 bg-white/5 overflow-hidden transition-all duration-300 hover:border-white/20 hover:bg-white/8 hover:shadow-[0_8px_30px_rgb(var(--brand-blue)/0.12)]"
     >
       <div className="relative aspect-video overflow-hidden">
         <Image
@@ -50,12 +50,7 @@ export default function BlogCard({
           {tags.slice(0, 3).map((tag) => (
             <span
               key={tag}
-              className="px-2.5 py-1 rounded-lg text-xs font-medium"
-              style={{
-                backgroundColor: 'rgba(14,165,233,0.15)',
-                color: '#0ea5e9',
-                border: '1px solid rgba(14,165,233,0.25)',
-              }}
+              className="px-2.5 py-1 rounded-lg text-xs font-medium bg-electric-blue/15 text-electric-blue border border-electric-blue/25"
             >
               {tag}
             </span>

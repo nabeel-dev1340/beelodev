@@ -7,11 +7,7 @@ const BOOKING_URL = 'https://calendly.com/nabeelsharafat/30min';
 export default function BlogCTA() {
   return (
     <div
-      className="rounded-2xl border border-white/10 p-6 sm:p-8"
-      style={{
-        backgroundColor: 'rgba(14,165,233,0.06)',
-        borderColor: 'rgba(14,165,233,0.15)',
-      }}
+      className="rounded-2xl border border-electric-blue/15 bg-electric-blue/6 p-6 sm:p-8"
     >
       <h3 className="font-display text-xl sm:text-2xl font-bold text-white mb-2">
         Ready to implement this in your business?
@@ -24,8 +20,7 @@ export default function BlogCTA() {
         href={BOOKING_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-shadow hover:shadow-[0_8px_30px_rgba(14,165,233,0.35)]"
-        style={{ backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4)' }}
+        className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-shadow hover-glow-blue gradient-brand-duo"
       >
         <Calendar className="w-4 h-4" />
         Book Free Call →

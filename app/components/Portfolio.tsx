@@ -50,12 +50,7 @@ export default function Portfolio() {
                     </motion.div>
                     <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-bold mb-4">
                         <span className="text-white">Featured </span>
-                        <span
-                            className="bg-clip-text text-transparent"
-                            style={{ backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4, #14b8a6)' }}
-                        >
-                            Projects
-                        </span>
+                        <span className="gradient-brand-text">Projects</span>
                     </h2>
                     <p className="text-neutral-400 text-lg max-w-xl mx-auto">
                         Proof these systems work. Real builds, real metrics, and the outcomes you can expect.

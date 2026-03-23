@@ -1,29 +1,40 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function MeshGradient() {
     const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
+    const rafId = useRef<number>(0);
+    const latestPos = useRef({ x: 0.5, y: 0.5 });
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
-            setMousePos({
+            latestPos.current = {
                 x: e.clientX / window.innerWidth,
                 y: e.clientY / window.innerHeight,
-            });
+            };
+            if (!rafId.current) {
+                rafId.current = requestAnimationFrame(() => {
+                    setMousePos(latestPos.current);
+                    rafId.current = 0;
+                });
+            }
         };
 
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mousemove', handleMouseMove, { passive: true });
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            if (rafId.current) cancelAnimationFrame(rafId.current);
+        };
     }, []);
 
     return (
-        <div className="fixed inset-0 -z-10 overflow-hidden">
+        <div className="fixed inset-0 -z-10 overflow-hidden" aria-hidden="true" style={{ contain: 'strict' }}>
             <svg
                 className="absolute inset-0 w-full h-full"
                 xmlns="http://www.w3.org/2000/svg"
-                style={{ filter: 'blur(60px)' }}
+                style={{ filter: 'blur(60px)', willChange: 'transform' }}
             >
                 <defs>
                     <radialGradient id="mesh-gradient-1" cx="30%" cy="30%">

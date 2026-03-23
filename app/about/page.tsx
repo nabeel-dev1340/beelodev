@@ -83,8 +83,7 @@ export default function AboutPage() {
               href={personal.booking.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-shadow"
-              style={{ backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4)' }}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-shadow hover-glow-blue gradient-brand-duo"
             >
               <Calendar className="w-4 h-4" />
               {personal.booking.label}

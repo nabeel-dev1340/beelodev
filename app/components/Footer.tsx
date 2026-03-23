@@ -12,8 +12,7 @@ export default function Footer() {
                 {/* Top — CTA Banner */}
                 <div className="border border-white/[0.06] rounded-2xl bg-white/[0.02] p-8 sm:p-10 md:p-14 text-center mb-12 sm:mb-16 relative overflow-hidden">
                     <div
-                        className="absolute -top-20 left-1/2 -translate-x-1/2 w-80 h-80 rounded-full blur-[120px] opacity-10 pointer-events-none"
-                        style={{ backgroundColor: '#0ea5e9' }}
+                        className="absolute -top-20 left-1/2 -translate-x-1/2 w-80 h-80 rounded-full blur-[120px] opacity-10 pointer-events-none bg-electric-blue"
                     />
                     <h3 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 relative z-10">
                         {footer.ctaBanner.headline}
@@ -25,8 +24,7 @@ export default function Footer() {
                         href={siteConfig.personal.booking.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-sm font-semibold text-white relative z-10 transition-shadow hover:shadow-[0_8px_30px_rgba(14,165,233,0.35)]"
-                        style={{ backgroundImage: 'linear-gradient(135deg, #0ea5e9, #06b6d4)' }}
+                        className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-sm font-semibold text-white relative z-10 transition-shadow hover-glow-blue gradient-brand-duo"
                     >
                         <Calendar className="w-4 h-4" />
                         {footer.ctaBanner.cta}
@@ -42,12 +40,7 @@ export default function Footer() {
                             <Logo size={28} />
                             <span className="font-display text-lg font-bold text-white">
                                 beelo
-                                <span
-                                    className="bg-clip-text text-transparent"
-                                    style={{ backgroundImage: 'linear-gradient(90deg, #0ea5e9, #06b6d4)' }}
-                                >
-                                    dev
-                                </span>
+                                <span className="gradient-logo-text">dev</span>
                             </span>
                         </a>
                         <p className="text-sm text-neutral-500 leading-relaxed max-w-xs">
@@ -109,10 +102,11 @@ export default function Footer() {
                                         href={item.href}
                                         target="_blank"
                                         rel="noopener noreferrer"
+                                        aria-label={`${item.label} (opens in new tab)`}
                                         className="inline-flex items-center gap-1.5 text-sm text-neutral-400 hover:text-white transition-colors"
                                     >
                                         {item.label}
-                                        <ArrowUpRight className="w-3 h-3 opacity-40" />
+                                        <ArrowUpRight className="w-3 h-3 opacity-40" aria-hidden="true" />
                                     </a>
                                 </li>
                             ))}
@@ -122,12 +116,12 @@ export default function Footer() {
 
                 {/* Bottom Bar */}
                 <div className="pt-8 border-t border-white/[0.04] flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div className="text-xs text-neutral-700">
+                    <div className="text-xs text-neutral-500">
                         © {new Date().getFullYear()} {personal.brandName}. Built with care by {personal.name}.
                         {' '}
                         <a href="/sitemap-page" className="text-neutral-500 hover:text-neutral-400 transition-colors">Site Index</a>
                     </div>
-                    <div className="flex items-center gap-4 text-xs text-neutral-700">
+                    <div className="flex items-center gap-4 text-xs text-neutral-500">
                         <span>{personal.location.split(' · ')[0]}</span>
                         <span className="w-1 h-1 rounded-full bg-neutral-800" />
                         <span>{personal.location.split(' · ')[1]}</span>

@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, useSpring } from 'framer-motion';
 import { useMousePosition } from '@/app/hooks/useMousePosition';
 
 export default function CustomCursor() {
     const { x, y } = useMousePosition();
     const [cursorVariant, setCursorVariant] = useState<'default' | 'link' | 'button' | 'card'>('default');
+    const lastVariant = useRef(cursorVariant);
 
     const cursorX = useSpring(x, { stiffness: 500, damping: 28 });
     const cursorY = useSpring(y, { stiffness: 500, damping: 28 });
@@ -14,19 +15,24 @@ export default function CustomCursor() {
     useEffect(() => {
         const updateCursorVariant = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
+            let next: typeof cursorVariant = 'default';
 
             if (target.closest('a')) {
-                setCursorVariant('link');
+                next = 'link';
             } else if (target.closest('button')) {
-                setCursorVariant('button');
+                next = 'button';
             } else if (target.closest('[data-magnetic]')) {
-                setCursorVariant('card');
-            } else {
-                setCursorVariant('default');
+                next = 'card';
+            }
+
+            // Only update state when variant actually changes
+            if (next !== lastVariant.current) {
+                lastVariant.current = next;
+                setCursorVariant(next);
             }
         };
 
-        document.addEventListener('mouseover', updateCursorVariant);
+        document.addEventListener('mouseover', updateCursorVariant, { passive: true });
 
         return () => {
             document.removeEventListener('mouseover', updateCursorVariant);
@@ -43,10 +49,10 @@ export default function CustomCursor() {
     const size = sizes[cursorVariant] || 32;
 
     const borderColor = cursorVariant === 'card'
-        ? 'rgba(20, 184, 166, 0.6)'
+        ? 'rgb(var(--brand-teal) / 0.6)'
         : cursorVariant === 'button'
-            ? 'rgba(6, 182, 212, 0.6)'
-            : 'rgba(14, 165, 233, 0.4)';
+            ? 'rgb(var(--brand-cyan) / 0.6)'
+            : 'rgb(var(--brand-blue) / 0.4)';
 
     return (
         <>
@@ -80,7 +86,7 @@ export default function CustomCursor() {
                     translateY: '-50%',
                     width: 80,
                     height: 80,
-                    background: 'radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 70%)',
+                    background: 'radial-gradient(circle, rgb(var(--brand-blue) / 0.15) 0%, transparent 70%)',
                 }}
                 animate={{
                     opacity: cursorVariant === 'default' ? 0.4 : 0.7,
