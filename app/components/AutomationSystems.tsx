@@ -37,7 +37,7 @@ export default function AutomationSystems() {
     };
 
     return (
-        <section className="py-20 sm:py-32 px-4 sm:px-6 relative overflow-hidden" id="systems" ref={ref}>
+        <section className="py-16 sm:py-28 px-4 sm:px-6 relative overflow-hidden" id="systems" ref={ref}>
             {/* Background Elements */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full pointer-events-none">
                 <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-[100px]" />
@@ -144,7 +144,7 @@ export default function AutomationSystems() {
                                         {/* SEO: keyword-rich anchor text for internal linking */}
                                         <Link
                                             href={`/systems/${system.slug}`}
-                                            className="mt-4 inline-flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold border"
+                                            className="mt-4 inline-flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold border transition-opacity hover:opacity-80"
                                             style={{ color: system.accent, borderColor: `${system.accent}40`, backgroundColor: `${system.accent}12` }}
                                         >
                                             {system.slug === 'ai-support-agent' && 'AI customer support agent'}

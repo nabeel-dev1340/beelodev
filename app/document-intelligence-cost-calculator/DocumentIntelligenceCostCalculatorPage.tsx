@@ -34,7 +34,7 @@ function NumberField({ label, value, onChange, min = 0, step = 1, placeholder }:
           onChange(Math.max(min, next));
         }}
         placeholder={placeholder}
-        className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-700 focus:border-electric-blue focus:outline-none focus:ring-1 focus:ring-electric-blue/20 transition-all"
+        className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder:text-neutral-600 focus:border-electric-blue focus:outline-none focus:ring-1 focus:ring-electric-blue/20 transition-all"
       />
     </div>
   );

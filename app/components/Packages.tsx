@@ -114,7 +114,7 @@ export default function Packages() {
                                     <div className="mb-5 ml-12">
                                         <Link
                                             href={`/systems/${plan.slug}`}
-                                            className="text-sm font-semibold"
+                                            className="text-sm font-semibold transition-opacity hover:opacity-80"
                                             style={{ color: plan.accent }}
                                             onClick={() => posthog.capture('pricing_plan_details_clicked', {
                                                 plan_name: plan.name,
@@ -135,7 +135,7 @@ export default function Packages() {
                                             </div>
                                         )}
                                         {plan.timeline && (
-                                            <div className="text-xs text-neutral-600 uppercase tracking-wider">
+                                            <div className="text-xs text-neutral-500 uppercase tracking-wider">
                                                 Typical timeline: <span className="text-neutral-400">{plan.timeline}</span>
                                             </div>
                                         )}
@@ -165,7 +165,7 @@ export default function Packages() {
                                                 {plan.price}
                                             </span>
                                         </div>
-                                        <div className="text-neutral-600 text-xs mt-1 uppercase tracking-wider">{plan.period}</div>
+                                        <div className="text-neutral-500 text-xs mt-1 uppercase tracking-wider">{plan.period}</div>
                                     </div>
 
                                     {/* Divider */}

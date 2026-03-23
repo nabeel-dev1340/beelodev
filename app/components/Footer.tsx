@@ -50,7 +50,7 @@ export default function Footer() {
 
                     {/* Services */}
                     <div>
-                        <h4 className="text-xs text-neutral-600 uppercase tracking-wider font-medium mb-4">Services</h4>
+                        <h4 className="text-xs text-neutral-500 uppercase tracking-wider font-medium mb-4">Services</h4>
                         <ul className="space-y-2.5">
                             {footer.services.map((item, i) => (
                                 <li key={i}>
@@ -64,7 +64,7 @@ export default function Footer() {
 
                     {/* Company */}
                     <div>
-                        <h4 className="text-xs text-neutral-600 uppercase tracking-wider font-medium mb-4">Company</h4>
+                        <h4 className="text-xs text-neutral-500 uppercase tracking-wider font-medium mb-4">Company</h4>
                         <ul className="space-y-2.5">
                             {footer.company.map((item, i) => (
                                 <li key={i}>
@@ -79,7 +79,7 @@ export default function Footer() {
                     {/* Calculators — SEO: internal links to calculator pages */}
                     {'calculators' in footer && (
                         <div>
-                            <h4 className="text-xs text-neutral-600 uppercase tracking-wider font-medium mb-4">Calculators</h4>
+                            <h4 className="text-xs text-neutral-500 uppercase tracking-wider font-medium mb-4">Calculators</h4>
                             <ul className="space-y-2.5">
                                 {footer.calculators.map((item: { label: string; href: string }, i: number) => (
                                     <li key={i}>
@@ -94,7 +94,7 @@ export default function Footer() {
 
                     {/* Socials */}
                     <div>
-                        <h4 className="text-xs text-neutral-600 uppercase tracking-wider font-medium mb-4">Connect</h4>
+                        <h4 className="text-xs text-neutral-500 uppercase tracking-wider font-medium mb-4">Connect</h4>
                         <ul className="space-y-2.5">
                             {footer.socials.map((item, i) => (
                                 <li key={i}>

@@ -76,7 +76,7 @@ export default function PlatformStats() {
                                     rel="noopener noreferrer"
                                     className="block h-full transition-transform duration-300 hover:scale-[1.02]"
                                 >
-                                    <div className="relative h-full border border-white/6 rounded-2xl bg-white/2 p-5 sm:p-8 transition-colors duration-300 hover:border-white/12">
+                                    <div className="relative h-full border border-white/[0.06] rounded-2xl bg-white/2 p-5 sm:p-8 transition-colors duration-300 hover:border-white/[0.12]">
 
                                         {/* Top accent line */}
                                         <div
@@ -136,7 +136,7 @@ export default function PlatformStats() {
                                                     className="text-center py-3 rounded-xl bg-white/3 border border-white/5"
                                                 >
                                                     <div className="text-lg font-display font-bold text-white">{stat.value}</div>
-                                                    <div className="text-[10px] text-neutral-600 uppercase tracking-wider mt-0.5">{stat.label}</div>
+                                                    <div className="text-[11px] text-neutral-500 uppercase tracking-wider mt-0.5">{stat.label}</div>
                                                 </div>
                                             ))}
                                         </div>
@@ -191,7 +191,7 @@ export default function PlatformStats() {
                             {i > 0 && <div className="w-px h-6 bg-white/10 -ml-1" />}
                             <div className="text-center ml-2">
                                 <span className="text-lg font-display font-bold text-white">{s.value}</span>
-                                <span className="text-xs text-neutral-600 ml-1.5">{s.label}</span>
+                                <span className="text-xs text-neutral-500 ml-1.5">{s.label}</span>
                             </div>
                         </div>
                     ))}

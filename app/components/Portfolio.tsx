@@ -82,7 +82,7 @@ export default function Portfolio() {
                                 >
                                     {/* Card */}
                                     <motion.div
-                                        className="relative h-full border border-white/6 rounded-2xl overflow-hidden bg-white/2"
+                                        className="relative h-full border border-white/[0.06] rounded-2xl overflow-hidden bg-white/2"
                                         whileHover={{ borderColor: `${project.accent}33` }}
                                         transition={{ duration: 0.3 }}
                                     >
@@ -135,7 +135,7 @@ export default function Portfolio() {
                                                     {project.metrics.slice(0, 4).map((metric, i) => (
                                                         <span
                                                             key={i}
-                                                            className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white/4 border border-white/6 text-neutral-300"
+                                                            className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white/4 border border-white/[0.06] text-neutral-300"
                                                         >
                                                             {metric}
                                                         </span>
@@ -146,18 +146,18 @@ export default function Portfolio() {
                                                 <div className="mt-auto flex flex-wrap items-center gap-3">
                                                     <Link
                                                         href={`/projects/${project.slug}`}
-                                                        className="inline-flex items-center gap-2 text-sm font-medium transition-colors"
+                                                        className="inline-flex items-center gap-2 text-sm font-medium transition-opacity hover:opacity-80"
                                                         style={{ color: project.accent }}
                                                     >
                                                         View details
-                                                        <ArrowUpRight className="w-4 h-4" />
+                                                        <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
                                                     </Link>
                                                     {project.liveUrl && (
                                                         <a
                                                             href={project.liveUrl}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
-                                                            className="inline-flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-lg border transition-all duration-200"
+                                                            className="inline-flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-lg border transition-opacity hover:opacity-80"
                                                             style={{ color: project.accent, borderColor: `${project.accent}40`, backgroundColor: `${project.accent}12` }}
                                                         >
                                                             Live site

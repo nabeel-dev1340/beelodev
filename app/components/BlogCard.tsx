@@ -34,7 +34,7 @@ export default function BlogCard({
   return (
     <Link
       href={`/blog/${slug}`}
-      className="group block rounded-2xl border border-white/10 bg-white/5 overflow-hidden transition-all duration-300 hover:border-white/20 hover:bg-white/8 hover:shadow-[0_8px_30px_rgb(var(--brand-blue)/0.12)]"
+      className="group flex flex-col h-full rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden transition-all duration-300 hover:border-white/[0.12] hover:bg-white/[0.04] hover:shadow-[0_8px_30px_rgb(var(--brand-blue)/0.12)]"
     >
       <div className="relative aspect-video overflow-hidden">
         <Image
@@ -45,7 +45,7 @@ export default function BlogCard({
           sizes="(max-width: 768px) 100vw, 50vw"
         />
       </div>
-      <div className="p-5 sm:p-6">
+      <div className="flex flex-col flex-1 p-5 sm:p-6">
         <div className="flex flex-wrap gap-2 mb-3">
           {tags.slice(0, 3).map((tag) => (
             <span
@@ -59,14 +59,14 @@ export default function BlogCard({
         <h2 className="font-display text-xl font-bold text-white mb-2 line-clamp-2 group-hover:text-electric-blue transition-colors">
           {title}
         </h2>
-        <p className="text-neutral-400 text-sm leading-relaxed line-clamp-2 mb-4">{description}</p>
-        <div className="flex items-center justify-between text-xs text-neutral-500">
+        <p className="text-neutral-400 text-sm leading-relaxed line-clamp-2 mb-4 flex-1">{description}</p>
+        <div className="flex items-center justify-between text-xs text-neutral-500 mt-auto">
           <span>
             {author} · {formattedDate} · {readingTime}
           </span>
           <span className="inline-flex items-center gap-1 text-electric-blue font-medium opacity-0 group-hover:opacity-100 transition-opacity">
             Read Article
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
           </span>
         </div>
       </div>
