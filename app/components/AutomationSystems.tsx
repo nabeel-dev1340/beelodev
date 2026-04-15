@@ -3,11 +3,18 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import Link from 'next/link';
-import { Bot, Receipt, FileText, CheckCircle2, Calendar } from 'lucide-react';
+import { Bot, Receipt, FileText, MessageSquare, CheckCircle2, Calendar } from 'lucide-react';
 import { siteConfig } from '../config/site';
 
 const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
-    Bot, Receipt, FileText,
+    Bot, Receipt, FileText, MessageSquare,
+};
+
+const systemLabels: Record<string, string> = {
+    'ai-support-agent': 'AI customer support agent',
+    'auto-invoicing': 'Invoice processing automation',
+    'docu-brain': 'Document intelligence system',
+    'ai-website-chatbot': 'AI website chatbot',
 };
 
 export default function AutomationSystems() {
@@ -21,24 +28,22 @@ export default function AutomationSystems() {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
-            transition: {
-                staggerChildren: 0.15
-            }
+            transition: { staggerChildren: 0.12 }
         }
     };
 
     const cardVariants = {
-        hidden: { opacity: 0, y: 30 },
+        hidden: { opacity: 0, y: 24 },
         visible: {
             opacity: 1,
             y: 0,
-            transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }
+            transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const }
         }
     };
 
     return (
         <section className="py-16 sm:py-28 px-4 sm:px-6 relative overflow-hidden" id="systems" ref={ref}>
-            {/* Background Elements */}
+            {/* Background glows */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full pointer-events-none">
                 <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-[100px]" />
                 <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[100px]" />
@@ -47,7 +52,7 @@ export default function AutomationSystems() {
             <div className="max-w-7xl mx-auto relative z-10">
                 {/* Section Header */}
                 <motion.div
-                    className="text-center mb-20"
+                    className="text-center mb-16"
                     initial={{ opacity: 0, y: 30 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.6 }}
@@ -87,7 +92,7 @@ export default function AutomationSystems() {
 
                 {/* Systems Grid */}
                 <motion.div
-                    className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+                    className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5"
                     variants={containerVariants}
                     initial="hidden"
                     animate={isInView ? "visible" : "hidden"}
@@ -100,75 +105,73 @@ export default function AutomationSystems() {
                                 variants={cardVariants}
                                 className="group relative h-full"
                             >
-                                <div className="h-full flex flex-col p-8 rounded-2xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm transition-all duration-300 hover:bg-white/[0.05] hover:border-white/[0.1]">
-                                    {/* Icon & Header */}
-                                    <div className="flex items-start justify-between mb-8">
+                                <div className="h-full flex flex-col p-6 rounded-2xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm transition-all duration-300 hover:bg-white/[0.05] hover:border-white/[0.1]">
+
+                                    {/* Icon */}
+                                    <div className="mb-5">
                                         <div
-                                            className="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg"
+                                            className="w-11 h-11 rounded-xl flex items-center justify-center"
                                             style={{
                                                 backgroundColor: `${system.accent}15`,
                                                 border: `1px solid ${system.accent}30`,
-                                                boxShadow: `0 0 20px ${system.accent}10`
+                                                boxShadow: `0 0 16px ${system.accent}10`
                                             }}
                                         >
-                                            {Icon && <Icon className="w-7 h-7" style={{ color: system.accent }} />}
+                                            {Icon && <Icon className="w-5 h-5" style={{ color: system.accent }} />}
                                         </div>
                                     </div>
 
                                     {/* Content */}
-                                    <div className="flex-1">
-                                        <h3 className="font-display text-2xl font-bold text-white mb-4">
+                                    <div className="flex-1 flex flex-col">
+                                        <h3 className="font-display text-lg font-bold text-white mb-2 leading-snug">
                                             {system.name}
                                         </h3>
-                                        <p className="text-lg text-neutral-300 font-medium leading-relaxed mb-8">
+                                        <p className="text-sm text-neutral-400 leading-relaxed mb-5">
                                             {system.shortHeadline}
                                         </p>
 
                                         {/* Bullets */}
-                                        <ul className="space-y-4 mb-8">
+                                        <ul className="space-y-2.5 flex-1">
                                             {system.bullets.map((bullet, i) => (
-                                                <li key={i} className="flex items-start gap-3 text-neutral-400">
-                                                    <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: system.accent }} />
-                                                    <span className="text-sm leading-relaxed">{bullet}</span>
+                                                <li key={i} className="flex items-start gap-2.5">
+                                                    <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" style={{ color: system.accent }} />
+                                                    <span className="text-xs text-neutral-400 leading-relaxed">{bullet}</span>
                                                 </li>
                                             ))}
                                         </ul>
                                     </div>
 
                                     {/* Footer */}
-                                    <div className="pt-6 border-t border-white/[0.08] mt-2">
-                                        <p className="text-sm font-mono font-medium tracking-wide flex items-center gap-2" style={{ color: system.accent }}>
-                                            <span className="opacity-80">{system.closingLine}</span>
+                                    <div className="pt-5 mt-5 border-t border-white/[0.08] flex flex-col gap-2.5">
+                                        <p className="text-xs font-mono tracking-wide pb-1" style={{ color: system.accent }}>
+                                            {system.closingLine}
                                         </p>
 
                                         {/* SEO: keyword-rich anchor text for internal linking */}
                                         <Link
                                             href={`/systems/${system.slug}`}
-                                            className="mt-4 inline-flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold border transition-opacity hover:opacity-80"
+                                            className="inline-flex w-full items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold border transition-opacity hover:opacity-80"
                                             style={{ color: system.accent, borderColor: `${system.accent}40`, backgroundColor: `${system.accent}12` }}
                                         >
-                                            {system.slug === 'ai-support-agent' && 'AI customer support agent'}
-                                            {system.slug === 'auto-invoicing' && 'Invoice processing automation'}
-                                            {system.slug === 'docu-brain' && 'Document intelligence system'}
-                                            {!['ai-support-agent', 'auto-invoicing', 'docu-brain'].includes(system.slug) && 'View details'}
+                                            {systemLabels[system.slug] ?? 'View details'}
                                         </Link>
 
                                         <a
                                             href={bookingUrl}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
+                                            className="inline-flex w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-white border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
                                         >
                                             <Calendar className="w-4 h-4" style={{ color: system.accent }} />
                                             Book a Free Discovery Call
                                         </a>
                                     </div>
 
-                                    {/* Hover specific glow */}
+                                    {/* Hover glow */}
                                     <div
                                         className="absolute -inset-0.5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                                         style={{
-                                            background: `linear-gradient(180deg, ${system.accent}20 0%, transparent 100%)`
+                                            background: `linear-gradient(180deg, ${system.accent}15 0%, transparent 60%)`
                                         }}
                                     />
                                 </div>

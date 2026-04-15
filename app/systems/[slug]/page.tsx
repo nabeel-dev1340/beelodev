@@ -39,6 +39,7 @@ export async function generateMetadata({ params }: SystemPageProps) {
     'ai-support-agent': 'AI Customer Support Agent for Small Business',
     'auto-invoicing': 'Invoice Processing Automation — QuickBooks & Xero',
     'docu-brain': 'Document Intelligence Automation System',
+    'ai-website-chatbot': 'AI Chatbot for Website — Lead Capture & 24/7 Engagement',
   };
   const metaDescriptions: Record<string, string> = {
     'ai-support-agent':
@@ -47,6 +48,8 @@ export async function generateMetadata({ params }: SystemPageProps) {
       'Automate invoice processing end-to-end. Email to QuickBooks or Xero with zero manual entry. Eliminate errors, close faster. From $1,299.',
     'docu-brain':
       'Turn document chaos into searchable business intelligence. AI-powered extraction, bulk processing, instant search. Starting at $1,999.',
+    'ai-website-chatbot':
+      'Add an AI chatbot to your website that engages visitors, captures leads, and books calls 24/7. Custom-built and live in 5–10 days. From $899.',
   };
 
   return generateSEOMetadata({
@@ -143,7 +146,8 @@ export default async function SystemPage({ params }: SystemPageProps) {
               {system.slug === 'ai-support-agent' && 'AI Customer Support Agent'}
               {system.slug === 'auto-invoicing' && 'Invoice Processing Automation'}
               {system.slug === 'docu-brain' && 'Document Intelligence System'}
-              {!['ai-support-agent', 'auto-invoicing', 'docu-brain'].includes(system.slug) && system.name}
+              {system.slug === 'ai-website-chatbot' && 'AI Chatbot for Your Website'}
+              {!['ai-support-agent', 'auto-invoicing', 'docu-brain', 'ai-website-chatbot'].includes(system.slug) && system.name}
             </h1>
 
             {/* SEO: intro with primary keyword in first 100 words */}
@@ -156,6 +160,9 @@ export default async function SystemPage({ params }: SystemPageProps) {
               )}
               {system.slug === 'docu-brain' && (
                 <>A document intelligence system turns PDFs and files into searchable business intelligence. </>
+              )}
+              {system.slug === 'ai-website-chatbot' && (
+                <>An AI chatbot for your website engages visitors 24/7, captures leads automatically, and books calls — without any manual effort. </>
               )}
               {system.longDescription}
             </p>
@@ -211,7 +218,8 @@ export default async function SystemPage({ params }: SystemPageProps) {
                   {system.slug === 'ai-support-agent' && 'Who This AI Support Agent Is For'}
                   {system.slug === 'auto-invoicing' && 'Who Invoice Automation Is For'}
                   {system.slug === 'docu-brain' && 'Who Document Intelligence Is For'}
-                  {!['ai-support-agent', 'auto-invoicing', 'docu-brain'].includes(system.slug) && 'Best for'}
+                  {system.slug === 'ai-website-chatbot' && 'Who This AI Chatbot Is For'}
+                  {!['ai-support-agent', 'auto-invoicing', 'docu-brain', 'ai-website-chatbot'].includes(system.slug) && 'Best for'}
                 </h2>
                 <p className="text-neutral-300 leading-relaxed">{system.bestFor}</p>
               </section>
@@ -302,7 +310,8 @@ export default async function SystemPage({ params }: SystemPageProps) {
               {system.slug === 'ai-support-agent' && 'AI Support Agent FAQ'}
               {system.slug === 'auto-invoicing' && 'Invoice Automation Pricing & FAQ'}
               {system.slug === 'docu-brain' && 'Document Intelligence Pricing & FAQ'}
-              {!['ai-support-agent', 'auto-invoicing', 'docu-brain'].includes(system.slug) && 'FAQ'}
+              {system.slug === 'ai-website-chatbot' && 'AI Website Chatbot FAQ'}
+              {!['ai-support-agent', 'auto-invoicing', 'docu-brain', 'ai-website-chatbot'].includes(system.slug) && 'FAQ'}
             </h2>
             <div className="space-y-4">
               {system.faqs.map((faq) => (

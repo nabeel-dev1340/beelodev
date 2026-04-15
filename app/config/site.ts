@@ -47,13 +47,14 @@ export const siteConfig = {
         subtitle:
             'AI automation systems that replace manual work — built for small and mid-sized businesses.',
         cta: {
-            primary: { label: 'View the 3 Systems', href: '#systems' },
+            primary: { label: 'View the 4 Systems', href: '#systems' },
             secondary: { label: 'Book a Free Discovery Call', href: '#book' },
         },
         capabilities: [
             { icon: 'Bot', label: 'AI Support Agent' },
             { icon: 'Receipt', label: 'Auto-Invoicing' },
             { icon: 'FileText', label: 'Docu-Brain' },
+            { icon: 'MessageSquare', label: 'AI Website Chatbot' },
         ],
         stats: [
             { value: '300+', label: 'Systems Built' },
@@ -65,7 +66,7 @@ export const siteConfig = {
     // ── Automation Systems ────────────────────────
     // SEO: keyword optimization
     automationSystems: {
-        title: "3 AI Automation Systems for Small Business",
+        title: "4 AI Automation Systems for Small Business",
         systems: [
             {
                 slug: 'ai-support-agent',
@@ -108,6 +109,20 @@ export const siteConfig = {
                 closingLine: "Your documents become a competitive advantage.",
                 icon: 'FileText',
                 accent: '#14b8a6',
+            },
+            {
+                slug: 'ai-website-chatbot',
+                name: "AI Chatbot for Your Website",
+                shortHeadline: "Engage visitors 24/7, capture leads, and answer questions without lifting a finger.",
+                bullets: [
+                    "Visitors get instant answers instead of bouncing",
+                    "Leads are captured and qualified automatically",
+                    "Your team only handles warm, ready-to-buy conversations",
+                    "Works around the clock without increasing headcount",
+                ],
+                closingLine: "Your website becomes your best salesperson.",
+                icon: 'MessageSquare',
+                accent: '#8b5cf6',
             },
         ],
     },
@@ -176,6 +191,14 @@ export const siteConfig = {
             deliverables: ['Bulk Processing', 'Searchable Database', 'Summaries/Insights', 'Secure Handling'],
             accent: '#14b8a6',
             stat: 'Find answers in seconds',
+        },
+        {
+            icon: 'MessageSquare',
+            title: 'AI Website Chatbot',
+            description: 'A custom AI chatbot that engages visitors, answers questions, and captures leads around the clock.',
+            deliverables: ['Lead Capture Flows', 'Knowledge Base Setup', 'Calendar Integration', 'Conversation Analytics'],
+            accent: '#8b5cf6',
+            stat: 'Capture leads 24/7',
         },
     ],
 
@@ -246,6 +269,29 @@ export const siteConfig = {
                     'Insight Generation & Summary',
                     'API Integration',
                     'Secure Data Handling',
+                    '2 Weeks Free Support',
+                ],
+                cta: 'Schedule a Call',
+                popular: false,
+            },
+            {
+                slug: 'ai-website-chatbot',
+                name: 'AI Website Chatbot',
+                tagline: 'Engage visitors, capture leads, and answer questions 24/7',
+                price: '$899',
+                period: 'one-time setup',
+                icon: 'MessageSquare',
+                accent: '#8b5cf6',
+                bestFor: 'Service businesses and agencies wanting to convert more website visitors.',
+                timeline: '5-10 days',
+                integrations: ['Website widget', 'WhatsApp', 'CRM', 'Calendly'],
+                features: [
+                    'Custom Chatbot Design & Tone',
+                    'Knowledge Base Setup',
+                    'Lead Capture & Qualification Flows',
+                    'Booking / Calendar Integration',
+                    'Human Handoff Logic',
+                    'Conversation Analytics',
                     '2 Weeks Free Support',
                 ],
                 cta: 'Schedule a Call',
@@ -403,6 +449,7 @@ export const siteConfig = {
             { label: 'AI Support Agent', href: '/systems/ai-support-agent' },
             { label: 'Auto-Invoicing', href: '/systems/auto-invoicing' },
             { label: 'Docu-Brain', href: '/systems/docu-brain' },
+            { label: 'AI Website Chatbot', href: '/systems/ai-website-chatbot' },
         ],
         company: [
             { label: 'About', href: '/about' },

@@ -3,12 +3,12 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import Link from 'next/link';
-import { Check, Calendar, Bot, Receipt, FileText } from 'lucide-react';
+import { Check, Calendar, Bot, Receipt, FileText, MessageSquare } from 'lucide-react';
 import { siteConfig } from '../config/site';
 import posthog from 'posthog-js';
 
 const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
-    Bot, Receipt, FileText,
+    Bot, Receipt, FileText, MessageSquare,
 };
 
 export default function Packages() {
@@ -35,7 +35,7 @@ export default function Packages() {
 
     return (
         <section className="py-16 sm:py-28 px-4 sm:px-6 relative" id="pricing" ref={ref}>
-            <div className="max-w-5xl mx-auto">
+            <div className="max-w-7xl mx-auto">
 
                 {/* Section Header */}
                 <motion.div
@@ -55,13 +55,13 @@ export default function Packages() {
                         <span className="gradient-brand-text">Real Results.</span>
                     </h2>
                     <p className="text-neutral-400 text-lg max-w-xl mx-auto">
-                        Three proven automation systems, packaged with fixed scope and clear pricing. Book a call and we will recommend the best fit.
+                        Four proven automation systems, packaged with fixed scope and clear pricing. Book a call and we will recommend the best fit.
                     </p>
                 </motion.div>
 
                 {/* Pricing Cards */}
                 <motion.div
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch"
+                    className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 items-stretch"
                     variants={stagger}
                     initial="hidden"
                     animate={isInView ? "visible" : "hidden"}
@@ -84,13 +84,13 @@ export default function Packages() {
                                 )}
 
                                 <div
-                                    className={`h-full rounded-2xl p-5 sm:p-7 transition-all duration-300 overflow-hidden relative ${plan.popular
+                                    className={`h-full flex flex-col rounded-2xl p-6 transition-all duration-300 overflow-hidden relative ${plan.popular
                                         ? 'border-2 bg-white/[0.04]'
                                         : 'border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12]'
                                         }`}
                                     style={plan.popular ? { borderColor: `${plan.accent}50` } : {}}
                                 >
-                                    {/* Top accent line (non-popular) */}
+                                    {/* Top accent line on hover (non-popular) */}
                                     {!plan.popular && (
                                         <div
                                             className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -99,55 +99,56 @@ export default function Packages() {
                                     )}
 
                                     {/* Icon + Name */}
-                                    <div className="flex items-center gap-3 mb-1">
+                                    <div className="flex items-center gap-3 mb-3">
                                         <div
-                                            className="w-9 h-9 rounded-lg flex items-center justify-center"
+                                            className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
                                             style={{ backgroundColor: `${plan.accent}15`, border: `1px solid ${plan.accent}20` }}
                                         >
                                             {PlanIcon && <PlanIcon className="w-4 h-4" style={{ color: plan.accent }} />}
                                         </div>
-                                        <h3 className="font-display text-xl font-bold text-white">{plan.name}</h3>
+                                        <h3 className="font-display text-base font-bold text-white leading-snug">{plan.name}</h3>
                                     </div>
 
-                                    <p className="text-neutral-500 text-sm mb-6 ml-12">{plan.tagline}</p>
+                                    {/* Tagline */}
+                                    <p className="text-xs text-neutral-500 leading-relaxed mb-5">{plan.tagline}</p>
 
-                                    <div className="mb-5 ml-12">
-                                        <Link
-                                            href={`/systems/${plan.slug}`}
-                                            className="text-sm font-semibold transition-opacity hover:opacity-80"
-                                            style={{ color: plan.accent }}
-                                            onClick={() => posthog.capture('pricing_plan_details_clicked', {
-                                                plan_name: plan.name,
-                                                plan_slug: plan.slug,
-                                                plan_price: plan.price,
-                                                is_popular: plan.popular ?? false,
-                                            })}
-                                        >
-                                            View details
-                                        </Link>
+                                    {/* Price */}
+                                    <div className="mb-5">
+                                        <div className="flex items-baseline gap-1">
+                                            <span
+                                                className="text-4xl font-display font-bold bg-clip-text text-transparent"
+                                                style={{ backgroundImage: `linear-gradient(135deg, ${plan.accent}, ${plan.accent}cc)` }}
+                                            >
+                                                {plan.price}
+                                            </span>
+                                        </div>
+                                        <div className="text-neutral-500 text-xs mt-0.5 uppercase tracking-wider font-mono">{plan.period}</div>
                                     </div>
 
-                                    {/* Best for + Timeline */}
-                                    <div className="mb-6 ml-12">
+                                    {/* Divider */}
+                                    <div className="h-px bg-white/6 mb-5" />
+
+                                    {/* Meta: Best for + Timeline */}
+                                    <div className="space-y-1.5 mb-4">
                                         {plan.bestFor && (
-                                            <div className="text-sm text-neutral-300 mb-2">
-                                                <span className="text-neutral-500">Best for:</span> {plan.bestFor}
-                                            </div>
+                                            <p className="text-xs text-neutral-400 leading-relaxed">
+                                                <span className="text-neutral-600">Best for:</span> {plan.bestFor}
+                                            </p>
                                         )}
                                         {plan.timeline && (
-                                            <div className="text-xs text-neutral-500 uppercase tracking-wider">
-                                                Typical timeline: <span className="text-neutral-400">{plan.timeline}</span>
-                                            </div>
+                                            <p className="text-xs text-neutral-500 font-mono uppercase tracking-wide">
+                                                Timeline: <span className="text-neutral-400 normal-case">{plan.timeline}</span>
+                                            </p>
                                         )}
                                     </div>
 
-                                    {/* Integrations */}
+                                    {/* Integration tags */}
                                     {plan.integrations?.length > 0 && (
-                                        <div className="flex flex-wrap gap-2 mb-7 ml-12">
+                                        <div className="flex flex-wrap gap-1.5 mb-5">
                                             {plan.integrations.map((item) => (
                                                 <span
                                                     key={item}
-                                                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white/4 border border-white/6 text-neutral-300"
+                                                    className="px-2 py-1 rounded-md text-[11px] font-medium bg-white/4 border border-white/6 text-neutral-400"
                                                 >
                                                     {item}
                                                 </span>
@@ -155,38 +156,39 @@ export default function Packages() {
                                         </div>
                                     )}
 
-                                    {/* Price */}
-                                    <div className="mb-7">
-                                        <div className="flex items-baseline gap-1.5">
-                                            <span
-                                                className="text-4xl sm:text-5xl font-display font-bold bg-clip-text text-transparent"
-                                                style={{ backgroundImage: `linear-gradient(135deg, ${plan.accent}, ${plan.accent}cc)` }}
-                                            >
-                                                {plan.price}
-                                            </span>
-                                        </div>
-                                        <div className="text-neutral-500 text-xs mt-1 uppercase tracking-wider">{plan.period}</div>
-                                    </div>
-
-                                    {/* Divider */}
-                                    <div className="h-px bg-white/[0.06] mb-7" />
-
                                     {/* Features */}
-                                    <ul className="space-y-3.5 mb-8">
+                                    <ul className="space-y-2.5 flex-1 mb-6">
                                         {plan.features.map((feature, i) => (
-                                            <li key={i} className="flex items-start gap-3">
-                                                <Check className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: plan.accent }} />
-                                                <span className="text-sm text-neutral-300">{feature}</span>
+                                            <li key={i} className="flex items-start gap-2.5">
+                                                <Check className="w-3.5 h-3.5 mt-0.5 shrink-0" style={{ color: plan.accent }} />
+                                                <span className="text-xs text-neutral-300 leading-relaxed">{feature}</span>
                                             </li>
                                         ))}
                                     </ul>
+
+                                    {/* View details link */}
+                                    <Link
+                                        href={`/systems/${plan.slug}`}
+                                        className="text-xs font-semibold mb-3 inline-block transition-opacity hover:opacity-80"
+                                        style={{ color: plan.accent }}
+                                        onClick={() => posthog.capture('pricing_plan_details_clicked', {
+                                            plan_name: plan.name,
+                                            plan_slug: plan.slug,
+                                            plan_price: plan.price,
+                                            is_popular: plan.popular ?? false,
+                                        })}
+                                    >
+                                        View full details →
+                                    </Link>
 
                                     {/* CTA */}
                                     <motion.a
                                         href={siteConfig.personal.booking.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className={`block w-full text-center py-3.5 rounded-xl font-semibold text-sm transition-shadow ${plan.popular ? 'text-white' : 'text-white border border-white/[0.1] hover:border-white/[0.2]'
+                                        className={`block w-full text-center py-3 rounded-xl font-semibold text-sm transition-shadow ${plan.popular
+                                            ? 'text-white'
+                                            : 'text-white border border-white/10 hover:border-white/20'
                                             }`}
                                         style={plan.popular ? {
                                             backgroundImage: `linear-gradient(135deg, ${plan.accent}, ${plan.accent}dd)`,
@@ -206,8 +208,8 @@ export default function Packages() {
                                         })}
                                     >
                                         <span className="flex items-center justify-center gap-2">
-                                            Book call for {plan.name}
                                             <Calendar className="w-4 h-4" />
+                                            Book a free call
                                         </span>
                                     </motion.a>
 

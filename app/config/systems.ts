@@ -1,4 +1,4 @@
-export const systemSlugs = ['ai-support-agent', 'auto-invoicing', 'docu-brain'] as const;
+export const systemSlugs = ['ai-support-agent', 'auto-invoicing', 'docu-brain', 'ai-website-chatbot'] as const;
 
 export type SystemSlug = (typeof systemSlugs)[number];
 
@@ -16,7 +16,7 @@ export type System = {
   timeline: string;
   priceLabel: string;
   accent: string;
-  icon: 'Bot' | 'Receipt' | 'FileText';
+  icon: 'Bot' | 'Receipt' | 'FileText' | 'MessageSquare';
   integrations: string[];
   outcomes: string[];
   includes: string[];
@@ -170,6 +170,56 @@ export const systems: System[] = [
       'document processing automation',
       'PDF data extraction workflow',
       'knowledge base from documents',
+    ],
+  },
+  {
+    slug: 'ai-website-chatbot',
+    name: 'AI Website Chatbot',
+    shortHeadline: 'Engage visitors 24/7, capture leads, and answer questions automatically — without adding headcount.',
+    longDescription:
+      'We build a custom AI chatbot for your website that greets visitors, answers common questions, qualifies leads, and books calls — all without human involvement. Every conversation is tracked so you can see what visitors ask and where they drop off.',
+    bestFor: 'Service businesses, agencies, and SaaS companies that get repetitive website inquiries and want to convert more visitors into leads.',
+    timeline: '5-10 days',
+    priceLabel: '$899 one-time setup',
+    accent: '#8b5cf6',
+    icon: 'MessageSquare',
+    integrations: ['Website chat widget', 'WhatsApp', 'Email', 'CRM', 'Calendly / Cal.com', 'Slack'],
+    outcomes: [
+      'Visitors get instant answers instead of bouncing',
+      'Leads captured and qualified around the clock',
+      'Fewer cold inquiries, more warm conversations',
+      'Clear visibility into what visitors actually want',
+    ],
+    includes: [
+      'Custom chatbot design and tone matching',
+      'Knowledge base setup from your existing content',
+      'Lead capture and qualification flows',
+      'Booking / calendar integration',
+      'Conversation analytics and reporting',
+      'Launch checklist + handoff documentation',
+    ],
+    faqs: [
+      {
+        question: 'Can the chatbot book calls or capture leads?',
+        answer:
+          'Yes. We can wire it to Calendly, Cal.com, or your CRM so qualified visitors can book a call or leave their details directly in the chat.',
+      },
+      {
+        question: 'What does the chatbot learn from?',
+        answer:
+          'We build its knowledge base from your website copy, FAQs, and any docs you provide. You review and approve the sources before launch.',
+      },
+      {
+        question: 'Can it hand off to a human when needed?',
+        answer:
+          'Yes. We configure escalation rules so complex or high-intent conversations get flagged or routed to your team via email, Slack, or WhatsApp.',
+      },
+    ],
+    keywords: [
+      'AI chatbot for website',
+      'website chatbot for small business',
+      'AI lead capture chatbot',
+      'custom AI chatbot',
     ],
   },
 ];
