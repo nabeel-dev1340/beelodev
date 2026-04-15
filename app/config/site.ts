@@ -457,10 +457,7 @@ export const siteConfig = {
             { label: 'Process', href: '/process' },
             { label: 'Systems', href: '/systems' },
             { label: 'Portfolio', href: '#portfolio' },
-            { label: 'Reviews', href: '#testimonials' },
-            { label: 'Pricing', href: '#pricing' },
             { label: 'Contact', href: '#contact' },
-            { label: 'Site Index', href: '/sitemap-page' },
         ],
         // SEO: calculator pages for internal linking
         calculators: [

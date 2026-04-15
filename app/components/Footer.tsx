@@ -10,7 +10,7 @@ export default function Footer() {
             <div className="max-w-7xl mx-auto">
 
                 {/* Top — CTA Banner */}
-                <div className="border border-white/[0.06] rounded-2xl bg-white/[0.02] p-8 sm:p-10 md:p-14 text-center mb-12 sm:mb-16 relative overflow-hidden">
+                <div className="border border-white/[0.06] rounded-2xl bg-white/[0.02] p-6 sm:p-8 md:p-10 text-center mb-10 sm:mb-12 relative overflow-hidden">
                     <div
                         className="absolute -top-20 left-1/2 -translate-x-1/2 w-80 h-80 rounded-full blur-[120px] opacity-10 pointer-events-none bg-electric-blue"
                     />
@@ -33,9 +33,9 @@ export default function Footer() {
                 </div>
 
                 {/* Middle — Links Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 mb-12 sm:mb-16">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 sm:gap-10 mb-10 sm:mb-12">
                     {/* Brand */}
-                    <div className="col-span-2 md:col-span-1">
+                    <div className="col-span-2 sm:col-span-1">
                         <a href="/" className="flex items-center gap-2.5 mb-4">
                             <Logo size={28} />
                             <span className="font-display text-lg font-bold text-white">
@@ -77,20 +77,18 @@ export default function Footer() {
                     </div>
 
                     {/* Calculators — SEO: internal links to calculator pages */}
-                    {'calculators' in footer && (
-                        <div>
-                            <h4 className="text-xs text-neutral-500 uppercase tracking-wider font-medium mb-4">Calculators</h4>
-                            <ul className="space-y-2.5">
-                                {footer.calculators.map((item: { label: string; href: string }, i: number) => (
-                                    <li key={i}>
-                                        <a href={item.href} className="text-sm text-neutral-400 hover:text-white transition-colors">
-                                            {item.label}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
+                    <div>
+                        <h4 className="text-xs text-neutral-500 uppercase tracking-wider font-medium mb-4">Calculators</h4>
+                        <ul className="space-y-2.5">
+                            {footer.calculators.map((item, i) => (
+                                <li key={i}>
+                                    <a href={item.href} className="text-sm text-neutral-400 hover:text-white transition-colors">
+                                        {item.label}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
 
                     {/* Socials */}
                     <div>
@@ -122,9 +120,7 @@ export default function Footer() {
                         <a href="/sitemap-page" className="text-neutral-500 hover:text-neutral-400 transition-colors">Site Index</a>
                     </div>
                     <div className="flex items-center gap-4 text-xs text-neutral-500">
-                        <span>{personal.location.split(' · ')[0]}</span>
-                        <span className="w-1 h-1 rounded-full bg-neutral-800" />
-                        <span>{personal.location.split(' · ')[1]}</span>
+                        <span>{personal.location}</span>
                         <span className="w-1 h-1 rounded-full bg-neutral-800" />
                         <span>{personal.domain}</span>
                     </div>
