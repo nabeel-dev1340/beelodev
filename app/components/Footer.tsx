@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Logo from './Logo';
 import { ArrowUpRight, Calendar } from 'lucide-react';
 import { siteConfig } from '../config/site';
@@ -36,13 +37,13 @@ export default function Footer() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 sm:gap-10 mb-10 sm:mb-12">
                     {/* Brand */}
                     <div className="col-span-2 sm:col-span-1">
-                        <a href="/" className="flex items-center gap-2.5 mb-4">
+                        <Link href="/" className="flex items-center gap-2.5 mb-4">
                             <Logo size={28} />
                             <span className="font-display text-lg font-bold text-white">
                                 beelo
                                 <span className="gradient-logo-text">dev</span>
                             </span>
-                        </a>
+                        </Link>
                         <p className="text-sm text-neutral-500 leading-relaxed max-w-xs">
                             {personal.tagline}
                         </p>
