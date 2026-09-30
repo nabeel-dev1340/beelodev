@@ -1,206 +1,106 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { projects } from '../../config/projects';
-import ProjectImageGallery from './ProjectImageGallery';
+import { automationServices } from '../../config/services';
+import { Breadcrumbs, JsonLd, WorkflowCTA } from '../../components/PageElements';
 import {
-    generateProjectMetadata,
-    generateProjectSchema,
-    generateProjectArticleSchema,
-    generateBreadcrumbsSchema,
-    siteUrl,
+  generateProjectMetadata,
+  generateProjectSchema,
+  generateBreadcrumbsSchema,
 } from '../../lib/seo';
 
-type ProjectPageProps = {
-    params: Promise<{ slug: string }>;
-};
-
+type Props = { params: Promise<{ slug: string }> };
 export function generateStaticParams() {
-    return projects.map((project) => ({ slug: project.slug }));
+  return projects.map((project) => ({ slug: project.slug }));
 }
-
-export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
-    const { slug } = await params;
-    const project = projects.find((item) => item.slug === slug);
-
-    if (!project) {
-        return { title: 'Project Not Found', robots: { index: false, follow: false } };
-    }
-
-    return generateProjectMetadata(project);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const project = projects.find((item) => item.slug === slug);
+  return project
+    ? generateProjectMetadata(project)
+    : { title: 'Project not found', robots: { index: false } };
 }
-
-export default async function ProjectPage({ params }: ProjectPageProps) {
-    const { slug } = await params;
-    const project = projects.find((item) => item.slug === slug);
-
-    if (!project) {
-        notFound();
-    }
-
-    const breadcrumbSchema = generateBreadcrumbsSchema([
-        { name: 'Home', url: '/' },
-        { name: 'Portfolio', url: '/#portfolio' },
-        { name: project.title, url: `/projects/${project.slug}` },
-    ]);
-
-    const projectSchema = generateProjectSchema(project);
-    const articleSchema = generateProjectArticleSchema(project);
-
-    return (
-        <>
-            {/* Project-level structured data injected into the page's <head> — LLM SEO: Article schema for AI discoverability */}
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(projectSchema) }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
-            />
-
-            <article className="min-h-screen py-12 sm:py-20 px-4 sm:px-6">
-                <div className="max-w-5xl mx-auto">
-                    {/* Visible breadcrumb navigation — reinforces hierarchy for crawlers */}
-                    <nav aria-label="Breadcrumb" className="mb-8">
-                        <ol className="flex items-center gap-1.5 text-xs text-neutral-500" itemScope itemType="https://schema.org/BreadcrumbList">
-                            <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-                                <Link href="/" className="hover:text-neutral-300 transition-colors" itemProp="item">
-                                    <span itemProp="name">Home</span>
-                                </Link>
-                                <meta itemProp="position" content="1" />
-                            </li>
-                            <li aria-hidden="true" className="text-neutral-700">/</li>
-                            <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-                                <Link href="/#portfolio" className="hover:text-neutral-300 transition-colors" itemProp="item">
-                                    <span itemProp="name">Portfolio</span>
-                                </Link>
-                                <meta itemProp="position" content="2" />
-                            </li>
-                            <li aria-hidden="true" className="text-neutral-700">/</li>
-                            <li
-                                className="text-neutral-400 truncate max-w-[160px] sm:max-w-none"
-                                itemProp="itemListElement"
-                                itemScope
-                                itemType="https://schema.org/ListItem"
-                            >
-                                <span itemProp="name">{project.title}</span>
-                                <meta itemProp="position" content="3" />
-                                <meta itemProp="item" content={`${siteUrl}/projects/${project.slug}`} />
-                            </li>
-                        </ol>
-                    </nav>
-
-                    <Link
-                        href="/#portfolio"
-                        className="inline-flex items-center gap-2 text-sm text-neutral-300 hover:text-white transition-colors mb-8"
-                    >
-                        <ArrowLeft className="w-4 h-4" />
-                        Back to portfolio
-                    </Link>
-
-                    <div className="rounded-2xl border border-white/10 bg-white/5 p-6 sm:p-10">
-                        <p className="text-xs font-mono uppercase tracking-wider mb-3" style={{ color: project.accent }}>
-                            {project.category}
-                        </p>
-                        <h1 className="font-display text-3xl sm:text-5xl font-bold text-white mb-5">
-                            {project.title}
-                        </h1>
-                        {project.liveUrl && (
-                            <a
-                                href={project.liveUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 text-sm font-medium mb-6"
-                                style={{ color: project.accent }}
-                            >
-                                Visit live project
-                                <ArrowUpRight className="w-4 h-4" />
-                            </a>
-                        )}
-
-                        {/* Main content — wrapped in a semantic section for better content signals */}
-                        <section aria-label="Project description">
-                            <p className="text-neutral-300 leading-relaxed mb-8">
-                                {project.fullDescription}
-                            </p>
-                        </section>
-
-                        <div className="flex flex-wrap gap-2 mb-10" role="list" aria-label="Project metrics">
-                            {project.metrics.map((metric) => (
-                                <span
-                                    key={metric}
-                                    role="listitem"
-                                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white/6 border border-white/10 text-neutral-200"
-                                >
-                                    {metric}
-                                </span>
-                            ))}
-                        </div>
-
-                        {project.images.length > 0 && (
-                            <ProjectImageGallery
-                                images={project.images}
-                                title={`${project.title} — ${project.category}`}
-                            />
-                        )}
-                    </div>
-
-                    {/* SEO: link back to relevant system page with keyword-rich anchor */}
-                    {project.systems && project.systems.length > 0 && (
-                        <div className="mt-10 text-center">
-                            <p className="text-neutral-400 text-sm mb-3">Built with our automation systems:</p>
-                            <div className="flex flex-wrap justify-center gap-3">
-                                {project.systems.includes('ai-support-agent') && (
-                                    <Link
-                                        href="/systems/ai-support-agent"
-                                        className="text-sm font-medium hover:underline"
-                                        style={{ color: project.accent }}
-                                    >
-                                        AI customer support agent
-                                    </Link>
-                                )}
-                                {project.systems.includes('auto-invoicing') && (
-                                    <Link
-                                        href="/systems/auto-invoicing"
-                                        className="text-sm font-medium hover:underline"
-                                        style={{ color: project.accent }}
-                                    >
-                                        Invoice processing automation
-                                    </Link>
-                                )}
-                                {project.systems.includes('docu-brain') && (
-                                    <Link
-                                        href="/systems/docu-brain"
-                                        className="text-sm font-medium hover:underline"
-                                        style={{ color: project.accent }}
-                                    >
-                                        Document intelligence system
-                                    </Link>
-                                )}
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Footer CTA — internal link equity back to homepage */}
-                    <div className="mt-12 text-center">
-                        <p className="text-neutral-400 text-sm mb-4">
-                            Interested in a similar system for your business?
-                        </p>
-                        <Link
-                            href="/#contact"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium text-white border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
-                        >
-                            Book a Free Discovery Call
-                        </Link>
-                    </div>
-                </div>
-            </article>
-        </>
-    );
+export default async function ProjectPage({ params }: Props) {
+  const { slug } = await params;
+  const project = projects.find((item) => item.slug === slug);
+  if (!project) notFound();
+  const related = automationServices.filter((service) => project.services?.includes(service.slug));
+  return (
+    <main id="main">
+      <div className="container page-intro">
+        <Breadcrumbs items={[{ name: 'Projects', href: '/projects' }, { name: project.title }]} />
+        <p className="eyebrow">{project.category} · Project</p>
+        <h1>{project.title}</h1>
+        <p className="lead">{project.shortDescription}</p>
+        <div className="project-facts">
+          {project.metrics.map((metric) => (
+            <span key={metric}>{metric}</span>
+          ))}
+        </div>
+      </div>
+      <section className="section section-line">
+        <div className="container detail-layout">
+          <div>
+            <h2>The implementation.</h2>
+            <p className="muted">{project.fullDescription}</p>
+          </div>
+          <div>
+            {project.contribution && (
+              <>
+                <h3>My contribution</h3>
+                <p className="scope-note">{project.contribution}</p>
+              </>
+            )}
+            {project.liveUrl && (
+              <a
+                className="text-link"
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Visit the live project <ArrowUpRight size={15} />
+              </a>
+            )}
+            {related.length > 0 && (
+              <div className="scope-note">
+                <strong>Related service</strong>
+                {related.map((service) => (
+                  <Link key={service.slug} className="text-link" href={`/services/${service.slug}`}>
+                    {service.title} <ArrowUpRight size={15} />
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+      <section className="container project-detail-images" aria-label="Project screenshots">
+        {project.images.map((src, i) => (
+          <Image
+            key={src}
+            src={src}
+            alt={`${project.title} — implementation screenshot ${i + 1}`}
+            width={1600}
+            height={1000}
+            sizes="(max-width: 800px) 100vw, 1200px"
+            className="project-detail-image"
+          />
+        ))}
+      </section>
+      <section className="container section">
+        <WorkflowCTA />
+      </section>
+      <JsonLd data={generateProjectSchema(project)} />
+      <JsonLd
+        data={generateBreadcrumbsSchema([
+          { name: 'Home', url: '/' },
+          { name: 'Projects', url: '/projects' },
+          { name: project.title, url: `/projects/${slug}` },
+        ])}
+      />
+    </main>
+  );
 }

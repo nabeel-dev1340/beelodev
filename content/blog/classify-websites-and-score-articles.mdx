@@ -1,0 +1,56 @@
+---
+title: "How to plan website classification and article scoring automation"
+description: "Define a rubric, extract useful page signals, and evaluate a sample before classifying domain lists or scoring research articles at scale."
+date: "2026-09-28"
+author: "Nabeel Sharafat"
+tags: ["Classification", "Website data", "Workflow planning"]
+slug: "classify-websites-and-score-articles"
+---
+
+Opening a long list of websites to categorize each business is a different task from collecting a fresh price feed. The output is a judgment under a rubric, so extraction quality and classification quality need separate checks.
+
+I built a [Website Classification Pipeline](/projects/ai-website-classification-pipeline) using a local Windows Python script. It extracted homepage titles, meta descriptions, the first H1, and short text snippets, then passed those signals to the ChatGPT API under client-provided instructions and exported results to CSV.
+
+I also built an [Article Scoring workflow](/projects/scoring-articles-automation) in n8n that extracted URLs from Gmail, retrieved article content, scored it against a custom rubric, and logged qualified items to Google Sheets. These are related patterns with different source content and evaluation needs.
+
+## Choose categories or scores according to the decision
+
+Categorization puts an item into a defined group. Scoring measures its fit against agreed criteria. Decide which output helps the next person act.
+
+For a domain list, your team may need a business category and a short reason. For a research inbox, it may need relevance scores and the criteria that caused an article to be selected. Asking for both without a downstream use adds complexity to review.
+
+Write category definitions or scoring conditions in plain language. Include positive examples, negative examples, and ambiguous cases. Decide whether more than one category is permitted and when “unknown” is the correct result.
+
+## Retain the evidence used for the judgment
+
+The pipeline can classify only the signals it receives. A homepage with an empty description or a loading screen does not supply the same evidence as a complete business description.
+
+Retain the source URL, extraction status, and useful page signals beside the result. An article workflow also needs to distinguish the article body from menus, recommendations, and surrounding page text.
+
+An illustrative domain export could contain:
+
+<table><thead><tr><th scope="col">Field</th><th scope="col">What it lets you review</th></tr></thead><tbody><tr><td>input_id</td><td>The corresponding item in the original list</td></tr><tr><td>final_url</td><td>The source after any redirect</td></tr><tr><td>page_title</td><td>A captured business signal</td></tr><tr><td>extracted_text</td><td>The content supplied to classification</td></tr><tr><td>category</td><td>The result under the agreed definitions</td></tr><tr><td>reason</td><td>An explanation tied to the retrieved content</td></tr><tr><td>review_status</td><td>Unreachable, ambiguous, or ready for use</td></tr></tbody></table>
+
+Do not label an inaccessible page as an ordinary negative result. Failed extraction and a valid non-match should remain distinct.
+
+## Evaluate against a reviewed sample
+
+Select a representative set your team labels manually. Include clear examples, sparse homepages, overlapping categories, and URLs that cannot be retrieved.
+
+Compare workflow results with those labels. Review false positives and false negatives for each important category, then decide whether the problem is missing content, an unclear definition, or an interpretation error.
+
+Keep the evaluation set separate from the examples used to tune the rubric where possible. Repeatedly optimizing for the same examples can give a misleading impression of quality on the full batch.
+
+## Plan a resumable batch
+
+Record processing status per input item so a stopped run can resume. Keep the extraction and classification results associated with the correct input ID even if items finish in a different order.
+
+Define retry behavior for inaccessible pages and failed model calls. Agree on limits and costs after the pilot reveals how much content and processing each item actually needs.
+
+For a recurring workflow, record which rubric version produced a result. A later category definition change should be visible when your team compares old and new outputs.
+
+## Deliver a list with a review path
+
+The final output should help the team act: accepted classifications, items needing review, and failures with an explanation. Setup instructions should show how to rerun selected items and update the rubric.
+
+[Website & Content Classification](/services/website-content-classification) covers these batch and workflow patterns. If you need broader company research and qualification, see [Lead Enrichment & Scoring](/services/lead-enrichment-scoring). [Bring a sample URL list and your category definitions](/contact?service=website-content-classification) to scope an evaluation batch.

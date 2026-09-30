@@ -1,0 +1,54 @@
+---
+title: "Planning a real estate public record extraction pipeline"
+description: "Define source coverage, property identifiers, conflicting records, and validation before building a foreclosure or property data feed."
+date: "2026-09-28"
+author: "Nabeel Sharafat"
+tags: ["Property data", "Data extraction", "Workflow planning"]
+slug: "real-estate-public-record-data-pipeline"
+---
+
+Property research becomes repetitive when the same team checks several public record sources and rewrites their findings into one spreadsheet. A useful extraction pipeline starts with a precise source inventory and a record definition that survives those differences.
+
+My work on [Foreclosure Data Hub](/projects/foreclosure-data-hub) included a Python collection pipeline, record normalization, and delivery into the platform. That project is relevant implementation evidence. A new project still needs its own coverage review and pilot.
+
+## Define coverage before counting records
+
+List the specific sources and the sections you need: foreclosure notices, REO listings, or another agreed record type. Include the jurisdiction, retrieval method, available date range, and fields visible in a sample record.
+
+“All property records” leaves several questions unanswered. Does coverage include historical notices? Withdrawn listings? Attachments? A dataset covering active listings should not silently imply coverage of every historical event.
+
+Check available exports or APIs first. If page extraction is needed, test pagination, empty results, and at least one record with missing values. A single successful page does not establish source coverage.
+
+## Give each observation a traceable identity
+
+A property and an event involving that property are different records. An address alone may not distinguish an auction notice from a later listing, and formatting differences can make one property look like two.
+
+A fictional output schema might look like this:
+
+<table><thead><tr><th scope="col">Field</th><th scope="col">Purpose</th></tr></thead><tbody><tr><td>source_record_id</td><td>Identifies the record within its source</td></tr><tr><td>source_url</td><td>Lets a reviewer inspect the original</td></tr><tr><td>parcel_id</td><td>Preserves a property identifier when supplied</td></tr><tr><td>address_raw</td><td>Keeps the source address unchanged</td></tr><tr><td>address_normalized</td><td>Supports agreed matching rules</td></tr><tr><td>record_type</td><td>Distinguishes notices, listings, and other observations</td></tr><tr><td>observed_at</td><td>Shows when the source was checked</td></tr></tbody></table>
+
+Keep raw values alongside normalized ones when changes would otherwise be hard to explain. If no reliable identifier is available, document the matching fallback and its limitations.
+
+## Decide how conflicting values should behave
+
+Suppose two sources show different dates for what appears to be the same event. The pipeline needs an explicit rule: retain separate observations, prefer an agreed source, or flag the conflict for review.
+
+Avoid merging records only because their addresses resemble each other. Apartment units, parcel splits, and incomplete addresses are examples worth including in the pilot. An ambiguous match should remain visible.
+
+The same applies to status changes. A missing record in one run may indicate a temporary source failure or a change in the selected page range. Define what evidence is needed before treating it as removed.
+
+## Validate the collection and the delivery separately
+
+Source validation asks whether the collector covered the agreed pages and found the expected fields. Destination validation asks whether the resulting CSV or database rows arrived without unintended changes.
+
+For the pilot, agree on a small sample your team can review manually. Check source IDs, dates, property fields, duplicate decisions, and source references. Record both extraction failures and uncertain matches.
+
+A useful run report includes sources attempted, records observed, records accepted, and exceptions. It should identify a source that returned no records because it failed, rather than presenting an empty output as a successful update.
+
+## Scope the ongoing responsibility
+
+Public record sites differ and change. Agree on the schedule, failure recipient, and maintenance responsibility before the pipeline becomes part of a daily research process.
+
+The extracted dataset supports research. Verifying title, legal status, or investment suitability involves a separate process and should not be inferred from successful collection.
+
+[Real Estate & Public Record Extraction](/services/real-estate-public-record-extraction) covers source-specific collection and normalized delivery. For the broader scheduling and monitoring requirements, see [Recurring Website Data Collection](/services/recurring-website-data-collection). [Send your source list and required fields](/contact?service=real-estate-public-record-extraction) to define a representative pilot.

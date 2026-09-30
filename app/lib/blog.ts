@@ -12,6 +12,7 @@ export type BlogPost = {
   title: string;
   description: string;
   date: string;
+  updatedDate?: string;
   author: string;
   tags: string[];
   coverImage: string;
@@ -23,6 +24,7 @@ type Frontmatter = {
   title: string;
   description: string;
   date: string;
+  updatedDate?: string;
   author: string;
   tags: string[];
   coverImage: string;
@@ -35,9 +37,10 @@ function parseFrontmatter(filePath: string, rawContent: string): Frontmatter & {
     title: data.title ?? 'Untitled',
     description: data.description ?? '',
     date: data.date ?? '',
+    updatedDate: data.updatedDate,
     author: data.author ?? 'Beelodev',
     tags: Array.isArray(data.tags) ? data.tags : [],
-    coverImage: data.coverImage ?? '/blog/covers/placeholder.jpg',
+    coverImage: data.coverImage ?? '/opengraph-image',
     slug: data.slug ?? path.basename(filePath, '.mdx'),
     content,
   };
@@ -63,6 +66,7 @@ export async function getAllPosts(): Promise<Omit<BlogPost, 'content'>[]> {
       title: parsed.title,
       description: parsed.description,
       date: parsed.date,
+      updatedDate: parsed.updatedDate,
       author: parsed.author,
       tags: parsed.tags,
       coverImage: parsed.coverImage,
@@ -70,7 +74,7 @@ export async function getAllPosts(): Promise<Omit<BlogPost, 'content'>[]> {
     });
   }
 
-  return posts.sort((a, b) => (b.date > a.date ? 1 : -1));
+  return posts.sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
 }
 
 /** Returns full post content + frontmatter for a given slug. */
@@ -95,6 +99,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       title: parsed.title,
       description: parsed.description,
       date: parsed.date,
+      updatedDate: parsed.updatedDate,
       author: parsed.author,
       tags: parsed.tags,
       coverImage: parsed.coverImage,
@@ -109,7 +114,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
 /** Returns up to 3 related posts sharing tags with the current post. */
 export async function getRelatedPosts(
   currentSlug: string,
-  tags: string[]
+  tags: string[],
 ): Promise<Omit<BlogPost, 'content'>[]> {
   const allPosts = await getAllPosts();
   const current = allPosts.find((p) => p.slug === currentSlug);

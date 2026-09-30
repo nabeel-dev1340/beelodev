@@ -1,484 +1,189 @@
-// ─────────────────────────────────────────────
-// Site Configuration — Single source of truth
-// Edit this file to update content across the entire site.
-// ─────────────────────────────────────────────
-
+// Content shared by the navigation, contact flow, metadata, and homepage.
+// Core service scopes live in app/config/services.ts; project evidence in projects.ts.
 export const siteConfig = {
-
-    // ── Personal / Brand ──────────────────────────
-    personal: {
-        name: 'Beelodev',
-        brandName: 'Beelodev',
-        email: 'support@beelodev.com',
-        phone: '+92 303 846 6058',
-        location: 'Pakistan · Remote Worldwide',
-        domain: 'beelodev.com',
-        tagline: 'Remove busywork, cut costs, scale without hiring — automation systems that run your business.',
-        responseTime: 'Response within 1 hour',
-        availability: {
-            available: true,
-            message: 'Available for new projects',
-        },
-        booking: {
-            url: 'https://calendly.com/nabeelsharafat/30min',
-            label: 'Book a Free Discovery Call',
-            shortLabel: 'Free Consultation',
-            duration: '30 min',
-            description: 'Discuss your project goals, get expert advice, and receive a tailored roadmap — completely free, no strings attached.',
-        },
+  personal: {
+    name: 'Nabeel Sharafat',
+    brandName: 'Beelodev',
+    email: 'support@beelodev.com',
+    phone: '+92 303 846 6058',
+    location: 'Pakistan · Remote Worldwide',
+    domain: 'beelodev.com',
+    tagline:
+      'Custom business and workflow automation by Nabeel Sharafat. Connect your tools, reduce repetitive work, and turn requests, research, and data into usable results.',
+    responseTime: 'Direct communication with Nabeel',
+    availability: { available: true, message: 'Available for new projects' },
+    booking: {
+      url: 'https://calendly.com/nabeelsharafat/30min',
+      label: 'Discuss your workflow',
+      shortLabel: 'Book a call',
+      duration: '30 min',
+      description:
+        'Walk through your manual process and explore a practical first step.',
     },
-
-    // ── Navigation ────────────────────────────────
-    navLinks: [
-        { name: 'Systems', href: '#systems' },
-        { name: 'Portfolio', href: '#portfolio' },
-        { name: 'Blog', href: '/blog' },
-        { name: 'Pricing', href: '#pricing' },
-        { name: 'Contact', href: '#contact' },
+  },
+  navLinks: [
+    { name: 'Services', href: '/services' },
+    { name: 'Work', href: '/projects' },
+    { name: 'Process', href: '/process' },
+    { name: 'About', href: '/about' },
+    { name: 'Blog', href: '/blog' },
+  ],
+  footer: {
+    serviceSlugs: [
+      'email-classification-routing',
+      'form-to-report-automation',
+      'lead-enrichment-scoring',
+      'recurring-website-data-collection',
     ],
-
-    // ── Hero Section ──────────────────────────────
-    hero: {
-        headline: {
-            line1: 'Stop Hiring.',
-            line2: 'Start Scaling.',
-        },
-        // SEO: keyword optimization — keyword-rich subtitle below H1
-        subtitle:
-            'AI automation systems that replace manual work — built for small and mid-sized businesses.',
-        cta: {
-            primary: { label: 'View the 4 Systems', href: '#systems' },
-            secondary: { label: 'Book a Free Discovery Call', href: '#book' },
-        },
-        capabilities: [
-            { icon: 'Bot', label: 'AI Support Agent' },
-            { icon: 'Receipt', label: 'Auto-Invoicing' },
-            { icon: 'FileText', label: 'Docu-Brain' },
-            { icon: 'MessageSquare', label: 'AI Website Chatbot' },
-        ],
-        stats: [
-            { value: '300+', label: 'Systems Built' },
-            { value: '24/7', label: 'Uptime' },
-            { value: '100%', label: 'Success Rate' },
-        ],
-    },
-
-    // ── Automation Systems ────────────────────────
-    // SEO: keyword optimization
-    automationSystems: {
-        title: "4 AI Automation Systems for Small Business",
-        systems: [
-            {
-                slug: 'ai-support-agent',
-                name: "24/7 AI Support Agent",
-                shortHeadline: "Cut support costs by 60% while improving response times and customer satisfaction.",
-                bullets: [
-                    "Customers get instant answers instead of waiting hours",
-                    "Your team only handles complex issues that need human judgment",
-                    "Support costs drop as volume grows",
-                    "Customer satisfaction scores increase",
-                ],
-                closingLine: "Your support operation runs itself while you sleep.",
-                icon: 'Bot',
-                accent: '#0ea5e9',
-            },
-            {
-                slug: 'auto-invoicing',
-                name: "Zero-Touch Invoice Processing",
-                shortHeadline: "Eliminate invoice data entry and prevent accounting mistakes that cost money.",
-                bullets: [
-                    "Invoices flow from email to your accounting system automatically",
-                    "No manual typing means zero entry errors",
-                    "Your team stops doing data entry and starts analyzing results",
-                    "Month-end closing happens faster with accurate data",
-                ],
-                closingLine: "Your accounting team stops typing and starts thinking.",
-                icon: 'Receipt',
-                accent: '#06b6d4',
-            },
-            {
-                slug: 'docu-brain',
-                name: "Smart Document Intelligence System",
-                shortHeadline: "Transform document chaos into organized, searchable business intelligence.",
-                bullets: [
-                    "Documents become searchable databases instead of file folders",
-                    "Key insights surface automatically without manual reading",
-                    "Your team finds information in seconds instead of hours",
-                    "Decision-making speeds up with instant access to data",
-                ],
-                closingLine: "Your documents become a competitive advantage.",
-                icon: 'FileText',
-                accent: '#14b8a6',
-            },
-            {
-                slug: 'ai-website-chatbot',
-                name: "AI Chatbot for Your Website",
-                shortHeadline: "Engage visitors 24/7, capture leads, and answer questions without lifting a finger.",
-                bullets: [
-                    "Visitors get instant answers instead of bouncing",
-                    "Leads are captured and qualified automatically",
-                    "Your team only handles warm, ready-to-buy conversations",
-                    "Works around the clock without increasing headcount",
-                ],
-                closingLine: "Your website becomes your best salesperson.",
-                icon: 'MessageSquare',
-                accent: '#8b5cf6',
-            },
-        ],
-    },
-
-    // ── Platform Stats ────────────────────────────
-    platformStats: {
-        platforms: [
-            {
-                name: 'Upwork',
-                logo: '/icons/upwork-icon.svg',
-                profileImage: '/profiles/upwork.png',
-                profileImageAlt: 'Beelodev Upwork profile — Top Rated AI automation developer',
-                badge: 'Top Rated',
-                badgeIcon: 'Award',
-                rating: '5.0',
-                reviews: '50+',
-                success: '100%',
-                earned: '$30K+',
-                accent: '#0ea5e9',
-                url: 'https://www.upwork.com/freelancers/syednabeel24',
-            },
-            {
-                name: 'Fiverr',
-                logo: '/icons/fiverr-icon.svg',
-                profileImage: '/profiles/fiverr.png',
-                profileImageAlt: 'Beelodev Fiverr profile — Level 1 automation seller',
-                badge: 'Level 1 Seller',
-                badgeIcon: 'TrendingUp',
-                rating: '4.9',
-                reviews: '400+',
-                success: '100%',
-                earned: '$30K+',
-                accent: '#06b6d4',
-                url: 'https://www.fiverr.com/s/VYAjE8z',
-            },
-        ],
-        aggregate: [
-            { value: '100+', label: 'Systems Deployed' },
-            { value: '100%', label: 'Client Success Rate' },
-            { value: '30+', label: 'Markets Served' },
-        ],
-    },
-
-    // ── Services ──────────────────────────────────
-    services: [
-        {
-            icon: 'Bot',
-            title: '24/7 AI Support Agent',
-            description: 'An AI support agent that resolves common questions instantly, hands off complex cases, and reduces support workload.',
-            deliverables: ['Knowledge Base Setup', 'Multi-channel Support', 'Human Handoff', 'Conversation Analytics'],
-            accent: '#0ea5e9',
-            stat: 'Faster responses',
-        },
-        {
-            icon: 'Receipt',
-            title: 'Zero-Touch Invoice Processing',
-            description: 'Invoice extraction + validation + routing so your team stops doing data entry and your books stay accurate.',
-            deliverables: ['Email/Portal Parsing', 'Line-item Extraction', 'Approvals', 'Audit Logs'],
-            accent: '#06b6d4',
-            stat: 'Zero entry errors',
-        },
-        {
-            icon: 'FileText',
-            title: 'Smart Document Intelligence System',
-            description: 'Turn documents into searchable, structured data with summaries and insights your team can use instantly.',
-            deliverables: ['Bulk Processing', 'Searchable Database', 'Summaries/Insights', 'Secure Handling'],
-            accent: '#14b8a6',
-            stat: 'Find answers in seconds',
-        },
-        {
-            icon: 'MessageSquare',
-            title: 'AI Website Chatbot',
-            description: 'A custom AI chatbot that engages visitors, answers questions, and captures leads around the clock.',
-            deliverables: ['Lead Capture Flows', 'Knowledge Base Setup', 'Calendar Integration', 'Conversation Analytics'],
-            accent: '#8b5cf6',
-            stat: 'Capture leads 24/7',
-        },
+    socials: [
+      {
+        label: 'Upwork',
+        href: 'https://www.upwork.com/freelancers/syednabeel24',
+      },
+      { label: 'Fiverr', href: 'https://www.fiverr.com/s/VYAjE8z' },
+      { label: 'GitHub', href: 'https://github.com/nabeel-dev1340' },
     ],
-
-    // ── Packages / Pricing ────────────────────────
-    packages: {
-        plans: [
-            {
-                slug: 'ai-support-agent',
-                name: 'AI Support Agent',
-                tagline: 'Cut support costs while improving customer experience',
-                price: '$1099',
-                period: 'one-time setup',
-                icon: 'Bot',
-                accent: '#0ea5e9',
-                bestFor: 'Teams drowning in repetitive customer questions.',
-                timeline: '7-14 days',
-                integrations: ['Website chat', 'WhatsApp', 'Email', 'Docs/FAQ'],
-                features: [
-                    'Custom Knowledge Base Setup',
-                    'Multi-Channel Integration (Web/WhatsApp)',
-                    'Human Handoff Logic',
-                    'Conversation Analytics',
-                    '30 Days of Tuning & Support',
-                    'Self-Hosted or Cloud Option',
-                    '2 Weeks Free Support',
-                ],
-                cta: 'Schedule a Call',
-                popular: false,
-            },
-            {
-                slug: 'auto-invoicing',
-                name: 'Auto-Invoicing',
-                tagline: 'Eliminate invoice data entry and prevent accounting errors',
-                price: '$1299',
-                period: 'one-time setup',
-                icon: 'Receipt',
-                accent: '#06b6d4',
-                bestFor: 'Finance teams processing invoices every day.',
-                timeline: '10-21 days',
-                integrations: ['Gmail/Outlook', 'QuickBooks', 'Xero', 'Google Drive'],
-                features: [
-                    'Email & Portal Parsing',
-                    'Line-Item Extraction',
-                    'QuickBooks/Xero Integration',
-                    'Approval Workflows',
-                    'Error Handling Dashboard',
-                    'Audit Logs & Reporting',
-                    '2 Weeks Free Support',
-                ],
-                cta: 'Schedule a Call',
-                popular: true,
-            },
-            {
-                slug: 'docu-brain',
-                name: 'Docu-Brain',
-                tagline: 'Transform document chaos into searchable business intelligence',
-                price: '$1999',
-                period: 'starting at',
-                icon: 'FileText',
-                accent: '#14b8a6',
-                bestFor: 'Ops teams buried in PDFs, contracts, and forms.',
-                timeline: '14-28 days',
-                integrations: ['Google Drive', 'Notion', 'Airtable', 'Custom API'],
-                features: [
-                    'Custom Document Models',
-                    'Bulk Processing Pipeline',
-                    'Searchable Database Setup',
-                    'Insight Generation & Summary',
-                    'API Integration',
-                    'Secure Data Handling',
-                    '2 Weeks Free Support',
-                ],
-                cta: 'Schedule a Call',
-                popular: false,
-            },
-            {
-                slug: 'ai-website-chatbot',
-                name: 'AI Website Chatbot',
-                tagline: 'Engage visitors, capture leads, and answer questions 24/7',
-                price: '$899',
-                period: 'one-time setup',
-                icon: 'MessageSquare',
-                accent: '#8b5cf6',
-                bestFor: 'Service businesses and agencies wanting to convert more website visitors.',
-                timeline: '5-10 days',
-                integrations: ['Website widget', 'WhatsApp', 'CRM', 'Calendly'],
-                features: [
-                    'Custom Chatbot Design & Tone',
-                    'Knowledge Base Setup',
-                    'Lead Capture & Qualification Flows',
-                    'Booking / Calendar Integration',
-                    'Human Handoff Logic',
-                    'Conversation Analytics',
-                    '2 Weeks Free Support',
-                ],
-                cta: 'Schedule a Call',
-                popular: false,
-            },
-        ],
-        bottomNote: 'Need a custom system? We build complete automation solutions that transform how you operate.',
-    },
-
-    // ── Portfolio / Projects ──────────────────────
-    portfolio: [],
-
-    // ── Skills ────────────────────────────────────
-    skills: {
-        categories: [
-            {
-                title: 'Frontend',
-                icon: 'Code2',
-                accent: '#0ea5e9',
-                tools: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'HTML/CSS'],
-            },
-            {
-                title: 'Backend',
-                icon: 'Database',
-                accent: '#06b6d4',
-                tools: ['Node.js', 'Express', 'Python', 'FastAPI', 'PostgreSQL', 'Redis'],
-            },
-            {
-                title: 'AI & Automation',
-                icon: 'Cpu',
-                accent: '#14b8a6',
-                tools: ['OpenAI API', 'Claude API', 'LangChain', 'Make.com', 'n8n', 'Zapier'],
-            },
-            {
-                title: 'Mobile',
-                icon: 'Smartphone',
-                accent: '#0ea5e9',
-                tools: ['React Native', 'Expo', 'iOS', 'Android', 'Push Notifications', 'App Store'],
-            },
-            {
-                title: 'WordPress',
-                icon: 'Globe',
-                accent: '#06b6d4',
-                tools: ['Custom Themes', 'WooCommerce', 'Elementor', 'SEO', 'Performance', 'Plugins'],
-            },
-            {
-                title: 'Infrastructure',
-                icon: 'Cloud',
-                accent: '#14b8a6',
-                tools: ['AWS', 'Vercel', 'Supabase', 'Docker', 'CI/CD', 'GitHub Actions'],
-            },
-        ],
-        highlights: [
-            { number: '5+', label: 'Years Experience' },
-            { number: '12+', label: 'Technologies' },
-            { number: '6', label: 'Specializations' },
-        ],
-        extraTools: ['Git', 'Figma', 'Jira', 'Notion', 'Slack', 'HubSpot', 'Stripe', 'Firebase'],
-        extraToolsMore: '+20 more',
-    },
-
-    // ── Testimonials ──────────────────────────────
-    testimonials: {
-        items: [
-            {
-                text: 'Excellent freelancer - Syed solved problems quickly and went far and beyond the job description by making the data even more useful (self-updating) and recorded a little video to clear up any of my confusions. Highly recommended!',
-                author: 'Alexander Limberg',
-                initials: 'AL',
-                platform: 'Upwork',
-                accent: '#0ea5e9',
-                featured: false,
-            },
-            {
-                text: 'He did a great job managing my project from start to finish. He created everything I needed, pulled data from multiple sites, organized it in a way that actually made sense, and set everything up so it could run without me having to watch it. He is currently managing the project and keeping everything updated, and I can already see the results. Reliable, efficient, and very easy to work with.',
-                author: 'Robert Johnson',
-                initials: 'RJ',
-                platform: 'Upwork',
-                accent: '#06b6d4',
-                featured: true,
-            },
-            {
-                text: 'Syed Nabeel is an excellent full-stack developer who has help us automate our office workflow. I highly recommend his services',
-                author: 'Tony Hyou',
-                initials: 'TH',
-                platform: 'Upwork',
-                accent: '#14b8a6',
-                featured: false,
-            },
-            {
-                text: 'It was a pleasure to work with Syed. He was proactive in understanding my needs and improved my planned outcome. He went above and beyond to solve problems so that we could reach the desired goal together. He has deep knowledge of working with OpenAI APIs and quickly wrote code to manage the project',
-                author: 'Adam Will',
-                initials: 'AW',
-                platform: 'Upwork',
-                accent: '#0ea5e9',
-                featured: false,
-            },
-            {
-                text: 'Syed was very professional and patient during the whole project. Communication was fast and clear, and he delivered the Avatar App exactly as requested. Deployment and setup on Vercel were handled very well. We will continue working together on the AutoChat part and upcoming improvements. Overall, I\'m satisfied with the cooperation and looking forward to the next steps. Thank you!',
-                author: 'George Jojje',
-                initials: 'GJ',
-                platform: 'Fiverr',
-                accent: '#06b6d4',
-                featured: false,
-            },
-            {
-                text: 'Outstanding Work! Nabeel did an excellent job bringing my vision to life. He improved the natural language understanding, built in real-time troubleshooting, and made the bot smarter and more interactive. He was responsive, detail oriented, and delivered everything as promised. I\'m very happy with the results and would definitely recommend him to anyone looking to build a powerful AI automation system.',
-                author: 'Steph Hon',
-                initials: 'SH',
-                platform: 'Fiverr',
-                accent: '#14b8a6',
-                featured: true,
-            },
-        ],
-        aggregateRating: '4.9',
-        aggregateLabel: 'across 100+ projects',
-        trustBanner: [
-            { value: '100+', label: 'Projects' },
-            { value: '100%', label: '5-Star' },
-            { value: '30+', label: 'Countries' },
-        ],
-    },
-
-    // ── Contact ───────────────────────────────────
-    contact: {
-        methods: [
-            { icon: 'Mail', label: 'Email', value: 'support@beelodev.com', href: 'mailto:support@beelodev.com' },
-            { icon: 'MessageSquare', label: 'WhatsApp', value: '+92 303 846 6058', href: 'https://wa.me/923038466058' },
-            { icon: 'MapPin', label: 'Location', value: 'Pakistan · Remote Worldwide', href: '#' },
-        ],
-        socialPlatforms: [
-            { label: 'Upwork', href: 'https://www.upwork.com/freelancers/syednabeel24' },
-            { label: 'Fiverr', href: 'https://www.fiverr.com/s/VYAjE8z' },
-            { label: 'Facebook', href: 'https://www.facebook.com/people/Beelodev/100070024941028/' },
-            { label: 'Instagram', href: 'https://www.instagram.com/beelo_dev/' },
-        ],
-        budgetRanges: [
-            'Under $500',
-            '$500 – $1,500',
-            '$1,500 – $5,000',
-            '$5,000 – $15,000',
-            '$15,000+',
-        ],
-        serviceOptions: [
-            'Remove Busywork',
-            'Cut Operating Costs',
-            'Scale Without Hiring',
-            'Automate Repetitive Tasks',
-            'Other',
-        ],
-    },
-
-    // ── Footer ────────────────────────────────────
-    footer: {
-        services: [
-            { label: 'AI Support Agent', href: '/systems/ai-support-agent' },
-            { label: 'Auto-Invoicing', href: '/systems/auto-invoicing' },
-            { label: 'Docu-Brain', href: '/systems/docu-brain' },
-            { label: 'AI Website Chatbot', href: '/systems/ai-website-chatbot' },
-        ],
-        company: [
-            { label: 'About', href: '/about' },
-            { label: 'Blog', href: '/blog' },
-            { label: 'Process', href: '/process' },
-            { label: 'Systems', href: '/systems' },
-            { label: 'Portfolio', href: '#portfolio' },
-            { label: 'Contact', href: '#contact' },
-        ],
-        // SEO: calculator pages for internal linking
-        calculators: [
-            { label: 'Support Cost Calculator', href: '/support-cost-calculator' },
-            { label: 'Invoice Cost Calculator', href: '/invoice-processing-cost-calculator' },
-            { label: 'Document Cost Calculator', href: '/document-intelligence-cost-calculator' },
-        ],
-        socials: [
-            { label: 'Upwork', href: 'https://www.upwork.com/freelancers/syednabeel24' },
-            { label: 'Fiverr', href: 'https://www.fiverr.com/s/VYAjE8z' },
-            { label: 'Facebook', href: 'https://www.facebook.com/people/Beelodev/100070024941028/' },
-            { label: 'Instagram', href: 'https://www.instagram.com/beelo_dev/' },
-            { label: 'GitHub', href: 'https://github.com/nabeel-dev1340' },
-        ],
-        ctaBanner: {
-            headline: 'Ready to remove the busywork?',
-            subtitle: "Let's install systems that run your business while you focus on growth.",
-            cta: 'Get Started',
-        },
-    },
+  },
 } as const;
 
-// Type helpers — use these if you need to type-check config slices in components
 export type SiteConfig = typeof siteConfig;
+
+export const revampContent = {
+  hero: {
+    eyebrow: 'Custom automation · Built around your workflow',
+    title: 'Give your team time back.',
+    emphasis: 'Automate the busywork.',
+    description:
+      'I connect your tools and automate the repetitive steps between them, so requests get routed, reports get prepared, and your team spends less time on admin.',
+    primaryCta: 'Discuss your workflow',
+    secondaryCta: 'See what you can automate',
+    nextStep:
+      'Start with one task. We’ll define a small pilot before the full build.',
+    strip: [
+      'Built around the tools you already use',
+      'Clear outputs and review checkpoints',
+      'Work directly with Nabeel',
+    ],
+  },
+  workflowVisual: {
+    label: 'An example of work moving forward',
+    source: 'Your tools & incoming work',
+    inputs: 'Emails, forms, spreadsheets, and portals',
+    steps: 'Connect · Process · Validate',
+    destination: 'Ready for your team’s next step',
+    outputs: [
+      'Requests routed to the right queue',
+      'Reports prepared for review',
+      'Records kept up to date',
+    ],
+    note: 'Illustrative workflow · Human review where it matters',
+  },
+  outcomes: {
+    eyebrow: 'Start with the result you need',
+    title: 'Where should work move faster?',
+    description:
+      'From an overloaded inbox to a weekly reporting routine, choose the work you want to make easier. The automation follows your process.',
+    groups: [
+      {
+        title: 'Keep routine operations moving.',
+        description:
+          'Turn emails and form responses into routed requests, structured records, and reports your team can review.',
+        services: [
+          'email-classification-routing',
+          'form-to-report-automation',
+          'portal-report-automation',
+        ],
+      },
+      {
+        title: 'Research and prioritize with less tab switching.',
+        description:
+          'Get company research, lead scores, and content categories with the sources and reasons behind each result.',
+        services: ['lead-enrichment-scoring', 'website-content-classification'],
+      },
+      {
+        title: 'Have current data when you need it.',
+        description:
+          'Receive fresh listings, prices, or public records in a consistent format your team can filter and use.',
+        services: [
+          'recurring-website-data-collection',
+          'real-estate-public-record-extraction',
+        ],
+      },
+      {
+        title: 'Put your records back in your control.',
+        description:
+          'Recover files and structured records from portals or older software, with an organized export and a report of any gaps.',
+        services: ['legacy-system-data-exports', 'bulk-document-downloads'],
+      },
+    ],
+  },
+  evidence: {
+    title: 'Useful results, built into real workflows.',
+    description:
+      'See how I’ve connected intake, research, classification, and data collection to outputs teams can use.',
+    projects: [
+      'scoutbrief-mvp-automation',
+      'lead-scoring-automation',
+      'smart-email-classification-system',
+      'foreclosure-data-hub',
+    ],
+  },
+  guides: [
+    'n8n-email-classification-workflow',
+    'lead-enrichment-scoring-google-sheets',
+    'tally-typeform-notion-report-automation',
+  ],
+  workflowCta: {
+    title: 'Start with one workflow.',
+    description:
+      'Tell me the repetitive task and the result you need. We’ll define a small pilot, check it against real examples, and agree on the full scope.',
+    label: 'Discuss your workflow',
+  },
+  trust: [
+    {
+      title: 'Your environment, your control.',
+      description:
+        'Local execution where appropriate, with credentials managed in your environment.',
+    },
+    {
+      title: 'Confidential from the start.',
+      description:
+        'NDA available before we review sensitive workflows or sample data.',
+    },
+    {
+      title: 'Know what happened.',
+      description:
+        'Validation, run logs, and exception reports are part of the agreed deliverable.',
+    },
+  ],
+  about: {
+    name: 'Nabeel Sharafat',
+    intro: 'The person behind the automation.',
+    description:
+      'I’m Nabeel Sharafat, the Python and workflow automation developer behind Beelodev. I build web scraping pipelines, browser workflows, and n8n, Make, and Zapier integrations that take repetitive work off your team’s hands.',
+    approach:
+      'My work spans website data extraction, classification pipelines, and workflow integrations with tools such as n8n, Make, and Zapier. I start with your actual process, test a small batch, and build toward an output your team can use.',
+  },
+  contact: {
+    title: 'What would you take off your team’s plate?',
+    description:
+      'Describe what takes time and what a successful result would look like. You don’t need a technical specification to start.',
+    nextStep:
+      'Next: I’ll review your workflow and reply with questions or a practical first step.',
+    submitLabel: 'Send my workflow',
+    volumes: [
+      'Under 100 items',
+      '100–1,000 items',
+      '1,000–10,000 items',
+      '10,000+ items',
+      'Not sure yet',
+    ],
+    deadlines: [
+      'No fixed deadline',
+      'Within 2 weeks',
+      'Within a month',
+      '1–3 months',
+      'A specific date (include below)',
+    ],
+  },
+} as const;

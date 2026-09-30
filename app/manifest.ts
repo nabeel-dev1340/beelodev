@@ -1,32 +1,17 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next';
 import { siteConfig } from './config/site';
 
 export default function manifest(): MetadataRoute.Manifest {
-  const { personal } = siteConfig;
-
   return {
-    name: `${personal.brandName} — AI Automation Systems for Small Business`,
+    name: 'Beelodev — Custom Automation',
     short_name: 'Beelodev',
-    description: personal.tagline,
+    description: siteConfig.personal.tagline,
     start_url: '/',
     display: 'standalone',
-    background_color: '#04040a',
-    theme_color: '#0ea5e9',
-    orientation: 'portrait-primary',
+    background_color: '#f6f5f0',
+    theme_color: '#346747',
     categories: ['business', 'productivity'],
-    lang: 'en-US',
-    icons: [
-      {
-        src: '/favicon.ico',
-        sizes: 'any',
-        type: 'image/x-icon',
-      },
-      {
-        src: '/og-image.png',
-        sizes: '1200x630',
-        type: 'image/png',
-        purpose: 'any',
-      },
-    ],
+    lang: 'en',
+    icons: [{ src: '/icon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' }],
   };
 }

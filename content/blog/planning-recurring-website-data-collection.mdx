@@ -1,0 +1,54 @@
+---
+title: "What to define before scheduling website data collection"
+description: "Choose the sources, fields, update schedule, duplicate rules, and delivery format that make a recurring dataset useful to your team."
+date: "2026-09-28"
+author: "Nabeel Sharafat"
+tags: ["Website data", "Workflow planning", "Data extraction"]
+slug: "planning-recurring-website-data-collection"
+---
+
+A recurring collector needs more than a list of URLs. It needs a definition of a useful record and a way to detect when the source stops supplying it.
+
+For listings, prices, directories, or public records, the practical starting point is the decision your team wants to make with the data.
+
+## Define the record and required fields
+
+Write down the fields your team actually needs. Distinguish required fields from optional ones. A price without a currency or a listing without a source link may look complete while being difficult to use.
+
+For a fictional property dataset, the schema could include source ID, listing URL, address, status, price, and collection time. The right schema depends on the downstream use.
+
+Keep a source link and retrieval timestamp where appropriate. They let a reviewer inspect the original and understand when the record was observed.
+
+## Agree on the source coverage
+
+A collector should have a documented list of approved sources and the pages or sections included. Check available APIs and exports before designing page extraction.
+
+Review access permissions and source constraints. Then test representative pages, including missing fields and pagination. A successful extraction from one page does not prove the full source is covered.
+
+The [Foreclosure Data Hub project](/projects/foreclosure-data-hub) is an example of a Python collection pipeline feeding structured data into a wider platform. The collection work needs to fit the way the product consumes the records.
+
+## Decide what counts as a duplicate
+
+A title or business name is rarely a sufficient identity rule by itself. Prefer stable source identifiers where available, and agree on a fallback when they are absent.
+
+Decide whether a changed price updates an existing record or creates a historical observation. Both are useful, but they answer different questions.
+
+Also decide what a disappearance means. A record absent from one run could be removed, temporarily inaccessible, or outside the selected page range. Do not treat those cases as equivalent without validation.
+
+## Choose a useful schedule
+
+Frequency follows the use case. A daily report may need one dependable collection window. A historical analysis may care more about consistent snapshots than frequent updates.
+
+Estimate the source volume and destination limits during the pilot. The schedule should allow the run to finish, validate its output, and recover from expected interruptions.
+
+## Make failures visible
+
+A run log should show which sources were attempted, how many records were collected, and whether required fields passed validation. Freshness checks can detect a collector that is running while repeatedly delivering stale records.
+
+Agree on who receives failure notifications and what they should do next. Website changes are a maintenance consideration, so define that responsibility before handover.
+
+## Deliver data your team can use
+
+Choose a destination and schema up front: CSV, a spreadsheet, or a database. Test the destination with sample records and verify the downstream workflow.
+
+[Recurring Website Data Collection](/services/recurring-website-data-collection) includes scoping the sources, collection rules, validation, and delivery. [Share your source list and required fields](/contact?service=recurring-website-data-collection) to start with a representative pilot.

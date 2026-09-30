@@ -1,0 +1,56 @@
+---
+title: "How to scope lead enrichment and scoring in Google Sheets"
+description: "Turn an existing company list into source-backed research and explainable qualification scores with clear field rules and a review process."
+date: "2026-09-28"
+author: "Nabeel Sharafat"
+tags: ["Lead research", "Workflow planning", "Classification"]
+slug: "lead-enrichment-scoring-google-sheets"
+---
+
+A company list is often only the start of a sales research task. Someone still opens each website, checks the business details, and decides whether the company meets the team's criteria.
+
+In my [Lead Scoring Automation project](/projects/lead-scoring-automation), I built a Make.com workflow to research real estate companies, write structured findings to Google Sheets, and apply a rule-based qualification rubric. The useful deliverable was an inspectable set of fields and reasons for prioritization.
+
+Here is what to define before automating a similar list.
+
+## Separate enrichment from qualification
+
+Enrichment answers factual questions about a company. Qualification applies your rules to those facts. Keep those steps distinct so a reviewer can tell whether an incorrect score came from a bad observation or a rule that needs changing.
+
+Start with fields you actually use in a decision. A name, domain, business category, operating region, and supporting source may be enough for one team. Another team may need a different set. Avoid collecting fields just because they are available.
+
+For each field, define what counts as acceptable evidence. A statement on a company's own website and an unsupported search snippet should not automatically have the same status.
+
+## Preserve the identity of each sheet row
+
+Give every input company a stable row identifier. Company names can repeat and domains can change. The workflow needs to return its result to the right record even if the sheet has been sorted since the run began.
+
+Agree on overwrite behavior. Should a new finding replace an existing value, fill only a blank cell, or create a proposed value for review? Decide which columns remain editable by your team and which are produced by the workflow.
+
+Normalize obvious duplicates according to agreed rules before paying to research the same company twice. Preserve separate branches or accounts when your team treats them as distinct prospects.
+
+## Write a rubric a person can explain
+
+Use examples of companies your team would prioritize and reject. Translate the reasons into explicit conditions rather than asking a model to identify a “great lead” without a definition.
+
+An illustrative rubric might award points for an agreed business category and operating region, then flag missing evidence separately. Those points express your team's criteria; they do not establish a likelihood of purchase.
+
+<table><thead><tr><th scope="col">Output field</th><th scope="col">What the reviewer can inspect</th></tr></thead><tbody><tr><td>qualification_score</td><td>The total under the agreed rubric</td></tr><tr><td>score_reasons</td><td>Conditions that contributed to the score</td></tr><tr><td>supporting_urls</td><td>Sources used for researched facts</td></tr><tr><td>unknown_fields</td><td>Information that was not verified</td></tr><tr><td>review_status</td><td>Whether the row needs a human decision</td></tr></tbody></table>
+
+Avoid silently treating unknown information as a negative fact. “No evidence found” and “confirmed not a fit” are different outcomes.
+
+## Give research failures their own path
+
+An unreachable website, vague company name, or conflicting source can prevent reliable enrichment. Return a status that explains the issue. A blank output row makes it hard to tell whether the company was skipped, rejected, or never processed.
+
+If AI is used for research or interpretation, require supporting sources for important fields and leave unsupported details unknown. Human review should focus on unresolved facts and ambiguous qualification decisions.
+
+## Pilot the list before updating it in full
+
+Choose representative rows: clear fits, clear non-fits, incomplete domains, duplicates, and companies your team previously found hard to classify. Review the researched facts first, then calculate what the scores should be.
+
+Acceptance criteria can cover source traceability, correct row mapping, handling of unknown fields, and agreement with the documented rubric. Set them before the full run so success is more concrete than “the spreadsheet looks richer.”
+
+Agree on refresh frequency and operating costs once the pilot shows the actual processing path. A one-time research pass and a recurring enrichment workflow have different maintenance needs.
+
+[Lead Enrichment & Scoring](/services/lead-enrichment-scoring) starts from your existing company list and qualification rules. If the main task is categorizing domains, [Website & Content Classification](/services/website-content-classification) may fit better. [Share a sample list and your fit criteria](/contact?service=lead-enrichment-scoring) to scope the first batch.

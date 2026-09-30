@@ -1,272 +1,148 @@
-// Blog system — added for SEO
-
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import { ArrowLeft, Calendar } from 'lucide-react';
-import { getPostBySlug, getRelatedPosts, getAllPostSlugs } from '../../lib/blog';
-import { generateMetadata as generateSEOMetadata, generateBreadcrumbsSchema, siteUrl } from '../../lib/seo';
+import {
+  getPostBySlug,
+  getRelatedPosts,
+  getAllPostSlugs,
+} from '../../lib/blog';
+import {
+  generateMetadata as seo,
+  generateBreadcrumbsSchema,
+  siteUrl,
+} from '../../lib/seo';
 import BlogCard from '../../components/BlogCard';
-import BlogCTA from '../../components/BlogCTA';
+import { automationServices } from '../../config/services';
+import {
+  Breadcrumbs,
+  JsonLd,
+  WorkflowCTA,
+} from '../../components/PageElements';
 
-type BlogPostPageProps = {
-  params: Promise<{ slug: string }>;
-};
-
+type Props = { params: Promise<{ slug: string }> };
 export async function generateStaticParams() {
-  const slugs = await getAllPostSlugs();
-  return slugs.map((slug) => ({ slug }));
+  return (await getAllPostSlugs()).map((slug) => ({ slug }));
 }
-
-export async function generateMetadata({ params }: BlogPostPageProps) {
+export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
-
-  if (!post) {
-    return { title: 'Post Not Found', robots: { index: false, follow: false } };
-  }
-
-  const path = `/blog/${slug}`;
-  const fullTitle = `${post.title} | Beelodev Blog`;
-  const imageUrl = post.coverImage.startsWith('http') ? post.coverImage : `${siteUrl}${post.coverImage}`;
-
-  return generateSEOMetadata({
-    title: fullTitle,
-    description: post.description,
-    path,
-    image: imageUrl,
-    type: 'article',
-    publishedTime: post.date,
-  });
+  return post
+    ? seo({
+        title: post.title,
+        description: post.description,
+        path: `/blog/${slug}`,
+        image: post.coverImage.startsWith('http')
+          ? post.coverImage
+          : `${siteUrl}${post.coverImage}`,
+        type: 'article',
+        publishedTime: post.date,
+        modifiedTime: post.updatedDate ?? post.date,
+      })
+    : { title: 'Guide not found', robots: { index: false } };
 }
-
 const mdxComponents = {
-  a: ({ href, children, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
-    const isExternal = href?.startsWith('http');
-    if (isExternal) {
-      return (
-        <a href={href} target="_blank" rel="noopener noreferrer" className="text-electric-blue hover:underline" {...props}>
-          {children}
-        </a>
-      );
-    }
-    return (
-      <Link href={href ?? '#'} className="text-electric-blue hover:underline">
+  a: ({
+    href,
+    children,
+    ...props
+  }: React.AnchorHTMLAttributes<HTMLAnchorElement>) =>
+    href?.startsWith('http') ? (
+      <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
         {children}
-      </Link>
-    );
-  },
-  h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2 className="font-display text-xl sm:text-2xl font-bold text-white mt-10 mb-4" {...props} />
-  ),
-  h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3 className="font-display text-lg sm:text-xl font-bold text-white mt-8 mb-3" {...props} />
-  ),
-  p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p className="text-neutral-300 leading-relaxed mb-4" {...props} />
-  ),
-  ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
-    <ul className="list-disc list-inside text-neutral-300 space-y-2 mb-6" {...props} />
-  ),
-  ol: (props: React.HTMLAttributes<HTMLOListElement>) => (
-    <ol className="list-decimal list-inside text-neutral-300 space-y-2 mb-6" {...props} />
-  ),
-  li: (props: React.HTMLAttributes<HTMLLIElement>) => (
-    <li className="leading-relaxed" {...props} />
-  ),
-  strong: (props: React.HTMLAttributes<HTMLElement>) => (
-    <strong className="font-semibold text-white" {...props} />
-  ),
-  blockquote: (props: React.HTMLAttributes<HTMLQuoteElement>) => (
-    <blockquote
-      className="border-l-4 border-electric-blue pl-4 py-2 my-4 text-neutral-400 italic"
-      {...props}
-    />
-  ),
+      </a>
+    ) : (
+      <Link href={href ?? '#'}>{children}</Link>
+    ),
 };
-
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
+export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
-
-  if (!post || !post.content) {
-    notFound();
-  }
-
-  const relatedPosts = await getRelatedPosts(slug, post.tags);
-  const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-
-  const breadcrumbSchema = generateBreadcrumbsSchema([
-    { name: 'Home', url: '/' },
-    { name: 'Blog', url: '/blog' },
-    { name: post.title, url: `/blog/${slug}` },
-  ]);
-
-  const articleImageUrl = post.coverImage.startsWith('http') ? post.coverImage : `${siteUrl}${post.coverImage}`;
-  const articleSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: post.title,
-    description: post.description,
-    author: {
-      '@type': 'Person',
-      name: post.author,
-      url: siteUrl,
-    },
-    publisher: {
-      '@type': 'Organization',
-      '@id': `${siteUrl}#organization`,
-      name: 'Beelodev',
-      url: siteUrl,
-      logo: {
-        '@type': 'ImageObject',
-        url: `${siteUrl}/logo.svg`,
-      },
-    },
-    datePublished: post.date,
-    dateModified: post.date,
-    image: {
-      '@type': 'ImageObject',
-      url: articleImageUrl,
-      width: 1200,
-      height: 630,
-    },
-    url: `${siteUrl}/blog/${slug}`,
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `${siteUrl}/blog/${slug}`,
-    },
-    keywords: post.tags.join(', '),
-    wordCount: post.content ? post.content.split(/\s+/).length : undefined,
-    inLanguage: 'en-US',
-    isPartOf: {
-      '@type': 'WebSite',
-      '@id': `${siteUrl}#website`,
-    },
-    speakable: {
-      '@type': 'SpeakableSpecification',
-      cssSelector: ['.blog-content h2', '.blog-content p:first-of-type'],
-    },
-  };
-
+  if (!post?.content) notFound();
+  const related = await getRelatedPosts(slug, post.tags);
+  const service = automationServices.find((item) => item.articleSlug === slug);
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
-      />
-
-      <article className="min-h-screen py-12 sm:py-20 px-4 sm:px-6">
-        <div className="max-w-3xl mx-auto">
-          <nav aria-label="Breadcrumb" className="mb-8">
-            <ol className="flex items-center gap-1.5 text-xs text-neutral-500 flex-wrap">
-              <li>
-                <Link href="/" className="hover:text-neutral-300 transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li aria-hidden="true" className="text-neutral-700">
-                /
-              </li>
-              <li>
-                <Link href="/blog" className="hover:text-neutral-300 transition-colors">
-                  Blog
-                </Link>
-              </li>
-              <li aria-hidden="true" className="text-neutral-700">
-                /
-              </li>
-              <li className="text-neutral-400 truncate max-w-[200px] sm:max-w-none">{post.title}</li>
-            </ol>
-          </nav>
-
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-2 text-sm text-neutral-300 hover:text-white transition-colors mb-8"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Blog
-          </Link>
-
-          <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] max-h-[400px] rounded-2xl overflow-hidden mb-8">
-            <Image
-              src={post.coverImage}
-              alt={post.title}
-              fill
-              className="object-cover"
-              priority
-              sizes="(max-width: 768px) 100vw, 672px"
-            />
-          </div>
-
-          <div className="flex flex-wrap gap-2 mb-4">
-            {post.tags.map((tag) => (
-              <span
-                key={tag}
-                className="px-2.5 py-1 rounded-lg text-xs font-medium bg-electric-blue/15 text-electric-blue border border-electric-blue/25"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <h1 className="font-display text-3xl sm:text-4xl font-bold text-white mb-6">{post.title}</h1>
-
-          <div className="flex items-center gap-4 text-sm text-neutral-500 mb-10">
-            <span className="font-medium text-neutral-300">{post.author}</span>
-            <span>{formattedDate}</span>
+    <main id="main">
+      <article className="article-container">
+        <Breadcrumbs
+          items={[
+            { name: 'Blog', href: '/blog' },
+            { name: post.tags[0] ?? 'Guide' },
+          ]}
+        />
+        <header className="article-header">
+          <p className="eyebrow">{post.tags[0]} · Practical guide</p>
+          <h1>{post.title}</h1>
+          <p className="lead">{post.description}</p>
+          <div className="article-meta">
+            <Link href="/about">{post.author}</Link>
+            <time dateTime={post.date}>
+              {new Date(post.date).toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+                timeZone: 'UTC',
+              })}
+            </time>
             <span>{post.readingTime}</span>
           </div>
-
-          <div className="prose prose-invert max-w-none blog-content">
-            <MDXRemote source={post.content!} components={mdxComponents} />
-          </div>
-
-          <hr className="border-white/10 my-12" />
-
-          <div className="mb-12">
-            <BlogCTA />
-          </div>
-
-          {relatedPosts.length > 0 && (
-            <section aria-label="Related posts" className="mt-12">
-              <h2 className="font-display text-xl font-bold text-white mb-6">Related Posts</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {relatedPosts.map((p) => (
-                  <BlogCard
-                    key={p.slug}
-                    slug={p.slug}
-                    title={p.title}
-                    description={p.description}
-                    date={p.date}
-                    author={p.author}
-                    readingTime={p.readingTime}
-                    tags={p.tags}
-                    coverImage={p.coverImage}
-                  />
-                ))}
-              </div>
-            </section>
-          )}
-
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors mt-10"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Blog
-          </Link>
+        </header>
+        {post.coverImage !== '/opengraph-image' && (
+          <figure className="article-cover">
+            <Image
+              src={post.coverImage}
+              alt={`Illustration for ${post.title}`}
+              width={1200}
+              height={630}
+              priority
+            />
+          </figure>
+        )}
+        <div className="blog-content">
+          <MDXRemote source={post.content} components={mdxComponents} />
         </div>
+        <WorkflowCTA service={service?.slug} />
+        {related.length > 0 && (
+          <section aria-label="Related guides">
+            <h2 style={{ fontSize: '1.6rem', marginBottom: 25 }}>
+              Keep reading.
+            </h2>
+            <div className="blog-grid">
+              {related.map((item) => (
+                <BlogCard key={item.slug} {...item} />
+              ))}
+            </div>
+          </section>
+        )}
       </article>
-    </>
+      <JsonLd
+        data={generateBreadcrumbsSchema([
+          { name: 'Home', url: '/' },
+          { name: 'Blog', url: '/blog' },
+          { name: post.title, url: `/blog/${slug}` },
+        ])}
+      />
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
+          headline: post.title,
+          description: post.description,
+          author: {
+            '@type': 'Person',
+            name: post.author,
+            url: `${siteUrl}/about`,
+          },
+          publisher: { '@id': `${siteUrl}#organization` },
+          datePublished: post.date,
+          dateModified: post.updatedDate ?? post.date,
+          image: post.coverImage.startsWith('http')
+            ? post.coverImage
+            : `${siteUrl}${post.coverImage}`,
+          mainEntityOfPage: `${siteUrl}/blog/${slug}`,
+          inLanguage: 'en',
+        }}
+      />
+    </main>
   );
 }

@@ -1,0 +1,60 @@
+---
+title: "Planning a reliable portal and report automation"
+description: "Turn a repetitive login-and-download routine into a defined workflow with authentication checkpoints, validation, run history, and clear failure handling."
+date: "2026-09-28"
+author: "Nabeel Sharafat"
+tags: ["Portal workflows", "Workflow planning", "Data extraction"]
+slug: "automate-portal-report-downloads"
+---
+
+A person who downloads a daily report does more than click buttons. They choose the date range, notice an expired session, check whether the output looks plausible, and decide what to do when the portal behaves differently.
+
+An automation plan should capture those decisions before the browser steps are implemented.
+
+## Describe the whole routine
+
+Walk through the process from its input to its final destination. Include the steps that happen outside the portal: receiving a request, preparing a date range, renaming the report, or sending it to another team.
+
+Document what a correct run produces. A report with the wrong reporting period is still a downloaded file, but it is not a successful result.
+
+Record these details:
+
+- The authorized account and its permissions.
+- Required report filters and date ranges.
+- Output format and naming rules.
+- Expected delivery destination.
+- Approvals or decisions that belong to a person.
+
+## Review authentication early
+
+A login requirement affects where the workflow runs and how it is started. Review multi-factor prompts, session expiry, and any requirement for a person to approve access.
+
+Client-controlled credentials and local execution can be considered where the environment supports them. Avoid putting passwords in the workflow inquiry or in ordinary shared documents.
+
+The pilot should establish the supported authentication path. Some workflows are intentionally assisted: a person signs in, then the automation performs the repetitive steps.
+
+## Validate the report
+
+Choose checks that relate to the actual task. Examples include the reporting period, required columns, a nonempty file, or a reasonable record count compared with the source.
+
+If a portal produces reports asynchronously, the workflow needs to distinguish a report being prepared from one that is unavailable. Define the timeout and recovery behavior during scoping.
+
+Keep an invalid output out of the normal delivery path. The team should receive an exception with enough context to investigate it.
+
+## Plan for an interrupted run
+
+Test expired sessions, delayed pages, missing downloads, and temporary failures. Agree on which steps can be retried safely.
+
+This becomes especially important when a workflow enters data. Repeating a download can be harmless; repeating a submission could create another record. Write actions need explicit duplicate checks and any required human approval.
+
+## Give the team a run history
+
+A useful log shows when the workflow started, the selected inputs, which steps completed, and where the output went. Failed runs should include a clear step or error category rather than a vague failure message.
+
+Agree on who gets notified and how the routine is restarted. Handover should include operating instructions and a walkthrough using the same environment the team will use.
+
+## Start with a small pilot
+
+[Portal & Report Automation](/services/portal-report-automation) focuses on operational browser tasks with validation and visible exceptions. If the job is only retrieving a large archive, [Bulk Document Downloads](/services/bulk-document-downloads) may be the closer fit.
+
+[Describe your daily routine](/contact?service=portal-report-automation), including the portal, output, frequency, and any deadline. A short walkthrough is enough to begin defining the pilot.

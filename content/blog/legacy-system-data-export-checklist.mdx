@@ -1,0 +1,62 @@
+---
+title: "A data export checklist before you leave a legacy system"
+description: "Define records, attachments, field mapping, and validation before a software transition. Know what extraction covers and what still needs an import plan."
+date: "2026-09-28"
+author: "Nabeel Sharafat"
+tags: ["Data exports", "Workflow planning", "Data extraction"]
+slug: "legacy-system-data-export-checklist"
+---
+
+When a software contract is ending, a CSV export can feel like the finish line. It may only be the beginning. The file might omit attachments, flatten important relationships, or use labels the destination system cannot interpret.
+
+A useful export plan defines what must leave the old system and how you will verify it before access ends.
+
+## Inventory the records and relationships
+
+List the entities your team uses: customers, cases, transactions, notes, users, or custom records. Then list the relationships between them.
+
+A customer export and a case export need a shared identifier. Without it, the files may contain the right rows but fail to preserve the structure your team depends on.
+
+Record the agreed scope:
+
+- Active records only, or historical records too?
+- Attachments and older document versions?
+- Notes, activity histories, and custom fields?
+- Archived or deleted records that remain accessible?
+- Which parts are unavailable through your current permissions?
+
+Keep unavailable items visible in the plan. They should become explicit gaps, not quiet omissions.
+
+## Test a representative export
+
+Choose a small set containing ordinary records and awkward examples. Include missing values, multiple attachments, duplicate names, long notes, and dates near the boundaries of your selection.
+
+Prefer a built-in export or documented API when it provides the required data. An authorized browser workflow can be assessed when those options are limited.
+
+The pilot should show the actual output, record relationships, and any access constraints. Review it with someone who knows the old system well enough to spot missing context.
+
+## Write down the field mapping
+
+A mapping document connects each source field to the agreed export field. Specify data type, formatting, and transformation rules.
+
+For example, decide how to represent empty values, whether dates retain time zones, how status labels are normalized, and whether addresses remain separate fields. Avoid silently changing meaning while cleaning the data.
+
+Keep source IDs whenever possible. They support reconciliation and can help the destination team investigate an import issue later.
+
+## Include an attachment manifest
+
+An attachment folder should have a manifest connecting files to records. At minimum, include the source record ID, attachment ID where available, original name, local path, and retrieval status.
+
+If a document could not be retrieved, include the reason in an exception report. This keeps the exported record from appearing complete when its supporting file is missing.
+
+## Validate before access ends
+
+Agree on source counts and compare them with exported counts. Sample individual records, check key relationships, and verify that important fields survive the transformation.
+
+Ask the destination owner to review a sample early. An export that is easy to inspect can still require changes before its first import.
+
+## Scope the import separately
+
+[Legacy System Data Exports](/services/legacy-system-data-exports) focuses on extraction and migration preparation. A complete migration also needs destination access, import rules, conflict handling, and validation inside the new system.
+
+Those tasks should be reviewed explicitly before a full migration is promised. If there is a contract deadline, include it in your [workflow inquiry](/contact?service=legacy-system-data-exports) so the pilot and final export can be planned around the remaining access window.

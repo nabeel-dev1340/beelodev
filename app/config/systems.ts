@@ -224,6 +224,6 @@ export const systems: System[] = [
   },
 ];
 
-export function getSystem(slug: SystemSlug) {
+export function getSystem(slug: string) {
   return systems.find((s) => s.slug === slug);
 }

@@ -1,0 +1,60 @@
+---
+title: "How to plan a bulk document download from a client portal"
+description: "A practical plan for retrieving a large document archive: define the file inventory, test access, save progress, and reconcile the final output."
+date: "2026-09-28"
+author: "Nabeel Sharafat"
+tags: ["Document downloads", "Workflow planning", "Data extraction"]
+slug: "bulk-download-documents-from-client-portals"
+---
+
+If your team opens a record, clicks an attachment, renames it, and repeats the process hundreds of times, the first automation question is simple: what would a complete archive actually contain?
+
+A downloader is only useful when you can tell which files arrived, where they belong, and which ones still need attention. Before building the script, define the inventory and the output.
+
+## Start with a file inventory
+
+List the types of records you need and the attachments each record can have. An invoice record might contain the invoice PDF, a statement, and supporting documents. A case record might contain several versions of the same document.
+
+Agree on the selection rules:
+
+- Which customers, cases, or date ranges are included?
+- Do you need every attachment or only specific document types?
+- Should previous versions be retained?
+- What should happen when a record has no attachments?
+
+A small sample should include the unusual records as well as the simple ones. A pilot containing only perfect records leaves the difficult work undiscovered.
+
+## Choose filenames before the first run
+
+A useful folder structure follows how your team retrieves information later. For example, use a stable customer ID as the folder name and a document ID in the filename. Display names alone can collide or change.
+
+Keep the source identity in a manifest, even if the files receive friendlier names. That gives you a way to trace a local file back to the record it came from.
+
+For a fictional archive, a path might be `clients/AC-104/invoice-2026-01.pdf`. The manifest should also retain the source record ID, original filename, download status, and destination path.
+
+## Test access and interrupted runs
+
+Check whether the system already offers a suitable export or API. If it requires browser automation, review login, session expiry, permissions, and any multi-factor checkpoints.
+
+Then test the behavior that matters during a long run:
+
+1. Stop the job partway through.
+2. Restart it and check that completed files are recognized.
+3. Confirm that incomplete downloads are retried.
+4. Simulate an unavailable document and inspect the reported exception.
+
+The details depend on the portal, but saving progress should be deliberate. A partially written file should never be counted as a completed download.
+
+## Reconcile the archive
+
+The final report should explain what the job found and what it delivered. Useful columns include record ID, document ID, destination, status, and an error category when needed.
+
+Compare the archive against the inventory. Separate successful files, unavailable documents, permission failures, and unresolved retries. A job finishing is different from every expected file being accounted for.
+
+## Define the handover
+
+Agree on where the downloader will run, how credentials will be supplied, and who will repeat the job. Include setup instructions and a short walkthrough. If the archive is a one-time retrieval, the requirements may be different from a monthly job.
+
+[Bulk Document Downloads](/services/bulk-document-downloads) covers retrieving and organizing files. Extracting values from those files or preparing a destination import belongs in a separate scope.
+
+To start, [describe the portal and approximate volume](/contact?service=bulk-document-downloads). A representative pilot can establish the approach before the full archive is retrieved.

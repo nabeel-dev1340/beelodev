@@ -1,45 +1,42 @@
-import { generateMetadata as generateSEOMetadata, generateBreadcrumbsSchema, siteUrl } from '../lib/seo';
-import DocumentIntelligenceCostCalculatorPage from './DocumentIntelligenceCostCalculatorPage';
+import CostCalculator from '../components/CostCalculator';
+import { Breadcrumbs, JsonLd } from '../components/PageElements';
+import { generateMetadata as seo, generateBreadcrumbsSchema } from '../lib/seo';
 
-// SEO: keyword optimization
-export const metadata = generateSEOMetadata({
-  title: 'Document Processing Cost Calculator',
+export const metadata = seo({
+  title: 'Document Handling Cost Calculator',
   description:
-    'Calculate how much document processing and search overhead costs your team each year. Free tool to estimate document automation ROI.',
+    'Estimate the labor cost of time spent finding and handling documents using your team size, working days, and hourly rate.',
   path: '/document-intelligence-cost-calculator',
-  keywords: [
-    'document intelligence cost calculator',
-    'document processing cost',
-    'PDF extraction cost',
-    'knowledge management cost',
-    'document automation ROI',
-  ],
 });
-
 export default function Page() {
-  const breadcrumbSchema = generateBreadcrumbsSchema([
-    { name: 'Home', url: '/' },
-    { name: 'Document Intelligence Cost Calculator', url: '/document-intelligence-cost-calculator' },
-  ]);
-
-  // SEO: WebApplication schema for calculator
-  const webApplicationSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'WebApplication',
-    name: 'Document Processing Cost Calculator',
-    description:
-      'Calculate how much document processing costs and estimate document automation ROI. Free business tool.',
-    url: `${siteUrl}/document-intelligence-cost-calculator`,
-    applicationCategory: 'BusinessApplication',
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-    isPartOf: { '@type': 'WebSite', '@id': `${siteUrl}#website` },
-  };
-
   return (
-    <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }} />
-      <DocumentIntelligenceCostCalculatorPage />
-    </>
+    <main id="main">
+      <div className="container page-intro">
+        <Breadcrumbs
+          items={[
+            { name: 'Other automations', href: '/systems' },
+            { name: 'Document Handling Cost Calculator' },
+          ]}
+        />
+        <p className="eyebrow">Free planning tool</p>
+        <h1>Document Handling Cost Calculator</h1>
+        <p className="lead">
+          Estimate the labor cost of time spent finding and handling documents using your team size,
+          working days, and hourly rate.
+        </p>
+      </div>
+      <section className="container section section-line" aria-label="Cost calculator">
+        <CostCalculator kind="document" />
+      </section>
+      <JsonLd
+        data={generateBreadcrumbsSchema([
+          { name: 'Home', url: '/' },
+          {
+            name: 'Document Handling Cost Calculator',
+            url: '/document-intelligence-cost-calculator',
+          },
+        ])}
+      />
+    </main>
   );
 }

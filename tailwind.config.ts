@@ -25,9 +25,10 @@ export default {
                 'dark-500': '#0a0a0f',
             },
             fontFamily: {
-                display: ['var(--font-syne)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-                body: ['var(--font-dm-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-                mono: ['var(--font-jetbrains-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+                sans: ['var(--font-roboto)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                display: ['var(--font-roboto)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                body: ['var(--font-roboto)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                mono: ['var(--font-roboto)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
             },
             animation: {
                 'gradient-x': 'gradient-x 6s ease infinite',

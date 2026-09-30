@@ -1,0 +1,60 @@
+---
+title: "Turning Tally or Typeform submissions into Notion reports"
+description: "Map form fields, preserve source responses, and define review and retry rules for a reliable intake-to-report workflow in Make, Zapier, or n8n."
+date: "2026-09-28"
+author: "Nabeel Sharafat"
+tags: ["Form workflows", "Workflow planning", "Reporting"]
+slug: "tally-typeform-notion-report-automation"
+---
+
+A completed form does not always produce a report a team can use. Someone may still organize the answers, rewrite free-text notes, and paste the result into Notion or Google Sheets.
+
+For [ScoutBrief](/projects/scoutbrief-mvp-automation), I built a lightweight internal MVP that connected scouting form submissions to structured AI summaries and Notion delivery. The work included a recorded handover. The useful scope was a defined intake-to-report workflow with a consistent output format.
+
+Here is how to prepare a similar automation.
+
+## Start with the report the reviewer needs
+
+Work backward from a good report. Identify the sections your team reads, the fields it filters on, and the information it uses to make the next decision.
+
+Then map each section to a form answer. If the report needs a date or a reference URL, the form should ask for it clearly. A summarization step cannot reliably recover information that was never supplied.
+
+For a fictional scouting workflow, the report could contain the subject, observation date, strengths, concerns, supporting notes, and follow-up questions. Those sections should reflect the team's actual review process.
+
+## Separate database properties from report text
+
+Notion properties and a report's written body serve different purposes. A date or review status should remain structured when the team needs to filter by it. Longer observations can go into the page body.
+
+<table><thead><tr><th scope="col">Form input</th><th scope="col">Example destination</th></tr></thead><tbody><tr><td>Submission ID</td><td>Stable reference property</td></tr><tr><td>Subject name</td><td>Page title or subject property</td></tr><tr><td>Observation date</td><td>Date property</td></tr><tr><td>Reviewer</td><td>Assigned review property</td></tr><tr><td>Free-text notes</td><td>Source notes and structured summary sections</td></tr><tr><td>Missing required details</td><td>Review status and exception reason</td></tr></tbody></table>
+
+Agree on field types and accepted values before building the workflow. A destination that accepts a test page may still reject a later submission with an unexpected date or missing property.
+
+## Use a template before adding summarization
+
+When the form already provides structured responses, a fixed report template may do the job. It can arrange fields without interpreting their meaning.
+
+AI summarization is useful when notes need organizing or compressing. Give it a defined format and require it to preserve uncertainty. An absent answer should remain missing, and an observation should not become a stronger claim in the summary.
+
+Keep the original submission accessible to the reviewer. During the pilot, compare each summary section against the source notes for omissions and unsupported statements. Treat form text as content to process, not instructions that can override the workflow.
+
+## Make duplicate submissions and retries predictable
+
+Use a stable submission ID to prevent a repeated delivery from producing duplicate pages. Decide whether a corrected submission updates an existing report, creates a revision, or enters a review queue.
+
+Track processing status so a failure after summarization but before destination delivery can be recovered. Your team should be able to see whether the report is incomplete, awaiting review, or ready.
+
+Do not mark the workflow complete merely because the processing step succeeded. Check that the expected destination record exists and has the required properties and report sections.
+
+## Keep approval separate from generation
+
+Agree on the reviewer and the action that marks a report as approved. An internal draft, a reviewed record, and an externally shared report are different states.
+
+The initial automation can prepare a consistent report for the team. External publication or actions based on sensitive information need their own defined rules and approval steps.
+
+## Pilot the awkward submissions
+
+Test complete responses, missing required answers, long notes, special characters, duplicate events, and a temporary destination failure. Review the formatting in the actual database or sheet your team uses.
+
+The handover should cover how to find the source, correct an incomplete record, recover a failed delivery, and update the report template. Scope those changes so the team knows which adjustments it can make itself.
+
+[Form-to-Report Automation](/services/form-to-report-automation) covers intake mapping, processing, and structured delivery. If your requests come through Gmail, see [Email Classification & Routing](/services/email-classification-routing). [Share your form and an example report](/contact?service=form-to-report-automation) to plan the first workflow.

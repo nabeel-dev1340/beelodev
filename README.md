@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Beelodev
 
-## Getting Started
+A Next.js App Router site for Nabeel Sharafat’s custom business and workflow automation services.
 
-First, run the development server:
+## Run locally
 
-```bash
+```sh
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. For a production preview, run `npm run build`, then `npm run start`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Content
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `app/config/site.ts`: identity, contact details, navigation, homepage copy, and trust language.
+- `app/config/services.ts`: four core offers and five specialist workflows, deliverables, boundaries, FAQs, search metadata, and related guides.
+- `app/config/projects.ts`: actual project evidence and screenshots.
+- `app/config/systems.ts`: secondary AI and integration workflows.
+- `content/blog/*.mdx`: practical guides. Frontmatter includes `title`, `description`, `date`, `author`, `tags`, and `slug`; use `updatedDate` for revisions without changing the original publication date.
+- `app/config/demo.ts`: fictional records shared by the downloader simulation and its CSV report.
 
-## Learn More
+New service pages and posts are included in the generated sitemap. Preserve existing slugs when editing published content.
 
-To learn more about Next.js, take a look at the following resources:
+## Design
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Shared styles and light/dark theme tokens live in `app/globals.css`. The theme follows the system preference on first visit and stores an explicit user choice locally. Design context is recorded in `.impeccable.md`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Core content is rendered on the server. Client components handle the navigation menu, theme toggle, inquiry form, blog filters, calculators, and sample downloader. The downloader is a simulation with fictional data; its CSV explicitly labels each download as simulated.
 
-## Deploy on Vercel
+## Inquiry delivery
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The server-side contact route requires `RESEND_API_KEY`. Configure it through the deployment environment and verify the sending domain in Resend. Do not commit environment files. A delivery failure is shown to the visitor with a direct email fallback.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The route validates field types, lengths, email format, service and dropdown values, and origin. It uses a honeypot and basic per-instance email throttling. Distributed production throttling belongs at the hosting edge.
+
+The inquiry requires name, email, and workflow details. Optional service, tools, volume, and timing are disclosed on demand, with safe defaults accepted by the server. Homepage content leads with outcomes and links all nine services through four workflow groups.
+
+PostHog initializes only when `NEXT_PUBLIC_POSTHOG_KEY` is configured. Form fields are excluded from automatic interaction capture and session recording is disabled. Vercel Analytics remains enabled.
+
+## Verify
+
+```sh
+npm run lint
+npm run build
+```
+
+No automated test runner is configured. See `REVAMP-NOTES.md` for the checks performed and launch follow-up.
+
+## Organic search
+
+See `SEO-PLAN.md` for the service and guide clusters and the Search Console setup steps. The optional `GOOGLE_SITE_VERIFICATION` deployment variable supports HTML meta tag verification; a domain property uses DNS verification instead.

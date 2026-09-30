@@ -1,46 +1,39 @@
-import { generateMetadata as generateSEOMetadata, generateBreadcrumbsSchema, siteUrl } from '../lib/seo';
-import SupportCostCalculatorPage from './SupportCostCalculatorPage';
+import CostCalculator from '../components/CostCalculator';
+import { Breadcrumbs, JsonLd } from '../components/PageElements';
+import { generateMetadata as seo, generateBreadcrumbsSchema } from '../lib/seo';
 
-// SEO: keyword optimization
-export const metadata = generateSEOMetadata({
-  title: 'Customer Support Cost Calculator — AI vs Human',
+export const metadata = seo({
+  title: 'Customer Support Cost Calculator',
   description:
-    'Calculate exactly how much your customer support is costing you — and how much you could save with an AI support agent. Free tool.',
+    'Estimate the labor cost of manual support using your ticket volume, handling time, and hourly rate. Explore a hypothetical automation share.',
   path: '/support-cost-calculator',
-  keywords: [
-    'support cost calculator',
-    'customer support cost',
-    'helpdesk cost',
-    'support automation ROI',
-    'AI support agent',
-    'reduce support tickets',
-  ],
 });
-
 export default function Page() {
-  const breadcrumbSchema = generateBreadcrumbsSchema([
-    { name: 'Home', url: '/' },
-    { name: 'Support Cost Calculator', url: '/support-cost-calculator' },
-  ]);
-
-  // SEO: WebApplication schema for calculator
-  const webApplicationSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'WebApplication',
-    name: 'Customer Support Cost Calculator',
-    description:
-      'Calculate how much customer support costs and compare AI vs human support cost. Free business tool.',
-    url: `${siteUrl}/support-cost-calculator`,
-    applicationCategory: 'BusinessApplication',
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-    isPartOf: { '@type': 'WebSite', '@id': `${siteUrl}#website` },
-  };
-
   return (
-    <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }} />
-      <SupportCostCalculatorPage />
-    </>
+    <main id="main">
+      <div className="container page-intro">
+        <Breadcrumbs
+          items={[
+            { name: 'Other automations', href: '/systems' },
+            { name: 'Customer Support Cost Calculator' },
+          ]}
+        />
+        <p className="eyebrow">Free planning tool</p>
+        <h1>Customer Support Cost Calculator</h1>
+        <p className="lead">
+          Estimate the labor cost of manual support using your ticket volume, handling time, and
+          hourly rate. Explore a hypothetical automation share.
+        </p>
+      </div>
+      <section className="container section section-line" aria-label="Cost calculator">
+        <CostCalculator kind="support" />
+      </section>
+      <JsonLd
+        data={generateBreadcrumbsSchema([
+          { name: 'Home', url: '/' },
+          { name: 'Customer Support Cost Calculator', url: '/support-cost-calculator' },
+        ])}
+      />
+    </main>
   );
 }

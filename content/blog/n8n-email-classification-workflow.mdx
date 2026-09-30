@@ -1,0 +1,56 @@
+---
+title: "Designing an n8n email classification workflow for Gmail"
+description: "Define message categories, duplicate handling, review queues, and structured logging before automating a shared inbox with n8n."
+date: "2026-09-28"
+author: "Nabeel Sharafat"
+tags: ["Email workflows", "Classification", "Workflow planning"]
+slug: "n8n-email-classification-workflow"
+---
+
+When a team reads every incoming message just to choose a category and copy its details elsewhere, classification can become a useful first automation. The workflow needs clear categories, a stable message reference, and a way to leave uncertain decisions for review.
+
+My [Smart Email Classification project](/projects/smart-email-classification-system) connected Gmail to GPT classification through n8n and stored structured results in MySQL. Its defined scope was message processing and logging. Automatic customer replies were a possible later phase.
+
+## Define categories through actual examples
+
+Start with anonymized messages from the real inbox. Include ordinary requests, forwarded chains, short subjects, and messages that could fit more than one category.
+
+For each category, write a definition and examples of what belongs and what does not. “Support” might mean an existing customer's product question; a pre-sales product question could belong somewhere else. That distinction has to be explicit before a workflow can apply it consistently.
+
+Set a rule for messages that contain several requests. Your team may want one primary category, several labels, or a manual review. Avoid letting that choice change from message to message.
+
+## Use simple rules where they are sufficient
+
+Known senders, fixed subjects, and predictable notifications may be handled by deterministic rules. A model is useful when free-text interpretation is needed, but it does not have to process every message.
+
+The workflow should produce the same structured output regardless of which path handled the message. Agree on required fields such as message ID, category, processing status, and a short classification reason.
+
+Treat the email body as input data. Content inside a message should not change the workflow's categories, operating rules, or destination permissions.
+
+## Keep message identity and thread identity separate
+
+A conversation can contain several incoming messages. Logging only a subject line or thread ID may accidentally treat a new reply as a duplicate. Logging every retry as a new record creates the opposite problem.
+
+Use the source message identifier to track processing, and retain the thread reference when your team needs conversation context. Define what a rerun is allowed to update.
+
+<table><thead><tr><th scope="col">Field</th><th scope="col">Reason to retain it</th></tr></thead><tbody><tr><td>message_id</td><td>Prevents duplicate processing of the same message</td></tr><tr><td>thread_id</td><td>Links a result to the conversation</td></tr><tr><td>received_at</td><td>Records the source timing</td></tr><tr><td>category</td><td>Stores the agreed classification</td></tr><tr><td>processing_status</td><td>Distinguishes complete, failed, and review-needed records</td></tr><tr><td>classification_reason</td><td>Helps a reviewer understand the decision</td></tr></tbody></table>
+
+Agree on what email content needs to be copied into the destination. A useful log does not necessarily require retaining the entire message body.
+
+## Make uncertainty an ordinary outcome
+
+Give unclassified messages a defined destination and an owner. They should not disappear from the work queue because the classifier could not decide.
+
+If a model reports confidence, do not assume that number has been calibrated against your inbox. Check the output against a manually labeled sample and base review rules on the observed mistakes and your team's tolerance for misrouting.
+
+Wrong category, missing fields, and failed destination writes are different issues. Keep their statuses separate so the recovery step is clear.
+
+## Test the failure path as well as the happy path
+
+The pilot should include a repeated message, an ambiguous request, malformed output, and a failed destination write. Verify that a retry updates the intended record and that a notification reaches the agreed operator.
+
+Measure classification agreement against your reviewed sample. Also inspect category-specific errors: a workflow can look acceptable overall while repeatedly misrouting the most important kind of request.
+
+The handover should show how to find a source message, review an uncertain classification, and recover a failed run. Define separate approval rules before adding automatic replies or actions that change customer records.
+
+[Email Classification & Routing](/services/email-classification-routing) covers the inbox-to-structured-record workflow. [Form-to-Report Automation](/services/form-to-report-automation) is a related option when requests arrive through a form. [Share your category definitions and an anonymized sample](/contact?service=email-classification-routing) to plan a pilot.
