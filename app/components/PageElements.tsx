@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { deliverySteps } from '../config/services';
-import { revampContent } from '../config/site';
+import { bookingUrl, revampContent, siteConfig } from '../config/site';
 
 export function Breadcrumbs({
   items,
@@ -27,13 +27,15 @@ export function Breadcrumbs({
 
 export function ProcessSteps({
   headingLevel = 'h3',
+  steps = deliverySteps,
 }: {
   headingLevel?: 'h2' | 'h3';
+  steps?: readonly { title: string; description: string }[];
 }) {
   const Heading = headingLevel;
   return (
     <div className="process-grid">
-      {deliverySteps.map((step, i) => (
+      {steps.map((step, i) => (
         <div className="process-step" key={step.title}>
           <span className="step-number">0{i + 1}</span>
           <Heading>{step.title}</Heading>
@@ -71,12 +73,22 @@ export function WorkflowCTA({ service }: { service?: string }) {
         <h2>{revampContent.workflowCta.title}</h2>
         <p>{revampContent.workflowCta.description}</p>
       </div>
-      <Link
-        href={service ? `/contact?service=${service}` : '/contact'}
-        className="button"
-      >
-        {revampContent.workflowCta.label} <ArrowUpRight size={17} />
-      </Link>
+      <div className="cta-actions">
+        <Link
+          href={service ? `/contact?service=${service}` : '/contact'}
+          className="button"
+        >
+          {revampContent.workflowCta.label} <ArrowUpRight size={17} />
+        </Link>
+        <a
+          href={bookingUrl(service ?? 'workflow-cta')}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="button button-secondary"
+        >
+          Book a {siteConfig.personal.booking.duration} call
+        </a>
+      </div>
     </div>
   );
 }

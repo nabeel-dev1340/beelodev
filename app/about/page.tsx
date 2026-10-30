@@ -9,9 +9,9 @@ import {
 } from '../lib/seo';
 
 export const metadata = seo({
-  title: 'Nabeel Sharafat — Python & Workflow Automation Developer',
+  title: 'Nabeel Sharafat — Automation Consultant & Python Developer',
   description:
-    'Meet Nabeel, the developer behind Beelodev. Custom Python scripts, website data collection, and browser automation for business workflows. Based in Pakistan, working worldwide.',
+    'Nabeel Sharafat is an automation consultant and Python developer. He builds n8n, Make, Zapier, and browser automation for business workflows, working worldwide.',
   path: '/about',
 });
 export default function AboutPage() {

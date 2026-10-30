@@ -31,6 +31,11 @@ export default function Footer() {
               {service.title}
             </Link>
           ))}
+          {siteConfig.footer.systemLinks.map((link) => (
+            <Link key={link.href} href={link.href}>
+              {link.label}
+            </Link>
+          ))}
           <Link href="/services">All automation services</Link>
         </div>
         <div>

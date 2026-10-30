@@ -608,6 +608,84 @@ export const automationServices: AutomationService[] = [
       'portal-report-automation',
     ],
   },
+  {
+    slug: 'n8n-development-consulting',
+    number: '10',
+    category: 'specialist',
+    title: 'n8n Development & Consulting',
+    shortTitle: 'An n8n developer you work with directly.',
+    problem:
+      '“We know n8n can do this, but nobody here has time to build it properly.”',
+    description:
+      'Custom n8n workflow development and consulting for teams that need more than a template. I design, build, and document workflows on your n8n Cloud or self-hosted instance, or repair the ones you already have. You work directly with the developer rather than through an agency.',
+    seoTitle: 'n8n Developer & Consultant for Custom Workflows',
+    seoDescription:
+      'Hire an n8n developer and consultant to build, fix, or take over workflows. n8n Cloud or self-hosted, with error handling, documentation, and a clear handover.',
+    outcome:
+      'Reliable n8n workflows in your own instance, documented so your team can operate them.',
+    examples: [
+      'Classifying Gmail messages with GPT and storing structured records in MySQL',
+      'Connecting forms, CRMs, spreadsheets, and internal APIs with validation between steps',
+      'Repairing a workflow that fails silently, duplicates records, or breaks on edge cases',
+    ],
+    deliverables: [
+      'Agreed workflows built and tested in your n8n instance',
+      'Testing against representative data, including edge cases',
+      'Error handling, retries, and failure notifications',
+      'Credentials that stay in your environment',
+      'Exported workflow files, operating notes, and a handover',
+    ],
+    scope:
+      'The scope covers the agreed workflows and the systems they connect. Setting up and maintaining n8n hosting, changes inside third-party systems, and ongoing support are agreed separately.',
+    sample: {
+      source: 'Your n8n instance',
+      destination: 'Documented workflows',
+      files: [
+        'workflows/inbox-triage.json',
+        'workflows/error-handler.json',
+        'docs/operating-notes.md',
+      ],
+    },
+    discovery: [
+      'What starts the workflow and the result you need at the end',
+      'The systems involved and the API access available',
+      'Whether n8n is already running, and whether it is Cloud or self-hosted',
+      'Examples of ordinary cases and the ones that tend to go wrong',
+    ],
+    faqs: [
+      {
+        question: 'Can you fix or take over an existing n8n workflow?',
+        answer:
+          'Yes. I start by reviewing the workflow and its recent failures, then recommend whether to repair it or rebuild the fragile parts. Access can be arranged after we agree on the scope.',
+      },
+      {
+        question: 'Do you work with n8n Cloud and self-hosted n8n?',
+        answer:
+          'Yes. The workflows are built in your instance, with credentials kept in your environment. Setting up or maintaining self-hosted infrastructure is scoped separately.',
+      },
+      {
+        question: 'Is Beelodev an n8n agency?',
+        answer:
+          'Beelodev is an independent practice rather than an agency. Nabeel handles discovery, the build, and the handover, so you talk directly to the person building your workflow.',
+      },
+      {
+        question: 'Should we use n8n, Make, or Zapier?',
+        answer:
+          'It depends on your team and the workflow. n8n suits work that benefits from self-hosting or custom code steps, while it can be simpler to stay on Make or Zapier if your team already runs there. I build on all three and can recommend one after reviewing the task.',
+      },
+      {
+        question: 'Can n8n workflows use AI models?',
+        answer:
+          'Yes. A workflow can call a model such as GPT to classify or extract information. We define the expected output, validate it, and send uncertain results to a person for review.',
+      },
+    ],
+    projectSlug: 'smart-email-classification-system',
+    articleSlug: 'n8n-email-classification-workflow',
+    relatedServiceSlugs: [
+      'email-classification-routing',
+      'form-to-report-automation',
+    ],
+  },
 ];
 
 export const coreAutomationServices = automationServices.filter(

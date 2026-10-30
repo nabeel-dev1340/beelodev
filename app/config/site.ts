@@ -13,7 +13,7 @@ export const siteConfig = {
     responseTime: 'Direct communication with Nabeel',
     availability: { available: true, message: 'Available for new projects' },
     booking: {
-      url: 'https://calendly.com/nabeelsharafat/30min',
+      url: 'https://calendly.com/nabeel-sharafat/30min',
       label: 'Discuss your workflow',
       shortLabel: 'Book a call',
       duration: '30 min',
@@ -30,10 +30,15 @@ export const siteConfig = {
   ],
   footer: {
     serviceSlugs: [
+      'n8n-development-consulting',
       'email-classification-routing',
       'form-to-report-automation',
       'lead-enrichment-scoring',
       'recurring-website-data-collection',
+    ],
+    systemLinks: [
+      { label: 'Invoice Processing Automation', href: '/systems/auto-invoicing' },
+      { label: 'AI Document Processing', href: '/systems/docu-brain' },
     ],
     socials: [
       {
@@ -48,9 +53,14 @@ export const siteConfig = {
 
 export type SiteConfig = typeof siteConfig;
 
+// UTM values appear on the Calendly booking, showing which placement led to it.
+export function bookingUrl(placement: string) {
+  return `${siteConfig.personal.booking.url}?utm_source=beelodev&utm_medium=website&utm_content=${placement}`;
+}
+
 export const revampContent = {
   hero: {
-    eyebrow: 'Custom automation · Built around your workflow',
+    eyebrow: 'Business automation services · Built around your workflow',
     title: 'Give your team time back.',
     emphasis: 'Automate the busywork.',
     description:
@@ -92,6 +102,7 @@ export const revampContent = {
           'email-classification-routing',
           'form-to-report-automation',
           'portal-report-automation',
+          'n8n-development-consulting',
         ],
       },
       {
@@ -160,7 +171,7 @@ export const revampContent = {
     name: 'Nabeel Sharafat',
     intro: 'The person behind the automation.',
     description:
-      'I’m Nabeel Sharafat, the Python and workflow automation developer behind Beelodev. I build web scraping pipelines, browser workflows, and n8n, Make, and Zapier integrations that take repetitive work off your team’s hands.',
+      'I’m Nabeel Sharafat, an automation consultant and the Python and workflow automation developer behind Beelodev. I build web scraping pipelines, browser workflows, and n8n, Make, and Zapier integrations that take repetitive work off your team’s hands.',
     approach:
       'My work spans website data extraction, classification pipelines, and workflow integrations with tools such as n8n, Make, and Zapier. I start with your actual process, test a small batch, and build toward an output your team can use.',
   },

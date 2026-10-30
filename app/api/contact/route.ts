@@ -51,6 +51,13 @@ export async function POST(request: NextRequest) {
   const volume = read('volume') || 'Not sure yet',
     deadline = read('deadline') || 'No fixed deadline',
     projectDetails = read('projectDetails');
+  // Reporting only, so unusable values are dropped rather than rejected.
+  const readSource = (key: string) => {
+    const value = read(key);
+    return value.length <= 300 && !/[\r\n]/.test(value) ? value : '';
+  };
+  const landingPage = readSource('landingPage'),
+    referrer = readSource('referrer');
   if (
     !name ||
     name.length > 100 ||
@@ -116,7 +123,7 @@ export async function POST(request: NextRequest) {
       to: [siteConfig.personal.email],
       replyTo: email,
       subject: `Workflow inquiry: ${serviceName}`,
-      text: `Name: ${name}\nEmail: ${email}\nService: ${serviceName}\nSystem: ${system || 'Not provided yet'}\nVolume: ${volume}\nDeadline: ${deadline}\n\nWorkflow and desired result:\n${projectDetails}`,
+      text: `Name: ${name}\nEmail: ${email}\nService: ${serviceName}\nSystem: ${system || 'Not provided yet'}\nVolume: ${volume}\nDeadline: ${deadline}\n\nWorkflow and desired result:\n${projectDetails}\n\nLanding page: ${landingPage || 'Unknown'}\nReferrer: ${referrer || 'Direct or unknown'}`,
     });
     if (error) {
       console.error('Contact email delivery failed', { code: error.name });

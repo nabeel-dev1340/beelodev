@@ -1,11 +1,12 @@
+import CalculatorDetails from '../components/CalculatorDetails';
 import CostCalculator from '../components/CostCalculator';
 import { Breadcrumbs, JsonLd } from '../components/PageElements';
 import { generateMetadata as seo, generateBreadcrumbsSchema } from '../lib/seo';
 
 export const metadata = seo({
-  title: 'Invoice Processing Cost Calculator',
+  title: 'Invoice Processing Cost Calculator: Cost per Invoice',
   description:
-    'Estimate the time and labor cost of manual invoice handling with your own volume, handling time, and hourly rate.',
+    'Calculate your cost per invoice and the yearly labor cost of manual invoice processing using your own volume, handling time, and hourly rate.',
   path: '/invoice-processing-cost-calculator',
 });
 export default function Page() {
@@ -28,6 +29,7 @@ export default function Page() {
       <section className="container section section-line" aria-label="Cost calculator">
         <CostCalculator kind="invoice" />
       </section>
+      <CalculatorDetails kind="invoice" />
       <JsonLd
         data={generateBreadcrumbsSchema([
           { name: 'Home', url: '/' },

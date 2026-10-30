@@ -1148,8 +1148,19 @@ h3 {
   font-size: 0.9rem;
   max-width: 550px;
 }
-.cta-band .button {
+.cta-band .cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   flex: none;
+}
+.booking-embed {
+  display: block;
+  width: 100%;
+  height: 720px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--surface);
 }
 .about-layout {
   display: grid;
@@ -1268,7 +1279,7 @@ h3 {
   margin-block: 50px;
   padding: 32px;
 }
-.article-container .cta-band .button {
+.article-container .cta-band .cta-actions {
   margin-top: 22px;
 }
 .blog-tools {

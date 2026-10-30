@@ -79,7 +79,7 @@ export function generateMetadata({
 
 export function generateProjectMetadata(project: Project): Metadata {
   return generateMetadata({
-    title: `${project.title} — Project`,
+    title: project.title.length < 45 ? `${project.title} — Project` : project.title,
     description: project.shortDescription,
     path: `/projects/${project.slug}`,
     image: project.images[0] ? `${siteUrl}${project.images[0]}` : undefined,
@@ -130,7 +130,7 @@ export function generatePersonSchema() {
     '@id': `${siteUrl}#person`,
     name: 'Nabeel Sharafat',
     url: `${siteUrl}/about`,
-    jobTitle: 'Python & Workflow Automation Developer',
+    jobTitle: 'Automation Consultant & Python Developer',
     worksFor: { '@id': `${siteUrl}#organization` },
     knowsAbout: [
       'Python',

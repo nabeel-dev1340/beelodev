@@ -6,6 +6,7 @@ import { generateMetadata as generateSEOMetadata } from './lib/seo';
 import StructuredData from './components/StructuredData';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import LeadSource from './components/LeadSource';
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -16,9 +17,9 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   ...generateSEOMetadata({
-    title: 'Custom Workflow & Business Automation',
+    title: 'Business & Workflow Automation Services',
     description:
-      'Give your team time back with custom automation by Nabeel Sharafat. Connect tools and automate inbox triage, lead research, reporting, data collection, and admin.',
+      'Business and workflow automation services by Nabeel Sharafat. Automate inbox triage, lead research, reports, and data entry with n8n, Make, Zapier, and Python.',
   }),
   ...(process.env.GOOGLE_SITE_VERIFICATION && {
     verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
@@ -43,6 +44,7 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer />
+        <LeadSource />
         <Analytics />
       </body>
     </html>

@@ -123,7 +123,7 @@ export const projects: Project[] = [
             'Incoming Gmail messages categorized and stored as structured MySQL records for SaaS support operations.',
         contribution:
             'n8n workflow connecting Gmail, GPT classification, and structured MySQL records for SaaS support operations.',
-        services: ['email-classification-routing'],
+        services: ['email-classification-routing', 'n8n-development-consulting'],
         category: 'AI Automation',
         shortDescription:
             'AI-powered n8n workflow that classifies incoming Gmail messages with GPT and stores structured results in MySQL for faster SaaS support operations.',

@@ -3,8 +3,9 @@
 import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, LoaderCircle, Mail } from 'lucide-react';
-import { siteConfig, revampContent } from '../config/site';
+import { bookingUrl, siteConfig, revampContent } from '../config/site';
 import { automationServices } from '../config/services';
+import { readLeadSource } from './LeadSource';
 
 type ContactProps = { initialService?: string; standalone?: boolean };
 
@@ -31,7 +32,10 @@ export default function Contact({
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.fromEntries(data.entries())),
+        body: JSON.stringify({
+          ...Object.fromEntries(data.entries()),
+          ...readLeadSource(),
+        }),
       });
       const result = await response.json();
       if (!response.ok)
@@ -76,9 +80,13 @@ export default function Contact({
               {siteConfig.personal.email}
             </a>
             <a
-              href={siteConfig.personal.booking.url}
-              target="_blank"
-              rel="noopener noreferrer"
+              {...(standalone
+                ? { href: '#book' }
+                : {
+                    href: bookingUrl('home-contact'),
+                    target: '_blank',
+                    rel: 'noopener noreferrer',
+                  })}
               className="text-link"
             >
               Prefer a call? Book 30 minutes <ArrowUpRight size={16} />
@@ -91,7 +99,7 @@ export default function Contact({
           </div>
         </div>
         <form
-          className="contact-form data-ph-no-capture"
+          className="contact-form"
           onSubmit={submit}
           aria-label="Workflow inquiry"
         >

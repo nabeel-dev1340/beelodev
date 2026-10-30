@@ -14,6 +14,18 @@
 - [Email Classification & Routing](https://beelodev.com/services/email-classification-routing): categorize Gmail messages and log structured records through n8n.
 - [Website & Content Classification](https://beelodev.com/services/website-content-classification): extract page signals and apply a classification or article scoring rubric.
 - [Form-to-Report Automation](https://beelodev.com/services/form-to-report-automation): connect Tally or Typeform intake to structured Notion or Google Sheets reports.
+- [n8n Development & Consulting](https://beelodev.com/services/n8n-development-consulting): build, repair, or take over n8n workflows on n8n Cloud or self-hosted instances.
+
+## AI automations
+- [Invoice Processing Automation](https://beelodev.com/systems/auto-invoicing): capture, extract, validate, approve, and post invoices to accounting systems.
+- [AI Document Processing](https://beelodev.com/systems/docu-brain): turn PDFs and office files into structured, searchable data.
+- [AI Customer Support Agent](https://beelodev.com/systems/ai-support-agent): answer routine questions from approved sources with human handoff.
+- [AI Chatbot for Your Website](https://beelodev.com/systems/ai-website-chatbot): answer visitor questions, capture leads, and offer booking.
+
+## Free tools
+- [Invoice Processing Cost Calculator](https://beelodev.com/invoice-processing-cost-calculator)
+- [Customer Support Cost Calculator](https://beelodev.com/support-cost-calculator)
+- [Document Handling Cost Calculator](https://beelodev.com/document-intelligence-cost-calculator)
 
 ## Learn more
 - [Projects](https://beelodev.com/projects): actual project descriptions and screenshots.
@@ -21,7 +33,7 @@
 - [About Nabeel](https://beelodev.com/about)
 - [Practical automation guides](https://beelodev.com/blog)
 - [Other automations](https://beelodev.com/systems): AI support agents, chatbots, invoice processing, and document workflows.
-- [Contact](https://beelodev.com/contact): describe the system, manual task, approximate volume, and deadline.
+- [Contact](https://beelodev.com/contact): describe the system, manual task, approximate volume, and deadline, or book a 30 minute call.
 
 Pricing is scoped after reviewing the workflow. Local execution and client-controlled credentials are options where appropriate. An NDA can be arranged.
 

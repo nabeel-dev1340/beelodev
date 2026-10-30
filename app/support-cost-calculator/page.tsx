@@ -1,3 +1,4 @@
+import CalculatorDetails from '../components/CalculatorDetails';
 import CostCalculator from '../components/CostCalculator';
 import { Breadcrumbs, JsonLd } from '../components/PageElements';
 import { generateMetadata as seo, generateBreadcrumbsSchema } from '../lib/seo';
@@ -28,6 +29,7 @@ export default function Page() {
       <section className="container section section-line" aria-label="Cost calculator">
         <CostCalculator kind="support" />
       </section>
+      <CalculatorDetails kind="support" />
       <JsonLd
         data={generateBreadcrumbsSchema([
           { name: 'Home', url: '/' },

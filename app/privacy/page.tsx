@@ -24,7 +24,8 @@ export default function PrivacyPage() {
         <p>
           The form collects your name, email, selected service, system, approximate volume,
           deadline, and workflow description. It sends these details to Beelodev by email through
-          Resend so Nabeel can assess and respond to the inquiry.
+          Resend so Nabeel can assess and respond to the inquiry. The email also notes the page where
+          your visit began and the site that referred you, so we can see how people find Beelodev.
         </p>
         <p>
           Please leave passwords, access tokens, and confidential client records out of the form.
@@ -33,10 +34,14 @@ export default function PrivacyPage() {
         </p>
         <h2>Website analytics</h2>
         <p>
-          This site uses Vercel Analytics and, when configured, PostHog to understand website use
-          and technical errors. These providers may receive technical information such as pages
-          visited, device details, and interaction events. Form inputs are excluded from automatic
-          interaction capture, and session recording is disabled in the site configuration.
+          This site uses Vercel Analytics to understand website use. Vercel may receive technical
+          information such as pages visited and device details.
+        </p>
+        <h2>Booking a call</h2>
+        <p>
+          Calls are scheduled through Calendly, including the calendar embedded on the contact page.
+          Calendly processes the details you enter and may set its own cookies when that calendar
+          loads.
         </p>
         <h2>Theme preference</h2>
         <p>
