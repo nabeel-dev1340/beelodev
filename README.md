@@ -36,7 +36,7 @@ The route validates field types, lengths, email format, service and dropdown val
 
 The inquiry requires name, email, and workflow details. Optional service, tools, volume, and timing are disclosed on demand, with safe defaults accepted by the server. Homepage content leads with outcomes and links all nine services through four workflow groups.
 
-PostHog initializes only when `NEXT_PUBLIC_POSTHOG_KEY` is configured. Form fields are excluded from automatic interaction capture and session recording is disabled. Vercel Analytics remains enabled.
+Analytics: Rybbit, self-hosted at rybbit.beelodev.com (site `03a11865d2c0`). The tracker loads from `/rb/script.js` once the page is idle, and `app/rb/[...path]/route.ts` forwards its requests to `RYBBIT_URL` (the Rybbit backend on the server's internal network) without cookies. Session replays mask every form input and keep recordings for 3 days.
 
 ## Verify
 

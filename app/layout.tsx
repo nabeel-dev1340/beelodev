@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
-import { Analytics } from '@vercel/analytics/next';
+import Script from 'next/script';
 import './globals.css';
 import { generateMetadata as generateSEOMetadata } from './lib/seo';
 import StructuredData from './components/StructuredData';
@@ -45,7 +45,13 @@ export default function RootLayout({
         {children}
         <Footer />
         <LeadSource />
-        <Analytics />
+        {/* Rybbit (self-hosted at rybbit.beelodev.com), through this origin: app/rb/[...path]/route.ts. */}
+        <Script
+          src="/rb/script.js"
+          strategy="lazyOnload"
+          data-site-id="03a11865d2c0"
+          data-replay-block-selector=".ph-no-capture"
+        />
       </body>
     </html>
   );
