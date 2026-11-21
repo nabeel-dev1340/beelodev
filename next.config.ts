@@ -16,6 +16,9 @@ function getProjectRoot(): string {
 const projectRoot = getProjectRoot();
 
 const nextConfig: NextConfig = {
+  // Self-hosted on the RackNerd box with Coolify: the Dockerfile runs the
+  // standalone server (.next/standalone/server.js).
+  output: "standalone",
   turbopack: {
     root: projectRoot,
   },
